@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="imagens/sticker-png-green-g-clef-removebg-preview.png" type="image/x-icon">
+    <title>Afinador de Instrumentos de Corda</title>
+</head>
+<body>
+    <header>
+        <div class="logo-img"> 
+            <img src="imagens/image-removebg-preview (2).png" alt="logo">
+        </div>
+        <nav> 
+            <ul>
+                <li><a href="#">Introdução</a></li>
+                <li><a href="#">Matrícula</a></li>
+                <li><a href="#">Afinador</a></li>
+                <li><a href="#">Tutoriais</a></li>
+                <li><a href="#">Dúvidas</a></li>
+                <li><a href="#">Dicas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <div class="container">
+                <h1>Afinador Online</h1>
+                
+                <div class="instrument-section">
+                    <h2>Violino</h2>
+                    <button class="note-button" onclick="playNote('G', 'violin')">G (Sol)</button>
+                    <button class="note-button" onclick="playNote('D', 'violin')">D (Ré)</button>
+                    <button class="note-button" onclick="playNote('A', 'violin')">A (Lá)</button>
+                    <button class="note-button" onclick="playNote('E', 'violin')">E (Mi)</button>
+                </div>
+
+                <div class="instrument-section">
+                    <h2>Viola</h2>
+                    <button class="note-button" onclick="playNote('C', 'viola')">C (Do)</button>
+                    <button class="note-button" onclick="playNote('G', 'viola')">G (Sol)</button>
+                    <button class="note-button" onclick="playNote('D', 'viola')">D (Ré)</button>
+                    <button class="note-button" onclick="playNote('A', 'viola')">A (Lá)</button>
+                </div>
+
+                <div class="instrument-section">
+                    <h2>Violoncelo</h2>
+                    <button class="note-button" onclick="playNote('C', 'cello')">C (Do)</button>
+                    <button class="note-button" onclick="playNote('G', 'cello')">G (Sol)</button>
+                    <button class="note-button" onclick="playNote('D', 'cello')">D (Ré)</button>
+                    <button class="note-button" onclick="playNote('A', 'cello')">A (Lá)</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+
+    <footer>
+        <span class="footer-title">Music School</span>
+        <ul class="socials">
+            <li><a href="https://wa.me/qr/KNIVFKKZMUUXH1"><i class="bi bi-whatsapp"></i></a></li>
+            <li><a href="https://pt-br.facebook.com/"><i class="bi bi-facebook"></i></a></li>
+            <li><a href="https://x.com/"><i class="bi bi-twitter"></i></a></li>
+            <li><a href="https://www.instagram.com/elliscarv/"><i class="bi bi-instagram"></i></a></li>
+        </ul>
+        <div class="info">
+            <ul>
+                <li class="footer-list_header">Oferece</li>
+                <li><a href="#">Produtos</a></li>
+                <li><a href="#">Serviços</a></li>
+                <li><a href="#">Categorias</a></li>
+                <li><a href="contact.php">Contato</a></li>
+            </ul>
+
+            <ul>
+                <li class="footer-list_header">Documentos</li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="#">Políticas de Privacidade</a></li>
+                <li><a href="#">Termos de Serviço</a></li>
+                <li><a href="#">Cookies</a></li>
+            </ul>
+
+            <ul>
+                <li class="footer-list_header">Para você</li>
+                <li><a href="#">Manuais</a></li>
+                <li><a href="#">Tutoriais</a></li>
+                <li><a href="#">Dicas e Truques</a></li>
+                <li><a href="#">F&Q</a></li>
+            </ul>
+
+            <ul>
+                <li class="footer-list_header">Trabalhe conosco</li>
+                <li><a href="#">Afiliar</a></li>
+                <li><a href="#">Colaborações</a></li>
+                <li><a href="#">Patrocinadores</a></li>
+                <li><a href="#">Parcerias</a></li>
+            </ul>
+        </div>
+        <p>Copyright &copy; 2025 Music School. Todos os direitos reservados. </p>
+    </footer>
+</body>
+</html>
