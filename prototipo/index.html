@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Loja Musical</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>🎻 Loja Musical</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="afinador.html">Afinador</a>
+      <a href="login.html">Login</a>
+      <a href="#" onclick="toggleCarrinho()">Carrinho 🛒 (<span id="cart-count">0</span>)</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="produtos" class="produtos-container">
+      <!-- Produtos serão inseridos via JavaScript -->
+    </section>
+  </main>
+
+  <div id="carrinho" class="carrinho">
+    <h2>🛒 Seu Carrinho</h2>
+    <ul id="lista-carrinho"></ul>
+    <p><strong>Total:</strong> R$ <span id="total-carrinho">0.00</span></p>
+    <p><strong>Pontos acumulados:</strong> <span id="pontos">0</span> 🎁</p>
+    <button onclick="finalizarCompra()">Finalizar Compra</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
