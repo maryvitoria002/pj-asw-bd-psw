@@ -1,17 +1,29 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Login - Loja Musical</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="images/sticker-png-green-g-clef-removebg-preview.png" type="image/x-icon">
+    <title>PROTOTIPO</title>
 </head>
 <body>
   <header>
-    <h1>🎻 Loja Musical</h1>
+
+    <div class="logo-img">
+      <img src="" alt="logo">
+    </div>
+
+    <h1>DOM DOM DOM</h1>
     <nav>
-      <a href="index.html">Home</a>
-      <a href="afinador.html">Afinador</a>
-      <a href="login.html">Login</a>
+      <ul>
+        <li> <a href="index.html">Home</a></li>
+        <li> <a href="afinador.html">Afinador</a></li>
+        <li> <a href="login.html">Login</a></li>
+        <li> <a href="#" onclick="toggleCarrinho()">Carrinho (<span id="cart-count">0</span>)</a></li>
+      </ul>
+      
     </nav>
   </header>
 
@@ -27,5 +39,48 @@
       <button type="submit">Entrar</button>
     </form>
   </main>
+  <footer>
+    <span class="footer-title">DOM DOM DOM</span>
+    <ul class="socials">
+        <li><a href="https://wa.me/qr/KNIVFKKZMUUXH1"><i class="bi bi-whatsapp"></i></a></li>
+        <li><a href="https://pt-br.facebook.com/"><i class="bi bi-facebook"></i></a></li>
+        <li><a href="https://x.com/"><i class="bi bi-twitter"></i></a></li>
+        <li><a href="https://www.instagram.com/elliscarv/"><i class="bi bi-instagram"></i></a></li>
+    </ul>
+    <div class="info">
+        <ul>
+            <li class="footer-list_header">Oferece</li>
+            <li><a href="#">Produtos</a></li>
+            <li><a href="#">Serviços</a></li>
+            <li><a href="#">Categorias</a></li>
+            <li><a href="contact.php">Contato</a></li>
+        </ul>
+
+        <ul>
+            <li class="footer-list_header">Documentos</li>
+            <li><a href="#">Sobre</a></li>
+            <li><a href="#">Políticas de Privacidade</a></li>
+            <li><a href="#">Termos de Serviço</a></li>
+            <li><a href="#">Cookies</a></li>
+        </ul>
+
+        <ul>
+            <li class="footer-list_header">Para você</li>
+            <li><a href="#">Manuais</a></li>
+            <li><a href="#">Tutoriais</a></li>
+            <li><a href="#">Dicas e Truques</a></li>
+            <li><a href="#">F&Q</a></li>
+        </ul>
+
+        <ul>
+            <li class="footer-list_header">Trabalhe conosco</li>
+            <li><a href="#">Afiliar</a></li>
+            <li><a href="#">Colaborações</a></li>
+            <li><a href="#">Patrocinadores</a></li>
+            <li><a href="#">Parcerias</a></li>
+        </ul>
+    </div>
+    <p>Copyright &copy; 2025 Music School. Todos os direitos reservados. </p>
+</footer>
 </body>
 </html>
