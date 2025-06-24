@@ -190,33 +190,32 @@
     }
 
     .btn-loja {
-      display: inline-block;
-  padding: 10px 20px;
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
+      color: black;
   text-decoration: none;
-  color: #fff;
-  background-color: #f7bd6d;
-  border: 2px solid #000;
-  border-radius: 10px;
-  box-shadow: 5px 5px 0px #000;
-  transition: all 0.3s ease;
+  font-size: 25px;
+  border: none;
+  background: none;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
   cursor: pointer;
     }
 
-    .btn-loja:hover {
-     background-color: #fff;
-  color: #f7bd6d;
-  border: 2px solid #f7bd6d;
-  box-shadow: 5px 5px 0px #f7bd6d;
+    .btn-loja::before {
+        margin-left: auto;
     }
 
-     .btn-loja:active {
-        background-color: #f6952d;
-  box-shadow: none;
-  transform: translateY(4px);
-     }
+    .btn-loja::after, .btn-loja::before {
+  content: '';
+  width: 0%;
+  height: 2px;
+  background: #f48236;
+  display: block;
+  transition: 0.5s;
+}
+
+.btn-loja:hover::after, .btn-loja:hover::before {
+  width: 100%;
+}
 
     main {
       flex: 1;
