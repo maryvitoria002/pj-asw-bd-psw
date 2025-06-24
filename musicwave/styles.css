@@ -190,19 +190,33 @@
     }
 
     .btn-loja {
-      background-color: #ffa500;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: 0.3s ease;
-      margin-right: 110px;
+      display: inline-block;
+  padding: 10px 20px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background-color: #f7bd6d;
+  border: 2px solid #000;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0px #000;
+  transition: all 0.3s ease;
+  cursor: pointer;
     }
 
     .btn-loja:hover {
-      background-color: #ff8800;
+     background-color: #fff;
+  color: #f7bd6d;
+  border: 2px solid #f7bd6d;
+  box-shadow: 5px 5px 0px #f7bd6d;
     }
+
+     .btn-loja:active {
+        background-color: #f6952d;
+  box-shadow: none;
+  transform: translateY(4px);
+     }
 
     main {
       flex: 1;
