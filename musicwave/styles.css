@@ -18,7 +18,7 @@
       align-items: center;
       padding: 20px 0;
       gap: 20px;
-      height: 100vh;
+      height: 144vh;
       transition: transform 0.3s ease;
       box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
       border-top-right-radius: 15px;
@@ -160,6 +160,21 @@
       font-weight: bold;
       font-size: 28px;
       transition: font-size 0.3s ease;
+      height: 50%;
+       border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .img-banner {
+      width: 100%;
+      height: 100%;
+      
+    }
+
+    .img-banner img {
+        padding-top: 30px;
+        width: 40%;
+        height: 100%;
     }
 
     .jogos {
