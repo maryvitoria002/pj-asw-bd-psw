@@ -189,7 +189,7 @@
       pointer-events: none;
     }
 
-    .btn-loja {
+/*   .btn-loja {
       color: black;
   text-decoration: none;
   font-size: 25px;
@@ -215,7 +215,33 @@
 
 .btn-loja:hover::after, .btn-loja:hover::before {
   width: 100%;
-}
+} */
+
+
+    .btn-loja {
+      padding: 12.5px 30px;
+  border: 0;
+  border-radius: 10px;
+  background-color: #fb892b;
+  color: black;
+  font-weight: Bold;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+    }
+
+    .btn-loja:hover {
+       background-color: #e46c09;
+  box-shadow: 0 0 20px #ee9851c0;
+  transform: scale(1.1);
+    }
+
+    .btn-loja:active {
+      background-color: #c36518a2;
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s;
+  box-shadow: none;
+  transform: scale(0.98);
+    }
 
     main {
       flex: 1;
@@ -224,6 +250,8 @@
     }
 
 /* home */
+
+/* alvaro */
 
 .banner {
   width: 100%;
@@ -357,6 +385,8 @@
       }
     }
 
+    /* alvaro */
+
     footer {
     background-color: #85c4bee8;
     color: white;
@@ -437,3 +467,44 @@ footer p{
         align-items: center;
     }
 }
+
+.container-banner {
+    width: 100%;
+    /* Você pode ajustar max-width se quiser que o banner tenha uma largura máxima */
+    /* max-width: 1200px; */
+    margin: 0 auto; /* Centraliza o container se max-width for definido */
+}
+
+.fundo-imagem {
+    background-image: url('img/musicwave.png'); /* Define sua imagem aqui */
+    background-size: cover; /* Garante que a imagem cubra toda a área */
+    background-position: center; /* Centraliza a imagem dentro do elemento */
+    background-repeat: no-repeat; /* Evita que a imagem se repita */
+    height: 500px; /* Define a altura desejada para o banner */
+    position: relative; /* Necessário para posicionamento absoluto se um overlay fosse usado */
+    overflow: hidden; /* Garante que a imagem não transborde se não estiver perfeitamente dimensionada */
+}
+
+/* Opcional: Media queries para responsividade, se necessário */
+@media (max-width: 768px) {
+    .fundo-imagem {
+        height: 300px; /* Ajusta a altura para telas menores */
+    }
+}
+
+@media (max-width: 480px) {
+    .fundo-imagem {
+        height: 250px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
