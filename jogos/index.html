@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Jogo da Forca</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Jogo da Forca</h1>
+    <div class="forca">
+      <div class="base"></div>
+      <div class="haste"></div>
+      <div class="traco"></div>
+      <div class="boneco parte cabeca"></div>
+      <div class="boneco parte tronco"></div>
+      <div class="boneco parte braco-esq"></div>
+      <div class="boneco parte braco-dir"></div>
+      <div class="boneco parte perna-esq"></div>
+      <div class="boneco parte perna-dir"></div>
+    </div>
+
+    <p>Advinhe a palavra secreta:</p>
+    <div id="wordDisplay">_ _ _ _ _</div>
+
+    <input type="text" id="letterInput" maxlength="1" placeholder="Digite uma letra">
+    <button onclick="guessLetter()">Tentar</button>
+
+    <p>Letras erradas: <span id="wrongLetters"></span></p>
+    <p>Tentativas restantes: <span id="attempts">6</span></p>
+
+    <p id="message"></p>
+    <button onclick="restartGame()">Reiniciar</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
