@@ -204,16 +204,32 @@ aside {
   top: 0;
   right: -100%;
   width: 320px;
+  max-width: 90%;
   height: 100%;
-  background: white;
-  box-shadow: -4px 0 12px rgba(0,0,0,0.1);
+  background: #fff;
   padding: 1rem;
+  box-shadow: -4px 0 12px rgba(0,0,0,0.1);
   transition: right 0.3s ease;
   z-index: 1000;
+  overflow-y: auto;
 }
 .painel-lateral.ativo {
   right: 0;
 }
+.cordas-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.cordas-container button {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 6px;
+  background: #ffe6b3;
+  cursor: pointer;
+  font-weight: bold;
+}
+
 
 .banner {
       width: 100%;
@@ -320,20 +336,6 @@ aside {
   justify-content: space-around;
 }
 
-.joguinho {
-  margin: 70px 0;
-}
-
-.col-3 {
-  flex-basis: 30%;
-  min-width: 250px;
-  margin-bottom: 30px;
-}
-
-.col-3 img {
-  width: 100%;
-}
-
 .small-container {
   max-width: 1080px;
   margin:  auto;
@@ -341,6 +343,102 @@ aside {
   padding-right: 25px;
 }
 
+.violoncelo, .guitarra, .bandolim, .viola, .banjo, .violino, .charango, .ukulele  {
+  flex-basis: 25%;
+  padding: 10px;
+  min-width: 200px;
+  margin-bottom: 50px;
+  transition: transform 0.5s ease;
+}
+
+
+.violoncelo, .guitarra, .bandolim, .viola, .banjo, .violino, .charango, .ukulele p {
+  font-size: 14px;
+}
+
+.violoncelo:hover, .guitarra:hover, .bandolim:hover, .viola:hover, .banjo:hover, .violino:hover, .charango:hover, .ukulele:hover {
+  transform:translateY(-10px) ;
+} 
+
+.rating .bi {
+  color: #ee971d;
+}
+
+.guitarra  img {
+  width: 93%;
+}
+
+.violoncelo img {
+  width: 50%;
+}
+
+.bandolim  img {
+  width: 100%;
+}
+
+.viola  img {
+  width: 120%;
+}
+
+.banjo  img {
+  width: 140%;
+}
+
+.violino  img {
+  width: 110%;
+}
+
+.charango  img {
+  width: 90%;
+}
+
+ .ukulele  img {
+  width: 50%;
+}
+
+h4 {
+  color: #555;
+  font-weight: normal;
+}
+
+.afinador {
+  background: radial-gradient(#fff, #ffe7d6);
+  margin-top: 80px;
+  padding: 30px 0;
+   flex-basis: 50%;
+  min-width: 300px;
+}
+
+.col-2 {
+  flex-basis: 50%;
+  min-width: 300px;
+}
+
+.col-2 img {
+   max-width: 100%;
+ padding: 50px 0;
+}
+
+.col-2 h1 {
+    font-size: 50px;
+  line-height: 60px;
+  font-family: 'Playrite';
+  margin: 25px 0;
+  color: #ee971d;
+}
+
+.col-2 p {
+  font-size: 20px;
+  line-height: 30px;
+  color: #f7bd6d;
+}
+
+.small {
+  color: #f7bd6d;
+  font-size: 17px;
+  font-family: 'Playrite';
+  text-align: justify;
+}
 
 /* tutorial */
 
