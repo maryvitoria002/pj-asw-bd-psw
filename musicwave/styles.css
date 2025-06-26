@@ -10,6 +10,9 @@
       display: flex;
     }
 
+
+    /* alvaro */
+
     aside {
        position: sticky;
   top: 0;
@@ -189,34 +192,6 @@
       pointer-events: none;
     }
 
-/*   .btn-loja {
-      color: black;
-  text-decoration: none;
-  font-size: 25px;
-  border: none;
-  background: none;
-  font-weight: 600;
-  font-family: 'Poppins', sans-serif;
-  cursor: pointer;
-    }
-
-    .btn-loja::before {
-        margin-left: auto;
-    }
-
-    .btn-loja::after, .btn-loja::before {
-  content: '';
-  width: 0%;
-  height: 2px;
-  background: #f48236;
-  display: block;
-  transition: 0.5s;
-}
-
-.btn-loja:hover::after, .btn-loja:hover::before {
-  width: 100%;
-} */
-
 
     .btn-loja {
       padding: 12.5px 30px;
@@ -248,63 +223,38 @@
       display: flex;
       flex-direction: column;
     }
+.container-banner {
+    width: 100%;
+    /* Você pode ajustar max-width se quiser que o banner tenha uma largura máxima */
+    /* max-width: 1200px; */
+    margin: 0 auto; /* Centraliza o container se max-width for definido */
+}
 
-/* home */
+.fundo-imagem {
+    background-image: url('img/musicwave.png'); /* Define sua imagem aqui */
+    background-size: cover; /* Garante que a imagem cubra toda a área */
+    background-position: center; /* Centraliza a imagem dentro do elemento */
+    background-repeat: no-repeat; /* Evita que a imagem se repita */
+    height: 500px; /* Define a altura desejada para o banner */
+    position: relative; /* Necessário para posicionamento absoluto se um overlay fosse usado */
+    overflow: hidden; /* Garante que a imagem não transborde se não estiver perfeitamente dimensionada */
+}
+
+/* Opcional: Media queries para responsividade, se necessário */
+@media (max-width: 768px) {
+    .fundo-imagem {
+        height: 300px; /* Ajusta a altura para telas menores */
+    }
+}
+
+@media (max-width: 480px) {
+    .fundo-imagem {
+        height: 250px;
+    }
+}
 
 /* alvaro */
 
-.banner {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.tamanho-video {
-  width: 100%;
-  height: 600px;
-  overflow: hidden;
-  position: relative;
-}
-
-.tamanho-video video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-}
-
-/* Degradê da esquerda para a transparência */
-.overlay-degrade {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to right, #fdd7a183, #fadeb678, #fae6ca5c, transparent);
-  z-index: 2;
-}
-
-.conteudo-video {
-  position: absolute;
-  top: 50%;
-  left: 5%;
-  transform: translateY(-50%);
-  z-index: 3;
-  color: white;
-  font-family: sans-serif;
-}
-
-#texto-digitado {
-  font-size: 2.5rem;
-  white-space: nowrap;
-  border-right: 2px solid white;
-  overflow: hidden;
-}
-
-/* home */
    
     .jogos {
       padding: 24px;
@@ -339,6 +289,8 @@
     .card:hover {
       transform: scale(1.05);
     }
+
+    
 
     @media (max-width: 768px) {
       .menu-toggle {
@@ -384,8 +336,7 @@
         font-size: 14px;
       }
     }
-
-    /* alvaro */
+    
 
     footer {
     background-color: #85c4bee8;
@@ -468,35 +419,103 @@ footer p{
     }
 }
 
-.container-banner {
-    width: 100%;
-    /* Você pode ajustar max-width se quiser que o banner tenha uma largura máxima */
-    /* max-width: 1200px; */
-    margin: 0 auto; /* Centraliza o container se max-width for definido */
-}
 
-.fundo-imagem {
-    background-image: url('img/musicwave.png'); /* Define sua imagem aqui */
-    background-size: cover; /* Garante que a imagem cubra toda a área */
-    background-position: center; /* Centraliza a imagem dentro do elemento */
-    background-repeat: no-repeat; /* Evita que a imagem se repita */
-    height: 500px; /* Define a altura desejada para o banner */
-    position: relative; /* Necessário para posicionamento absoluto se um overlay fosse usado */
-    overflow: hidden; /* Garante que a imagem não transborde se não estiver perfeitamente dimensionada */
-}
 
-/* Opcional: Media queries para responsividade, se necessário */
-@media (max-width: 768px) {
-    .fundo-imagem {
-        height: 300px; /* Ajusta a altura para telas menores */
+
+/* ellis */
+
+
+
+/*   .btn-loja {
+      color: black;
+  text-decoration: none;
+  font-size: 25px;
+  border: none;
+  background: none;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
     }
+
+    .btn-loja::before {
+        margin-left: auto;
+    }
+
+    .btn-loja::after, .btn-loja::before {
+  content: '';
+  width: 0%;
+  height: 2px;
+  background: #f48236;
+  display: block;
+  transition: 0.5s;
 }
 
-@media (max-width: 480px) {
-    .fundo-imagem {
-        height: 250px;
-    }
+.btn-loja:hover::after, .btn-loja:hover::before {
+  width: 100%;
+} */
+
+
+
+
+
+.banner {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
+
+.tamanho-video {
+  width: 100%;
+  height: 600px;
+  overflow: hidden;
+  position: relative;
+}
+
+.tamanho-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* Degradê da esquerda para a transparência */
+.overlay-degrade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #fdd7a183, #fadeb678, #fae6ca5c, transparent);
+  z-index: 2;
+}
+
+.conteudo-video {
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  transform: translateY(-50%);
+  z-index: 3;
+  color: white;
+  font-family: sans-serif;
+}
+
+#texto-digitado {
+  font-size: 2.5rem;
+  white-space: nowrap;
+  border-right: 2px solid white;
+  overflow: hidden;
+}
+
+
+
+
+
+
+/* ellis */
+
 
 
 

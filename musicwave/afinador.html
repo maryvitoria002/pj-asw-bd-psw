@@ -1,0 +1,247 @@
+ <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+      background-color: #fffaf3;
+    }
+    h1 {
+      margin-bottom: 16px;
+      color: #b45f06;
+    }
+    select {
+      margin-bottom: 12px;
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 6px;
+    }
+    #descricao {
+      margin: 8px 0 16px;
+      font-style: italic;
+      color: #555;
+      text-align: center;
+      max-width: 400px;
+    }
+    .instrumento-img {
+      max-width: 120px;
+      margin-bottom: 16px;
+    }
+    .cordas {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .btn-todas {
+      background-color: #ffa500;
+      color: white;
+      font-weight: bold;
+      padding: 12px 20px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.2s;
+    }
+    .btn-todas:hover {
+      background-color: #ff8800;
+    }
+    button {
+      background-color: #fdf1e4;
+      border: 2px solid #ffa500;
+      padding: 16px;
+      font-size: 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    button:hover {
+      transform: scale(1.05);
+      background-color: #ffeac3;
+    }
+    button.vibrar {
+      animation: vibrar 0.3s linear;
+    }
+    @keyframes vibrar {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(2deg); }
+      50% { transform: rotate(-2deg); }
+      75% { transform: rotate(2deg); }
+    }
+  </style>
+</head>
+<body>
+  <h1>Afinador</h1>
+  <select id="instrumento" onchange="carregarCordas()">
+    <option value="cavaquinho">🪕 Cavaquinho</option>
+    <option value="violino">🎻 Violino</option>
+    <option value="viola">🎻 Viola</option>
+    <option value="violoncelo">🎼 Violoncelo</option>
+    <option value="ukulele">🌺 Ukulele</option>
+    <option value="viola_caipira">🤠 Viola Caipira</option>
+    <option value="banjo">🎶 Banjo</option>
+    <option value="charango">🦙 Charango</option>
+    <option value="bandolim">🎼 Bandolim</option>
+    <option value="violao">🎸 Violão</option>
+  <option value="guitarra">🎸 Guitarra</option>
+  <option value="baixo">🎸 Baixo</option>
+  </select>
+  <p id="descricao"></p>
+  <img id="imgInstrumento" class="instrumento-img" src="" alt="Instrumento" style="display: none;" />
+
+  <div class="cordas" id="cordas"></div>
+  <button class="btn-todas" onclick="tocarTodasCordas()">Tocar todas as cordas</button>
+
+  <script>
+    const afinacoes = {
+      cavaquinho: [
+        { nome: "G - 4ª Corda", freq: 392 },
+        { nome: "D - 3ª Corda", freq: 293.66 },
+        { nome: "B - 2ª Corda", freq: 246.94 },
+        { nome: "D - 1ª Corda", freq: 196 },
+      ],
+      violino: [
+        { nome: "E - 1ª Corda", freq: 659.25 },
+        { nome: "A - 2ª Corda", freq: 440 },
+        { nome: "D - 3ª Corda", freq: 293.66 },
+        { nome: "G - 4ª Corda", freq: 196 },
+      ],
+      viola: [
+        { nome: "A - 1ª Corda", freq: 880 },
+        { nome: "D - 2ª Corda", freq: 587.33 },
+        { nome: "G - 3ª Corda", freq: 392 },
+        { nome: "C - 4ª Corda", freq: 261.63 },
+      ],
+      violoncelo: [
+        { nome: "A - 1ª Corda", freq: 220 },
+        { nome: "D - 2ª Corda", freq: 146.83 },
+        { nome: "G - 3ª Corda", freq: 98 },
+        { nome: "C - 4ª Corda", freq: 65.41 },
+      ],
+      ukulele: [
+        { nome: "G - 4ª Corda", freq: 392 },
+        { nome: "C - 3ª Corda", freq: 261.63 },
+        { nome: "E - 2ª Corda", freq: 329.63 },
+        { nome: "A - 1ª Corda", freq: 440 },
+      ],
+      viola_caipira: [
+        { nome: "E - 1ª Corda", freq: 329.63 },
+        { nome: "B - 2ª Corda", freq: 246.94 },
+        { nome: "G# - 3ª Corda", freq: 415.30 },
+        { nome: "E - 4ª Corda", freq: 329.63 },
+        { nome: "B - 5ª Corda", freq: 246.94 },
+      ],
+      banjo: [
+        { nome: "D - 4ª Corda", freq: 293.66 },
+        { nome: "B - 3ª Corda", freq: 246.94 },
+        { nome: "G - 2ª Corda", freq: 196 },
+        { nome: "D - 1ª Corda", freq: 146.83 },
+        { nome: "G - 5ª Corda", freq: 392 },
+      ],
+      charango: [
+        { nome: "G - 5ª Corda", freq: 196 },
+        { nome: "C - 4ª Corda", freq: 261.63 },
+        { nome: "E - 3ª Corda", freq: 329.63 },
+        { nome: "A - 2ª Corda", freq: 440 },
+        { nome: "E - 1ª Corda", freq: 659.25 },
+      ],
+      bandolim: [
+        { nome: "E - 1ª Corda", freq: 659.25 },
+        { nome: "A - 2ª Corda", freq: 440 },
+        { nome: "D - 3ª Corda", freq: 293.66 },
+        { nome: "G - 4ª Corda", freq: 196 },
+      ],
+      violao: [  // violão
+    { nome: "E - 6ª Corda", freq: 82.41 },
+    { nome: "A - 5ª Corda", freq: 110.00 },
+    { nome: "D - 4ª Corda", freq: 146.83 },
+    { nome: "G - 3ª Corda", freq: 196.00 },
+    { nome: "B - 2ª Corda", freq: 246.94 },
+    { nome: "E - 1ª Corda", freq: 329.63 },
+  ],
+  guitarra: [ // guitarra - mesma afinação do violão
+    { nome: "E - 6ª Corda", freq: 82.41 },
+    { nome: "A - 5ª Corda", freq: 110.00 },
+    { nome: "D - 4ª Corda", freq: 146.83 },
+    { nome: "G - 3ª Corda", freq: 196.00 },
+    { nome: "B - 2ª Corda", freq: 246.94 },
+    { nome: "E - 1ª Corda", freq: 329.63 },
+  ],
+  baixo: [
+    { nome: "E - 4ª Corda", freq: 41.20 },
+    { nome: "A - 3ª Corda", freq: 55.00 },
+    { nome: "D - 2ª Corda", freq: 73.42 },
+    { nome: "G - 1ª Corda", freq: 98.00 },
+  ],
+};
+    const descricoes = {
+      cavaquinho: "Instrumento brasileiro de 4 cordas, muito usado no samba e no choro.",
+      violino: "Instrumento clássico de 4 cordas afinado em quintas, muito usado em orquestras.",
+      viola: "Semelhante ao violino, porém com afinação mais grave e corpo maior.",
+      violoncelo: "Instrumento de orquestra com afinação grave e tocado entre as pernas.",
+      ukulele: "Instrumento havaiano de 4 cordas, com som doce e alegre.",
+      viola_caipira: "Tradicional do Brasil, possui 10 cordas em pares e som característico sertanejo.",
+      banjo: "Instrumento americano com timbre metálico, muito usado em música country e bluegrass.",
+      charango: "Instrumento andino de 10 cordas usado em música folclórica sul-americana.",
+      bandolim: "Instrumento de 8 cordas (4 pares), muito usado em música clássica e popular."
+    };
+
+    const imagens = {
+      cavaquinho: "https://upload.wikimedia.org/wikipedia/commons/3/3b/Cavaquinho.png",
+      violino: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Violin_VL100.png",
+      viola: "https://upload.wikimedia.org/wikipedia/commons/6/6d/Viola.jpg",
+      violoncelo: "https://upload.wikimedia.org/wikipedia/commons/e/e1/Violoncello_front_side.png",
+      ukulele: "https://upload.wikimedia.org/wikipedia/commons/3/38/Ukulele.png",
+      viola_caipira: "https://upload.wikimedia.org/wikipedia/commons/0/0e/Viola_caipira.png",
+      banjo: "https://upload.wikimedia.org/wikipedia/commons/e/e1/Banjo_5_cordas.png",
+      charango: "https://upload.wikimedia.org/wikipedia/commons/d/d7/Charango_Boliviano.png",
+      bandolim: "https://upload.wikimedia.org/wikipedia/commons/f/f4/Bandolim.png"
+    };
+
+    function playNote(freq, el = null) {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.2, ctx.currentTime);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 2);
+
+      if (el) {
+        el.classList.add("vibrar");
+        setTimeout(() => el.classList.remove("vibrar"), 300);
+      }
+    }
+
+    function carregarCordas() {
+      const tipo = document.getElementById("instrumento").value;
+      const cordas = afinacoes[tipo];
+      const container = document.getElementById("cordas");
+      container.innerHTML = "";
+      cordas.forEach(corda => {
+        const btn = document.createElement("button");
+        btn.textContent = corda.nome;
+        btn.onclick = () => playNote(corda.freq, btn);
+        container.appendChild(btn);
+      });
+      document.getElementById("descricao").textContent = descricoes[tipo];
+      const img = document.getElementById("imgInstrumento");
+      img.src = imagens[tipo];
+      img.style.display = "block";
+    }
+
+    function tocarTodasCordas() {
+      const tipo = document.getElementById("instrumento").value;
+      const cordas = afinacoes[tipo];
+      cordas.forEach((corda, i) => {
+        setTimeout(() => playNote(corda.freq), i * 1000);
+      });
+    }
+
+    carregarCordas();
+  </script>
