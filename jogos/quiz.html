@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #fdfaf5;
+  color: #333;
+}
+
+section.quiz {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  margin-top: 2rem;
+  margin-left: 500px;
+  width: 33%;
+}
+#opcoes button {
+  margin: 0.5rem;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: #eee;
+  cursor: pointer;
+}
+#opcoes button:hover {
+  background: #ffd280;
+}
+button {
+  font-size: 1rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  main {
+    margin-left: 0;
+  }
+  aside {
+    display: none;
+  }
+}
+
+    </style>
+    <br><br><br><br><br><br><br>
+    <section class="quiz">
+  <h2>🎵 Quiz Musical: acerte e ganhe pontos!</h2>
+  <div id="pergunta"></div>
+  <div id="opcoes"></div>
+  <button onclick="proximaPergunta()">Próxima</button>
+</section>
+
+<script>
+  const perguntas = [
+    {
+      q: "Qual instrumento possui 4 cordas afinadas em G-D-A-E?",
+      op: ["Violão", "Violino", "Ukulele", "Viola caipira"],
+      a: 1
+    },
+    {
+      q: "Qual instrumento típico da cultura sertaneja?",
+      op: ["Cavaquinho", "Charango", "Viola caipira", "Banjo"],
+      a: 2
+    }
+  ];
+
+  let atual = 0;
+  let pontos = 0;
+
+  function renderQuiz() {
+    const p = perguntas[atual];
+    document.getElementById("pergunta").textContent = p.q;
+    const opcoes = document.getElementById("opcoes");
+    opcoes.innerHTML = "";
+    p.op.forEach((txt, i) => {
+      const btn = document.createElement("button");
+      btn.textContent = txt;
+      btn.onclick = () => {
+        if (i === p.a) {
+          pontos += 10;
+          alert("✅ Correto! +10 pontos");
+        } else {
+          alert("❌ Errado!");
+        }
+        proximaPergunta();
+      };
+      opcoes.appendChild(btn);
+    });
+  }
+
+  if (atual >= perguntas.length) {
+  alert(`🎉 Quiz finalizado! Você ganhou ${pontos} pontos.`);
+  aplicarCupom(pontos);
+  atual = 0;
+  pontos = 0;
+}
+
+
+  function proximaPergunta() {
+    atual++;
+    if (atual >= perguntas.length) {
+      alert(`🎉 Quiz finalizado! Você ganhou ${pontos} pontos.`);
+      atual = 0;
+      pontos = 0;
+    }
+    renderQuiz();
+  }
+
+  window.addEventListener("DOMContentLoaded", renderQuiz);
+  function aplicarCupom(pontos) {
+  const descontos = Math.floor(pontos / 50);
+  if (descontos > 0) {
+    alert(`🎁 Você ganhou ${descontos} cupom(ns) de 10% de desconto! Use: CUPOM10`);
+    // Simule adicionar ao carrinho aqui
+  }
+}
+
+</script>
+
+</body>
+</html>
