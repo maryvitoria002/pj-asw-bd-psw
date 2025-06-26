@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="ellis.css">
+  <title>MW</title>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo-img"> 
+            <img src="img/logomw.png" alt="logo">
+        </div>
+    <input type="text" placeholder="Buscar instrumentos..." />
+    <button class="cep"> Informe seu CEP</button>
+    <div class="actions">
+      <button> Conta</button>
+      <button> Carrinho</button>
+      <button onclick="abrirAfinador()"> Afinador</button>
+    </div>
+  </header>
+
+  <nav>
+    <a href="#">Jogos</a>
+    <a href="#">Instrumentos com traste</a>
+    <a href="#">Instrumentos sem traste</a>
+  </nav>
+
+  <aside>
+    <a href="#perfil"><i class="bi bi-person-circle" style="color: black; font-size: 30px"></i></a>
+    <a href="#home"><i class="bi bi-house-fill" style="color: black;font-size: 30px"></i></a>
+    <a href="#notificacoes"><i class="bi bi-bell-fill" style="color: black; font-size: 30px"></i></a>
+    <a href="#loja"><i class="bi bi-cart-fill" style="color: black; font-size: 30px"></i></a>
+    <a href="#jogos"><i class="bi bi-controller" style="color: black; font-size: 30px"></i></a>
+    <a href="#configuracoes" style="margin-top:auto;"><i class="bi bi-gear-fill" style="color: black; font-size: 30px"></i></a>
+  </aside>
+
+  <main> 
+         <div class="banner">
+  <div class="tamanho-video">
+    <video autoplay muted loop id="myVideo">
+      <source src="video/videoplayback.mp4" type="video/mp4">
+    </video>
+    <div class="overlay-degrade"></div>
+    <div class="conteudo-video">
+      <h1 id="texto-digitado"></h1>
+    </div>
+  </div>
+</div> 
+
+    
+
+<!-- <script>
+  const perguntas = [
+    {
+      q: "Qual instrumento possui 4 cordas afinadas em G-D-A-E?",
+      op: ["Violão", "Violino", "Ukulele", "Viola caipira"],
+      a: 1
+    },
+    {
+      q: "Qual instrumento típico da cultura sertaneja?",
+      op: ["Cavaquinho", "Charango", "Viola caipira", "Banjo"],
+      a: 2
+    }
+  ];
+
+  let atual = 0;
+  let pontos = 0;
+
+  function renderQuiz() {
+    const p = perguntas[atual];
+    document.getElementById("pergunta").textContent = p.q;
+    const opcoes = document.getElementById("opcoes");
+    opcoes.innerHTML = "";
+    p.op.forEach((txt, i) => {
+      const btn = document.createElement("button");
+      btn.textContent = txt;
+      btn.onclick = () => {
+        if (i === p.a) {
+          pontos += 10;
+          alert("✅ Correto! +10 pontos");
+        } else {
+          alert("❌ Errado!");
+        }
+        proximaPergunta();
+      };
+      opcoes.appendChild(btn);
+    });
+
+    if (atual >= perguntas.length) {
+  alert(`🎉 Quiz finalizado! Você ganhou ${pontos} pontos.`);
+  aplicarCupom(pontos);
+  atual = 0;
+  pontos = 0;
+}
+
+  }
+
+  function proximaPergunta() {
+    atual++;
+    if (atual >= perguntas.length) {
+      alert(`🎉 Quiz finalizado! Você ganhou ${pontos} pontos.`);
+      atual = 0;
+      pontos = 0;
+    }
+    renderQuiz();
+  }
+
+  window.addEventListener("DOMContentLoaded", renderQuiz);
+
+  function aplicarCupom(pontos) {
+  const descontos = Math.floor(pontos / 50);
+  if (descontos > 0) {
+    alert(`🎁 Você ganhou ${descontos} cupom(ns) de 10% de desconto! Use: CUPOM10`);
+    // Simule adicionar ao carrinho aqui
+  }
+}
+
+</script>
+ -->
+    
+    
+  </main>
+
+
+  <script>
+  const frases = ["Seja bem-vindo!", "Aprenda se divertindo"];
+  const textoEl = document.getElementById("texto-digitado");
+  let fraseIndex = 0;
+  let charIndex = 0;
+  let digitando = true;
+
+  function digitarTexto() {
+    if (digitando) {
+      if (charIndex < frases[fraseIndex].length) {
+        textoEl.textContent += frases[fraseIndex].charAt(charIndex);
+        charIndex++;
+        setTimeout(digitarTexto, 100);
+      } else {
+        digitando = false;
+        setTimeout(digitarTexto, 1500); // pausa antes de apagar
+      }
+    } else {
+      if (charIndex > 0) {
+        textoEl.textContent = frases[fraseIndex].substring(0, charIndex - 1);
+        charIndex--;
+        setTimeout(digitarTexto, 50);
+      } else {
+        digitando = true;
+        fraseIndex = (fraseIndex + 1) % frases.length;
+        setTimeout(digitarTexto, 300); // pequena pausa antes da próxima frase
+      }
+    }
+  }
+
+  window.onload = digitarTexto;
+</script>
+
+  <!-- Afinador lateral (off-canvas) -->
+  <div id="afinadorLateral" class="painel-lateral">
+    <button onclick="fecharAfinador()">✖</button>
+    <div id="cordas"></div>
+  </div>
+
+  <script>
+    function abrirAfinador() {
+      document.getElementById("afinadorLateral").classList.add("ativo");
+      localStorage.setItem("afinadorAberto", "true");
+    }
+    function fecharAfinador() {
+      document.getElementById("afinadorLateral").classList.remove("ativo");
+      localStorage.setItem("afinadorAberto", "false");
+    }
+    window.addEventListener("DOMContentLoaded", () => {
+      if (localStorage.getItem("afinadorAberto") === "true") abrirAfinador();
+    });
+  </script>
+
+</body>
+</html>
