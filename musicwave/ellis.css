@@ -387,7 +387,7 @@ aside {
 
 .small-container {
   max-width: 1080px;
-  margin:  auto;
+  margin: auto;
   padding-left: 25px;
   padding-right: 25px;
 }
@@ -490,6 +490,66 @@ h4 {
 }
 
 /* tutorial */
+
+
+/* feedbacks */
+
+.col-3 {
+  flex-basis: 30%;
+  min-width: 250px;
+  margin-bottom: 30px;
+}
+
+.col-3  img {
+  width: 100%;
+  border-radius: 15%;
+}
+
+.feedbacks {
+  padding-top: 100px;
+}
+
+.feedbacks .col-3 {
+  text-align: center;
+  padding: 40px 20px;
+  box-shadow: 0 0 20px 0px rgba(55, 46, 39, 0.1);
+  cursor: pointer;
+  transition:  0.5s;
+}
+
+.feedbacks .col-3 img {
+  width: 50px;
+  margin-top: 20px;
+  border-radius: 50%;
+}
+
+.feedbacks .col-3:hover {
+  transform: translateY(-10px);
+}
+
+ .feedbacks .col-3 h3 {
+  font-size: 17px;
+  font-weight: 600;
+  color: #555;
+  margin: 10px 0;
+}
+
+.col-3 p {
+  font-size: 12px;
+  margin: 12px 0;
+  color: #333;
+}
+
+.bi.bi-quote {
+  font-size: 32px;
+  color: #f7bd6d;
+}
+
+
+
+
+
+
 
 
 
