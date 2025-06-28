@@ -16,6 +16,7 @@ body {
    font-family: 'Libre Baskerville'; 
   background: #fdfaf5;
   color: #333;
+  scroll-behavior: smooth;
 }
 
 .logo-img img {
@@ -121,50 +122,9 @@ header input[type="text"] {
 
 
 
-  nav {
-      position: fixed;
-      top: 73px;
-      left: 0;
-      width: 100%;
-      background: #feebd7d1;
-      padding: 0.5rem;
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      border-bottom: 1px solid #eee;
-      z-index: 999;
-    }
-
-.btn-nav {
-  color: #f7bd6d;
-  text-decoration: none;
-  font-size: 20px;
-  border: none;
-  background: none;
-  font-weight: 600;
-}
-
-.btn-nav::before {
-  margin-left: auto;
-}
-
-.btn-nav::after,.btn-nav::before {
-  content: '';
-  width: 0%;
-  height: 2px;
-  background: #fcb045;
-  display: block;
-  transition: 0.5s;
-}
-
-.btn-nav:hover::after, .btn-nav:hover::before {
-  width: 100%;
-}
-
-
 aside {
       position: fixed;
-      top: 130px;
+      top: 74px;
       left: 0;
       z-index: 998;
       width: 60px;
@@ -174,7 +134,7 @@ aside {
       align-items: center;
       padding: 20px 0;
       gap: 20px;
-      height: calc(100vh - 130px);
+      height: calc(100vh - 80px);
       box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
       border-top-right-radius: 12px;
       border-bottom-right-radius: 12px;
@@ -191,12 +151,10 @@ aside {
 
   main {
       margin-left: 60px;
-      padding-top: 120px; /* Espaço para header (73px) + nav (~47px) */
+      padding-top: 70px; /* Espaço para header (73px) + nav (~47px) */
       display: flex;
       flex-direction: column;
     }
-
-
 
 /* Painel lateral */
 .painel-lateral {
@@ -385,6 +343,13 @@ aside {
   justify-content: space-around;
 }
 
+.row-instrumentos {
+   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
 .small-container {
   max-width: 1080px;
   margin: auto;
@@ -392,57 +357,60 @@ aside {
   padding-right: 25px;
 }
 
-.violoncelo, .guitarra, .bandolim, .viola, .banjo, .violino, .charango, .ukulele  {
-  flex-basis: 25%;
-  padding: 10px;
-  min-width: 200px;
-  margin-bottom: 50px;
-  transition: transform 0.5s ease;
+.small-container-instrumentos {
+  max-width: 1080px;
+  margin: auto;
+  padding: 25px;
 }
 
+.instrumento-card {
+  flex-basis: 23%;
+  box-sizing: border-box;
+  padding: 15px;
+  margin-bottom: 30px;
+  text-align: center;
+  transition: transform 0.3s ease;
+  background-color: #f9f1e984;
+  border-radius: 10px;
+  box-shadow: 0 0 20px 0px #372e271a;
+}
 
-.violoncelo, .guitarra, .bandolim, .viola, .banjo, .violino, .charango, .ukulele p {
+.instrumento-card:hover {
+  transform: translateY(-10px);
+}
+
+.instrumento-card img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 15px;
+  object-fit: contain;
+}
+
+/* Estilização de imagem específica por instrumento (opcional para ajustes finos) */
+.instrumento-card.guitarra img { width: 98%; }
+.instrumento-card.violoncelo img { width: 70%; }
+.instrumento-card.bandolim img { width: 100%; }
+.instrumento-card.viola img { width: 110%; }
+.instrumento-card.banjo img { width: 120%; }
+.instrumento-card.violino img { width: 100%; }
+.instrumento-card.charango img { width: 95%; }
+.instrumento-card.ukulele img { width: 70%; }
+
+.instrumento-card h4 {
+  font-size: 15px;
+  margin: 10px 0;
+}
+
+.instrumento-card p {
   font-size: 14px;
+  color: #333;
 }
-
-.violoncelo:hover, .guitarra:hover, .bandolim:hover, .viola:hover, .banjo:hover, .violino:hover, .charango:hover, .ukulele:hover {
-  transform:translateY(-10px) ;
-} 
 
 .rating .bi {
   color: #ee971d;
-}
-
-.guitarra  img {
-  width: 93%;
-}
-
-.violoncelo img {
-  width: 50%;
-}
-
-.bandolim  img {
-  width: 100%;
-}
-
-.viola  img {
-  width: 120%;
-}
-
-.banjo  img {
-  width: 140%;
-}
-
-.violino  img {
-  width: 110%;
-}
-
-.charango  img {
-  width: 90%;
-}
-
- .ukulele  img {
-  width: 50%;
+  font-size: 14px;
+  margin: 2px;
 }
 
 h4 {
@@ -512,7 +480,7 @@ h4 {
 .feedbacks .col-3 {
   text-align: center;
   padding: 40px 20px;
-  box-shadow: 0 0 20px 0px rgba(55, 46, 39, 0.1);
+  box-shadow: 0 0 20px 0px #372e271a;
   cursor: pointer;
   transition:  0.5s;
 }
@@ -535,7 +503,7 @@ h4 {
 }
 
 .col-3 p {
-  font-size: 12px;
+  font-size: 13px;
   margin: 12px 0;
   color: #333;
 }
@@ -546,7 +514,92 @@ h4 {
 }
 
 
+/* rodape */
 
+footer {
+    background-color: #feebd7d1;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    bottom: 0;
+    width: 100%;
+    margin-top: 40px;
+}
+
+.footer-title {
+    font-size: 1.5rem;
+    color: #ee971d;
+}
+
+footer ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+}
+
+footer ul li {
+    margin: 10px 10px;
+}
+
+footer ul li a {
+    color: #faa938;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: thin;
+}
+
+footer ul li a:hover {
+    color: #f95f00;
+    transition: 0.4s ease-in-out;
+}
+
+.socials {
+    display: flex;
+    justify-content: center;
+    margin-block: 20px;
+    width: 100%;
+}
+
+.socials a {
+    color: #f7bd6d;
+    font-size: 1.1rem;
+}
+
+.socials a:hover {
+    color: #f95f00;
+    transition: 1s ease-in-out;
+}
+
+.info {
+    display: flex;
+    justify-content: center;
+    margin-block: 20px;
+    gap: 20px;
+}
+
+.footer-list_header {
+    font-size: 0.9rem;
+    color: #f7bd6d;
+}
+
+footer p{
+    color: #ee971d;
+}
+
+@media screen and (max-widht: 600px) {
+    .info {
+        flex-direction: column;
+    }
+
+    footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+
+/* rodape */
 
 
 
