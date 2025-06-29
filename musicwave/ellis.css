@@ -334,7 +334,7 @@ aside {
     }
 
 
-/* tutorial */
+/* produtos na home */
 
 .row {
   display: flex;
@@ -343,12 +343,43 @@ aside {
   justify-content: space-around;
 }
 
-.row-instrumentos {
-   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 20px;
+.instrumento-card-home {
+    flex-basis: 10%; /* Ajuste para controlar quantos cards por linha */
+    min-width: 250px; /* Garante um tamanho mínimo em telas menores */
+    box-sizing: border-box;
+    padding: 15px;
+    background-color: #f9f1e984;
+    border-radius: 10px;
+    box-shadow: 0 0 20px 0px #372e271a;
+    text-align: center;
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+.instrumento-card-home:hover {
+    transform: translateY(-10px);
+}
+
+.card-image-container-home {
+    width: 100%;
+    height: 220px; /* ALTURA FIXA: Ajuste este valor se desejar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.card-image-container-home img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain; /* Ajusta a imagem sem distorcer */
+}
+
 
 .small-container {
   max-width: 1080px;
@@ -357,8 +388,25 @@ aside {
   padding-right: 25px;
 }
 
+.row-instrumentoss {
+   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* produtos na home */
+
+
 
 /* ======== Container dos Instrumentos ======== */
+
+.row-instrumentos {
+   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
 
 .small-container-instrumentos {
   max-width: 1080px;
@@ -399,6 +447,7 @@ aside {
   flex-direction: column;
   align-items: center;
    max-width: 280px;
+   cursor: pointer;
 }
 
 .instrumento-card:hover {
@@ -679,22 +728,11 @@ aside {
 
 
 
-
-
-
 /* instrumentos em catalogo */
 
 /* instrumentos em catalogo na aba produtos */
 
-/* Estilização de imagem específica por instrumento (opcional para ajustes finos) */
-.instrumento-card.guitarra img { width: 98%; }
-.instrumento-card.violoncelo img { width: 70%; }
-.instrumento-card.bandolim img { width: 100%; }
-.instrumento-card.viola img { width: 110%; }
-.instrumento-card.banjo img { width: 120%; }
-.instrumento-card.violino img { width: 100%; }
-.instrumento-card.charango img { width: 95%; }
-.instrumento-card.ukulele img { width: 70%; }
+
 
 .instrumento-card h4 {
   font-size: 15px;
@@ -705,24 +743,6 @@ aside {
   font-size: 14px;
   color: #333;
 }
-
-.instrumento-card.violino img {
-  width: 75%;
-  max-height: 180px;
-  object-fit: contain;
-}
-
-.instrumento-card img {
-  width: 90%;
-  height: auto;
-  object-fit: contain;
-}
-
-.instrumento-card.violino img {
-  width: 75%;
-  max-height: 180px;
-}
-
 
 
 .rating .bi {
