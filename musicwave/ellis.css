@@ -358,38 +358,331 @@ aside {
 }
 
 
-/* instrumentos em catalogo na aba produtos */
+/* ======== Container dos Instrumentos ======== */
 
 .small-container-instrumentos {
   max-width: 1080px;
-  margin: auto;
-  padding: 25px;
+  margin: 0 auto 60px;
+  padding: 0 25px;
+}
+
+.row-instrumentos- {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* ======== Cards dos Instrumentos ======== */
+
+.card-image-container {
+    width: 100%; /* Ocupa toda a largura do card */
+    height: 220px; /* ALTURA FIXA - Este é o segredo! Ajuste este valor se precisar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    overflow: hidden; /* Garante que nada saia do contêiner */
 }
 
 .instrumento-card {
   flex-basis: 23%;
   box-sizing: border-box;
   padding: 15px;
-  margin-bottom: 30px;
-  text-align: center;
-  transition: transform 0.3s ease;
   background-color: #f9f1e984;
   border-radius: 10px;
   box-shadow: 0 0 20px 0px #372e271a;
-  cursor: pointer;
+  text-align: center;
+  transition: transform 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+   max-width: 280px;
 }
 
 .instrumento-card:hover {
   transform: translateY(-10px);
 }
 
-.instrumento-card img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-  margin: 0 auto 15px;
+.instrumento-card .card-image-container img {
+    max-width: 100%;
+    max-height: 100%; /* Garante que a imagem não ultrapasse o contêiner */
+    height: auto;
+    width: auto;
+    object-fit: contain; /* Faz a mágica: ajusta a imagem sem distorcer */
+    border-radius: 10px;
+}
+
+.instrumento-card h4 {
+  font-weight: 600;
+  color: #555;
+  margin: 0 0 8px;
+  font-size: 16px;
+  min-height: 48px;
+   min-height: 48px; /* Ótima prática para manter os títulos alinhados! */
+}
+
+.instrumento-card .rating {
+  margin-bottom: 8px;
+}
+
+.instrumento-card .rating .bi {
+  color: #ee971d;
+  font-size: 18px;
+  margin: 0 2px;
+}
+
+.instrumento-card p {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  color: #212121;
+}
+
+/* Botão "Ver detalhes" */
+
+.ver-detalhes-btn {
+  background-color: transparent;
+  border: 2px solid #f7bd6d;
+  color: #f7bd6d;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-top: auto;
+  width: 100%;
+}
+
+.ver-detalhes-btn:hover {
+  background-color: #f7bd6d;
+  color: #212121;
+}
+
+/* ======== Paginação ======== */
+
+.page-btn {
+  margin: 0 auto 80px;
+  text-align: center;
+  user-select: none;
+}
+
+.page-btn span {
+  display: inline-block;
+  border: 1px solid #f7bd6d;
+  margin-left: 10px;
+  gap: 5px;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  color: #f7bd6d;
+  font-weight: 700;
+  user-select: none;
+}
+
+.page-btn span:first-child {
+  margin-left: 0;
+}
+
+.page-btn span:hover {
+  background-color: #f7996d;
+  color: black;
+}
+
+.page-btn .active {
+  background-color: #f7bd6d;
+  color: black;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ======== Modal ======== */
+
+#modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(55, 46, 39, 0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+#modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 12px;
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 30px 40px;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.modal-left,
+.modal-right {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-left img.main-image {
+  width: 100%;
+  max-width: 350px;
+  border-radius: 12px;
   object-fit: contain;
 }
+
+.modal-thumbnails {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.modal-thumbnails img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.modal-thumbnails img:hover,
+.modal-thumbnails img.active {
+  border-color: #f7bd6d;
+}
+
+.modal-right h3 {
+  margin: 0 0 15px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #212121;
+}
+
+.modal-right p.price {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ee971d;
+  margin-bottom: 15px;
+}
+
+.modal-right p.description {
+  font-size: 14px;
+  margin-bottom: 25px;
+  color: #555;
+}
+
+.modal-right label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.modal-right input[type="number"] {
+  width: 80px;
+  padding: 6px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.modal-right select {
+  width: 150px;
+  padding: 6px 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+
+.modal-right button.buy-btn {
+  background-color: #f7bd6d;
+  border: none;
+  color: black;
+  font-weight: 700;
+  padding: 12px 25px;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-right button.buy-btn:hover {
+  background-color: #e6a12d;
+}
+
+/* Botão fechar modal */
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 30px;
+  color: #333;
+  cursor: pointer;
+  font-weight: 700;
+  user-select: none;
+}
+
+.modal-close:hover {
+  color: #f7bd6d;
+}
+
+/* Responsividade */
+
+@media (max-width: 900px) {
+  .instrumento-card {
+    flex-basis: 45%;
+  }
+  .modal-content {
+    flex-direction: column;
+    align-items: center;
+  }
+  .modal-left,
+  .modal-right {
+    flex-basis: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .instrumento-card {
+    flex-basis: 100%;
+  }
+}
+
+
+
+
+
+
+
+/* instrumentos em catalogo */
 
 /* instrumentos em catalogo na aba produtos */
 
@@ -538,44 +831,6 @@ h4 {
   color: #f7bd6d;
 }
 
-/* instrumentos em catalogo */
-
-.page-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 40px auto;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.page-btn span {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #f7bd6d;
-  height: 40px;
-  width: 40px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s ease;
-  color: #f7bd6d;
-  font-weight: bold;
-}
-
-.page-btn span:hover {
-  background-color: #f4812f;
-  color: black;
-}
-
-.page-btn .active {
-  background-color: #f7bd6d;
-  color: black;
-}
-
-
-
-/* instrumentos em catalogo */
 
 
 /* rodape */
