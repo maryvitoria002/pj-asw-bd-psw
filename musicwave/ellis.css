@@ -357,6 +357,9 @@ aside {
   padding-right: 25px;
 }
 
+
+/* instrumentos em catalogo na aba produtos */
+
 .small-container-instrumentos {
   max-width: 1080px;
   margin: auto;
@@ -373,6 +376,7 @@ aside {
   background-color: #f9f1e984;
   border-radius: 10px;
   box-shadow: 0 0 20px 0px #372e271a;
+  cursor: pointer;
 }
 
 .instrumento-card:hover {
@@ -386,6 +390,8 @@ aside {
   margin: 0 auto 15px;
   object-fit: contain;
 }
+
+/* instrumentos em catalogo na aba produtos */
 
 /* Estilização de imagem específica por instrumento (opcional para ajustes finos) */
 .instrumento-card.guitarra img { width: 98%; }
