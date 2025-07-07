@@ -52,6 +52,12 @@ header input[type="text"] {
 
 /* botao CEP */
 /* From Uiverse.io by nikk7007 */ 
+
+.bubbles a {
+  text-decoration: none;
+  color: inherit; /* Mantém a cor do texto */
+}
+
 .bubbles {
   --c1: #212121; /* Recommendation: same background color */
   --c2: #f7bd6d;
