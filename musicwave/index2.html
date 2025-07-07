@@ -301,18 +301,18 @@
   <button onclick="fecharAfinador()">✖</button>
   <h2 style="text-align:center; color:#b45f06;">Afinador</h2>
   <select id="instrumento" onchange="carregarCordas()">
-    <option value="cavaquinho">Cavaquinho</option>
     <option value="violino"> Violino</option>
     <option value="viola"> Viola</option>
     <option value="violoncelo">Violoncelo</option>
+    <option value="violao"> Violão</option>
+    <option value="guitarra"> Guitarra</option>
+    <option value="baixo">Baixo</option>
+    <option value="cavaquinho">Cavaquinho</option>
     <option value="ukulele">Ukulele</option>
     <option value="viola_caipira">Viola Caipira</option>
     <option value="banjo"> Banjo</option>
     <option value="charango">Charango</option>
     <option value="bandolim">Bandolim</option>
-    <option value="violao"> Violão</option>
-    <option value="guitarra"> Guitarra</option>
-    <option value="baixo">Baixo</option>
   </select>
   <p id="descricao"></p>
   <img id="imgInstrumento" class="instrumento-img" src="" alt="Instrumento" style="display:none;" />
@@ -321,12 +321,6 @@
 </div>
 <script>
   const afinacoes = {
-    cavaquinho: [
-      { nome: "G - 4ª Corda", freq: 392 },
-      { nome: "D - 3ª Corda", freq: 293.66 },
-      { nome: "B - 2ª Corda", freq: 246.94 },
-      { nome: "D - 1ª Corda", freq: 196 },
-    ],
     violino: [
       { nome: "E - 1ª Corda", freq: 659.25 },
       { nome: "A - 2ª Corda", freq: 440 },
@@ -344,6 +338,34 @@
       { nome: "D - 2ª Corda", freq: 146.83 },
       { nome: "G - 3ª Corda", freq: 98 },
       { nome: "C - 4ª Corda", freq: 65.41 },
+    ],
+    violao: [
+      { nome: "E - 6ª Corda", freq: 82.41 },
+      { nome: "A - 5ª Corda", freq: 110.00 },
+      { nome: "D - 4ª Corda", freq: 146.83 },
+      { nome: "G - 3ª Corda", freq: 196.00 },
+      { nome: "B - 2ª Corda", freq: 246.94 },
+      { nome: "E - 1ª Corda", freq: 329.63 },
+    ],
+    guitarra: [
+      { nome: "E - 6ª Corda", freq: 82.41 },
+      { nome: "A - 5ª Corda", freq: 110.00 },
+      { nome: "D - 4ª Corda", freq: 146.83 },
+      { nome: "G - 3ª Corda", freq: 196.00 },
+      { nome: "B - 2ª Corda", freq: 246.94 },
+      { nome: "E - 1ª Corda", freq: 329.63 },
+    ],
+    baixo: [
+      { nome: "E - 4ª Corda", freq: 41.20 },
+      { nome: "A - 3ª Corda", freq: 55.00 },
+      { nome: "D - 2ª Corda", freq: 73.42 },
+      { nome: "G - 1ª Corda", freq: 98.00 },
+    ],
+     cavaquinho: [
+      { nome: "G - 4ª Corda", freq: 392 },
+      { nome: "D - 3ª Corda", freq: 293.66 },
+      { nome: "B - 2ª Corda", freq: 246.94 },
+      { nome: "D - 1ª Corda", freq: 196 },
     ],
     ukulele: [
       { nome: "G - 4ª Corda", freq: 392 },
@@ -378,54 +400,37 @@
       { nome: "D - 3ª Corda", freq: 293.66 },
       { nome: "G - 4ª Corda", freq: 196 },
     ],
-    violao: [
-      { nome: "E - 6ª Corda", freq: 82.41 },
-      { nome: "A - 5ª Corda", freq: 110.00 },
-      { nome: "D - 4ª Corda", freq: 146.83 },
-      { nome: "G - 3ª Corda", freq: 196.00 },
-      { nome: "B - 2ª Corda", freq: 246.94 },
-      { nome: "E - 1ª Corda", freq: 329.63 },
-    ],
-    guitarra: [
-      { nome: "E - 6ª Corda", freq: 82.41 },
-      { nome: "A - 5ª Corda", freq: 110.00 },
-      { nome: "D - 4ª Corda", freq: 146.83 },
-      { nome: "G - 3ª Corda", freq: 196.00 },
-      { nome: "B - 2ª Corda", freq: 246.94 },
-      { nome: "E - 1ª Corda", freq: 329.63 },
-    ],
-    baixo: [
-      { nome: "E - 4ª Corda", freq: 41.20 },
-      { nome: "A - 3ª Corda", freq: 55.00 },
-      { nome: "D - 2ª Corda", freq: 73.42 },
-      { nome: "G - 1ª Corda", freq: 98.00 },
-    ],
   };
 
   const descricoes = {
-    cavaquinho: "Instrumento brasileiro de 4 cordas, muito usado no samba e no choro.",
-    violino: "Instrumento clássico de 4 cordas afinado em quintas.",
-    viola: "Semelhante ao violino, mas maior e com som mais grave.",
-    violoncelo: "Tocado entre as pernas, com som encorpado.",
-    ukulele: "Pequeno instrumento havaiano com som doce.",
-    viola_caipira: "Tradicional do Brasil, com 10 cordas em pares.",
-    banjo: "Instrumento americano com timbre metálico.",
-    charango: "Andino de 10 cordas, com som folclórico.",
-    bandolim: "Instrumento de 8 cordas com pares duplos.",
+    violino: "Conhecido por sua expressividade e agilidade, o Violino, com suas 4 cordas afinadas em G-D-A-E, é um instrumento de cordas que pode evocar desde as mais delicadas melodias até passagens virtuosísticas.",
+    viola: "Com um timbre mais grave e encorpado que o violino, a Viola de Arco, possuindo 4 cordas afinadas uma quinta abaixo do violino (C-G-D-A), atua como uma ponte harmônica, adicionando profundidade e calor.",
+    violoncelo: "Dona de uma sonoridade rica e ressonante, que se assemelha à voz humana, o Violoncelo, com suas 4 cordas afinadas em C-G-D-A (uma oitava abaixo da viola), é capaz de tocar linhas melódicas e harmonias profundas com grande emoção.",
+     violao: "Essencial em diversos gêneros musicais, o Violão, geralmente com 6 cordas afinadas em E-A-D-G-B-E, é um instrumento versátil que oferece sonoridades ricas e acolhedoras.",
+    guitarra: " Seja elétrica ou acústica, a Guitarra, com suas 6 cordas (ou mais) e afinação padrão em E-A-D-G-B-E, é um ícone da música moderna, capaz de produzir desde riffs poderosos a melodias suaves.",
+    baixo: "Com suas 4 a 6 cordas e timbre profundo, o Baixo, tipicamente afinado em E-A-D-G, é a espinha dorsal de qualquer banda, fornecendo a base rítmica e harmônica.",
+    cavaquinho: "Essencial no samba e no choro, o Cavaquinho, com suas 4 cordas e afinação padrão em D-G-B-D, é um instrumento pequeno, mas com um som vibrante e ágil.",
+    ukulele: "Pequeno e alegre, o Ukulele, geralmente com 4 cordas afinadas em G-C-E-A, é perfeito para quem busca um som descontraído e fácil de aprender, ideal para canções leves.",
+    viola_caipira: "Parte da alma musical brasileira, a Viola Caipira se destaca por suas 10 cordas em cinco pares e seu timbre único, que evoca a tradição e a emoção do campo.",
+    banjo: "Com seu som ressonante e percussivo, o Banjo, frequentemente com 5 cordas e afinação aberta, é a alma do bluegrass e de outros gêneros folclóricos, criando melodias cativantes.",
+    charango: "Um instrumento de cordas andino, o Charango, com suas 10 cordas agrupadas em cinco pares, encanta com seu som agudo e vibrante, ideal para melodias folclóricas.",
+    bandolim: "Com seu som brilhante e percussivo, o Bandolim, tipicamente com 8 cordas em quatro pares afinados em G-D-A-E, adiciona um toque especial a diversos estilos, do folk ao choro.",
   };
 
   const imagens = {
-    cavaquinho: "https://upload.wikimedia.org/wikipedia/commons/3/3b/Cavaquinho.png",
-    violino: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Violin_VL100.png",
-    viola: "https://upload.wikimedia.org/wikipedia/commons/6/6d/Viola.jpg",
-    violoncelo: "https://upload.wikimedia.org/wikipedia/commons/e/e1/Violoncello_front_side.png",
-    ukulele: "https://upload.wikimedia.org/wikipedia/commons/3/38/Ukulele.png",
-    viola_caipira: "https://upload.wikimedia.org/wikipedia/commons/0/0e/Viola_caipira.png",
-    banjo: "https://upload.wikimedia.org/wikipedia/commons/e/e1/Banjo_5_cordas.png",
-    charango: "https://upload.wikimedia.org/wikipedia/commons/d/d7/Charango_Boliviano.png",
-    bandolim: "https://upload.wikimedia.org/wikipedia/commons/f/f4/Bandolim.png"
+    violino: "instrumentos/violin6.png",
+    viola: "instrumentos/viola4.png",
+    violoncelo: "instrumentos/celo2.png",
+    violao: "",
+    guitarra: "instrumentos/guitarra1.png",
+    baixo: "",
+    cavaquinho: "",
+    ukulele: "instrumentos/ukulele8.png",
+    viola_caipira: "",
+    banjo: "instrumentos/banjo5.png",
+    charango: "instrumentos/charango7.png",
+    bandolim: "instrumentos/bandolim3.png"
   };
-
   function playNote(freq, el = null) {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     const ctx = new AudioContext();
