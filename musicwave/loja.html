@@ -20,8 +20,9 @@
 </button>
       <button class="bubbles">
   <span class="text"><a href="loja.html">Loja</a></span>
-</button><button class="bubbles">
-  <span class="text">Carrinho</span>
+</button>
+<button class="bubbles" onclick="toggleCarrinho()">
+    <span class="text">Carrinho (<span id="cart-count">0</span>)</span>
 </button>
       
       <button id="btn-afinador" class="bubbles" onclick="abrirAfinador()">
@@ -73,8 +74,8 @@
       <label for="payment-method">Forma de pagamento:</label>
       <select id="payment-method">
         <option value="" disabled selected>Selecione</option>
-        <option value="cartao">Cartão de Crédito</option>
-        <option value="boleto">Boleto Bancário</option>
+        <option value="cartao">Cartão de crédito</option>
+        <option value="boleto">Boleto bancário</option>
         <option value="pix">PIX</option>
       </select>
 
@@ -181,43 +182,7 @@
 
 
   </main>
-
-  <!-- script das letras do banner -->
-
-  <script>
-    const frases = ["Seja bem-vindo!", "Aprenda se divertindo"];
-    const textoEl = document.getElementById("texto-digitado");
-    let fraseIndex = 0;
-    let charIndex = 0;
-    let digitando = true;
-
-    function digitarTexto() {
-      if (digitando) {
-        if (charIndex < frases[fraseIndex].length) {
-          textoEl.textContent += frases[fraseIndex].charAt(charIndex);
-          charIndex++;
-          setTimeout(digitarTexto, 100);
-        } else {
-          digitando = false;
-          setTimeout(digitarTexto, 1500);
-        }
-      } else {
-        if (charIndex > 0) {
-          textoEl.textContent = frases[fraseIndex].substring(0, charIndex - 1);
-          charIndex--;
-          setTimeout(digitarTexto, 50);
-        } else {
-          digitando = true;
-          fraseIndex = (fraseIndex + 1) % frases.length;
-          setTimeout(digitarTexto, 300);
-        }
-      }
-    }
-
-    window.onload = digitarTexto;
-  </script>
-
-    <!-- script das letras do banner -->
+ 
 
 
 
@@ -747,6 +712,8 @@ const products = [
   }
 ];
 
+let carrinho = [];
+
 // Para os demais produtos (25 a 96) simbólicos
 for (let i = 25; i <= 96; i++) {
   products.push({
@@ -925,20 +892,101 @@ modal.onclick = (e) => {
 };
 
 buyBtn.onclick = () => {
-  if (!paymentMethodSelect.value) {
-    alert("Por favor, selecione a forma de pagamento.");
-    paymentMethodSelect.focus();
-    return;
-  }
-  const quantity = parseInt(quantityInput.value);
-  if (quantity < 1) {
-    alert("Quantidade inválida.");
-    quantityInput.focus();
-    return;
-  }
-  alert(`Obrigado pela compra!\n\nProduto: ${currentModalProduct.title}\nQuantidade: ${quantity}\nPagamento: ${paymentMethodSelect.options[paymentMethodSelect.selectedIndex].text}`);
-  modal.classList.remove("active");
+    // Validação do formulário (já existente)
+    if (!paymentMethodSelect.value) {
+        alert("Por favor, selecione a forma de pagamento.");
+        paymentMethodSelect.focus();
+        return;
+    }
+    const quantity = parseInt(quantityInput.value);
+    if (quantity < 1 || isNaN(quantity)) {
+        alert("Quantidade inválida.");
+        quantityInput.focus();
+        return;
+    }
+
+    // NOVA LÓGICA: Adiciona o produto ao carrinho
+    adicionarAoCarrinho(currentModalProduct, quantity);
+    
+    // Fecha o modal após adicionar ao carrinho
+    modal.classList.remove("active"); 
 };
+
+/* =================================
+   FUNÇÕES DO CARRINHO DE COMPRAS
+   ================================= */
+function toggleCarrinho() {
+    document.getElementById('carrinho').classList.toggle('ativo');
+}
+
+function adicionarAoCarrinho(produto, quantidade) {
+    // Adiciona o produto ao carrinho a quantidade de vezes especificada
+    for (let i = 0; i < quantidade; i++) {
+        carrinho.push(produto);
+    }
+    atualizarCarrinho();
+    alert(`${quantidade}x "${produto.title}" adicionado(s) ao carrinho!`);
+}
+
+function removerDoCarrinho(index) {
+    carrinho.splice(index, 1); // Remove o item pelo seu índice no array
+    atualizarCarrinho();
+}
+
+function atualizarCarrinho() {
+    const cartCountEl = document.getElementById('cart-count');
+    const listaCarrinhoEl = document.getElementById('lista-carrinho');
+    const totalCarrinhoEl = document.getElementById('total-carrinho');
+    
+    cartCountEl.innerText = carrinho.length; // Atualiza o contador no header
+
+    if (carrinho.length === 0) {
+        listaCarrinhoEl.innerHTML = '<li class="carrinho-vazio">Seu carrinho está vazio.</li>';
+        totalCarrinhoEl.innerText = '0,00';
+        return;
+    }
+
+    listaCarrinhoEl.innerHTML = ''; // Limpa a lista antes de recriar
+
+    let total = 0;
+    carrinho.forEach((item, index) => {
+        // Converte o preço de string "R$1.799,00" para número 1799.00
+        const precoNumerico = parseFloat(item.price.replace('R$', '').replace('.', '').replace(',', '.'));
+        total += precoNumerico;
+
+        const li = document.createElement('li');
+        li.className = 'carrinho-item';
+        li.innerHTML = `
+            <img src="${item.image}" alt="${item.title}">
+            <div class="carrinho-item-info">
+                <h4>${item.title}</h4>
+                <p>${item.price}</p>
+                <button class="remover-item-btn" onclick="removerDoCarrinho(${index})">Remover</button>
+            </div>
+        `;
+        listaCarrinhoEl.appendChild(li);
+    });
+
+    totalCarrinhoEl.innerText = total.toFixed(2).replace('.', ',');
+}
+
+function finalizarCompra() {
+    if (carrinho.length === 0) {
+        alert("Seu carrinho está vazio!");
+        return;
+    }
+
+    const total = carrinho.reduce((acc, item) => {
+        const preco = parseFloat(item.price.replace('R$', '').replace('.', '').replace(',', '.'));
+        return acc + preco;
+    }, 0);
+
+    alert(`Compra finalizada!\nTotal de itens: ${carrinho.length}\nValor total: R$ ${total.toFixed(2).replace('.', ',')}\n\nObrigado por comprar na MusicWave!`);
+
+    carrinho = []; // Esvazia o carrinho
+    atualizarCarrinho(); // Atualiza a exibição
+    toggleCarrinho(); // Fecha o painel do carrinho
+}
 
 /* ===== Inicialização ===== */
 
@@ -949,6 +997,24 @@ update();
 
    <!-- script de paginação dos instrumentos em catálogo -->
 
+   <!-- carrinho -->
+
+   <div id="carrinho" class="carrinho-lateral">
+    <div class="carrinho-header">
+        <h2> Seu carrinho</h2>
+        <button class="carrinho-fechar" onclick="toggleCarrinho()">&times;</button>
+    </div>
+    <ul id="lista-carrinho" class="carrinho-body">
+        <li class="carrinho-vazio">Seu carrinho está vazio.</li>
+    </ul>
+    <div class="carrinho-footer">
+        <p><strong>Total:</strong> R$ <span id="total-carrinho">0,00</span></p>
+        <button class="finalizar-compra-btn" onclick="finalizarCompra()">Finalizar Compra</button>
+    </div>
+</div>
+
+
+   <!-- carrinho -->
 
 
   <footer>

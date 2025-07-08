@@ -123,9 +123,156 @@ header input[type="text"] {
   filter: brightness(0.9);
 }
 
-
 /* boato CEP */
 
+/* carrinho */
+
+/* ========================
+   ESTILOS DO CARRINHO
+   ======================== */
+
+.carrinho-lateral {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 380px;
+    height: 100%;
+    background-color: #fdfaf6;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.15);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%); /* Começa escondido */
+    transition: transform 0.4s ease-in-out;
+}
+
+.carrinho-lateral.ativo {
+    transform: translateX(0); /* Fica visível */
+}
+
+.carrinho-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    background-color: #fff;
+}
+
+.carrinho-header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+}
+
+.carrinho-fechar {
+    background: none;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: #888;
+}
+.carrinho-fechar:hover {
+    color: #333;
+}
+
+.carrinho-body {
+    flex-grow: 1;
+    list-style: none;
+    padding: 20px;
+    margin: 0;
+    overflow-y: auto;
+}
+
+.carrinho-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.carrinho-item img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 15px;
+}
+
+.carrinho-item-info {
+    flex-grow: 1;
+}
+
+.carrinho-item-info h4 {
+    margin: 0 0 5px;
+    font-size: 14px;
+}
+
+.carrinho-item-info p {
+    margin: 0;
+    font-size: 14px;
+    color: #b45f06;
+    font-weight: bold;
+}
+
+.remover-item-btn {
+    background: none;
+    border: 1px solid #e74c3c;
+    color: #e74c3c;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 5px;
+    transition: all 0.2s ease;
+}
+.remover-item-btn:hover {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.carrinho-vazio {
+    text-align: center;
+    color: #888;
+    padding: 40px 0;
+}
+
+.carrinho-footer {
+    padding: 20px;
+    border-top: 1px solid #e0e0e0;
+    background-color: #fff;
+}
+
+.carrinho-footer p {
+    margin: 0 0 15px;
+    font-size: 18px;
+    text-align: right;
+}
+
+.finalizar-compra-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #f7bd6d;
+    border: none;
+    color: #212121;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.finalizar-compra-btn:hover {
+    background-color: #e6a12d;
+}
+
+@media (max-width: 420px) {
+    .carrinho-lateral {
+        width: 100%;
+    }
+}
+
+/* carrinho */
 
 
 aside {
@@ -546,7 +693,7 @@ aside {
 }
 
 .page-btn span:hover {
-  background-color: #f7996d;
+  background-color: #fd941c;
   color: black;
 }
 
