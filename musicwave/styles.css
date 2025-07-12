@@ -311,12 +311,13 @@ aside {
 
 .slideshow-container {
       position: relative;
-      width: 90%;
-height: 85vh; /* 85% da altura da tela ≈ 690px em monitores 1080p */
-    margin-left: 70px;
+      width: 100%;
+      max-width: 1000px;
+      aspect-ratio: 16 / 9;
       overflow: hidden;
+      margin-left: 200px;
       border-radius: 12px;
-      box-shadow: 0 0 20px rgba(167, 91, 5, 0.5);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     }
 
     .slide {
@@ -347,7 +348,7 @@ height: 85vh; /* 85% da altura da tela ≈ 690px em monitores 1080p */
       height: 12px;
       border-radius: 50%;
       background-color: rgba(255, 255, 255, 0.4);
-      transition: background-color 0.1s;
+      transition: background-color 0.3s;
       cursor: pointer;
     }
 
