@@ -43,20 +43,20 @@
 
     <!-- slideshow nenemzinho -->
     <div class="slideshow-container">
-            <img src="img/1.png" class="slide active" data-background-color="#f0e3dc" alt="Produto 1 - Cor 1" />
-            <img src="img/2.png" class="slide" data-background-color="#ffd7c1" alt="Produto 2 - Cor 2" />
-            <img src="img/3.png" class="slide" data-background-color="#1b273d" alt="Produto 3 - Cor 3" />
-            <img src="img/4.png" class="slide" data-background-color="#fa98b1" alt="Produto 4 - Cor 4"/>
-            <img src="img/5.png" class="slide" data-background-color="#e4a777" alt="Produto 5 - Cor 5" />
+    <img src="img/1.png" class="slide active" data-background-color="#f0e3dc" alt="Produto 1" />
+    <img src="img/2.png" class="slide" data-background-color="#ffd7c1" alt="Produto 2" />
+    <img src="img/3.png" class="slide" data-background-color="#1b273d" alt="Produto 3" />
+    <img src="img/4.png" class="slide" data-background-color="#fa98b1" alt="Produto 4" />
+    <img src="img/5.png" class="slide" data-background-color="#e4a777" alt="Produto 5" />
 
-            <div class="indicators">
-                <span class="dot active" data-index="0"></span>
-                <span class="dot" data-index="1"></span>
-                <span class="dot" data-index="2"></span>
-                <span class="dot" data-index="3"></span>
-                <span class="dot" data-index="4"></span>
-            </div>
-        </div>
+    <div class="indicators">
+      <span class="dot active" data-index="0"></span>
+      <span class="dot" data-index="1"></span>
+      <span class="dot" data-index="2"></span>
+      <span class="dot" data-index="3"></span>
+      <span class="dot" data-index="4"></span>
+    </div>
+  </div>
   <!-- slideshow nenemzinho -->
 
     <!-- <div class="banner">
@@ -282,71 +282,51 @@
   <!-- slideshow -->
 
 <script>
-        // Garante que o script só execute depois que o DOM estiver completamente carregado
-        document.addEventListener('DOMContentLoaded', function() {
-            // Referências para os elementos do DOM
-            const slideshowContainer = document.querySelector('.slideshow-container');
-            const slides = document.querySelectorAll(".slide");
-            const dots = document.querySelectorAll(".dot");
-            
-            let index = 0; // Índice do slide atualmente ativo
-            let intervalId; // ID para o setInterval, usado para controlar o avanço automático
+    document.addEventListener('DOMContentLoaded', function () {
+      const slideshowContainer = document.querySelector('.slideshow-container');
+      const slides = document.querySelectorAll(".slide");
+      const dots = document.querySelectorAll(".dot");
 
-            // Função principal para exibir um slide específico
-            function showSlide(i) {
-                // Remove a classe 'active' do slide e dot atualmente visíveis
-                slides[index].classList.remove("active");
-                dots[index].classList.remove("active");
-                
-                // Atualiza o índice para o novo slide
-                index = i; 
-                
-                // Adiciona a classe 'active' ao novo slide e dot para torná-los visíveis
-                slides[index].classList.add("active");
-                dots[index].classList.add("active");
+      let index = 0;
+      let intervalId;
 
-                // Pega a cor de fundo do atributo 'data-background-color' do slide atual
-                const backgroundColor = slides[index].getAttribute('data-background-color');
-                // Se a cor for encontrada, aplica-a como background-color do container
-                if (backgroundColor) {
-                    slideshowContainer.style.backgroundColor = backgroundColor;
-                }
-            }
+      function showSlide(i) {
+        slides[index].classList.remove("active");
+        dots[index].classList.remove("active");
+        index = i;
+        slides[index].classList.add("active");
+        dots[index].classList.add("active");
 
-            // Função para avançar para o próximo slide
-            function nextSlide() {
-                // Calcula o próximo índice (volta para 0 se chegar ao final)
-                showSlide((index + 1) % slides.length);
-            }
+        const backgroundColor = slides[index].getAttribute('data-background-color');
+        if (backgroundColor) {
+          slideshowContainer.style.backgroundColor = backgroundColor;
+        }
+      }
 
-            // Função para iniciar o avanço automático do slideshow
-            function startAutoSlide() {
-                // Define um intervalo para chamar 'nextSlide' a cada 3000ms (3 segundos)
-                intervalId = setInterval(nextSlide, 3000);
-            }
+      function nextSlide() {
+        showSlide((index + 1) % slides.length);
+      }
 
-            // Função para parar e reiniciar o avanço automático (útil após interação manual)
-            function resetAutoSlide() {
-                clearInterval(intervalId); // Limpa o intervalo existente
-                startAutoSlide(); // Inicia um novo intervalo
-            }
+      function startAutoSlide() {
+        intervalId = setInterval(nextSlide, 3000);
+      }
 
-            // Adiciona event listeners para os indicadores (dots)
-            dots.forEach(dot => {
-                dot.addEventListener("click", () => {
-                    // Pega o índice do dot clicado e exibe o slide correspondente
-                    showSlide(parseInt(dot.dataset.index));
-                    resetAutoSlide(); // Reseta o contador para evitar mudança imediata
-                });
-            });
+      function resetAutoSlide() {
+        clearInterval(intervalId);
+        startAutoSlide();
+      }
 
-            // --- Inicialização do Slideshow ---
-            // 1. Exibe o primeiro slide ao carregar a página (e define sua cor de fundo)
-            showSlide(index); 
-            // 2. Inicia o avanço automático
-            startAutoSlide();
+      dots.forEach(dot => {
+        dot.addEventListener("click", () => {
+          showSlide(parseInt(dot.dataset.index));
+          resetAutoSlide();
         });
-    </script>
+      });
+
+      showSlide(index);
+      startAutoSlide();
+    });
+  </script>
    
 
   <!-- slideshow -->
