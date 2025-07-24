@@ -42,6 +42,63 @@
 
 
   <main>
+<section class="user-profile">
+  <h2>Perfil do Usuário</h2>
+  <div class="profile-box">
+    <div class="avatar-container">
+  <img src="https://via.placeholder.com/100" alt="Avatar" class="avatar" id="avatar">
+  <label for="foto-perfil" class="foto-label">Inserir foto</label>
+  <input type="file" id="foto-perfil" accept="image/*">
+  <button id="remover-foto" class="btn-remover" style="display: none;">Remover foto</button>
+</div>
+
+    <div class="profile-info">
+      <p><strong>Nome:</strong> Webberzinho Fantini</p>
+      <p><strong>Email:</strong> profwebberfantini@gmail.com</p>
+      <p><strong>Telefone:</strong> (11) 98765-4321</p>
+      <p><strong>Endereço:</strong> Rua das Panquecas, 123 - Guanambi - BA</p>
+      <a href="#" class="btn-laranja">Editar Perfil</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  const inputFoto = document.getElementById("foto-perfil");
+  const avatar = document.getElementById("avatar");
+  const btnRemover = document.getElementById("remover-foto");
+  const avatarPadrao = "https://via.placeholder.com/100";
+
+  // Carregar imagem salva
+  const fotoSalva = localStorage.getItem("fotoPerfil");
+  if (fotoSalva) {
+    avatar.src = fotoSalva;
+    btnRemover.style.display = "inline-block";
+  }
+
+  // Seleção de nova imagem
+  inputFoto.addEventListener("change", function () {
+    const file = this.files[0];
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        avatar.src = e.target.result;
+        localStorage.setItem("fotoPerfil", e.target.result);
+        btnRemover.style.display = "inline-block";
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // Remoção da imagem personalizada
+  btnRemover.addEventListener("click", function () {
+    localStorage.removeItem("fotoPerfil");
+    avatar.src = avatarPadrao;
+    btnRemover.style.display = "none";
+    inputFoto.value = ""; // limpa o input
+  });
+</script>
+
+
 
   </main>
 
