@@ -43,30 +43,6 @@
 
 
   <main>
-    <div class="category-buttons">
-        <button class="category-button active" data-category="todos">Todos</button>
-        <button class="category-button" data-category="violino">Violinos</button>
-        <button class="category-button" data-category="viola">Violas</button>
-        <button class="category-button" data-category="violoncelo">Violoncelos</button>
-        <button class="category-button" data-category="violao">Violões</button>
-        <button class="category-button" data-category="guitarra">Guitarras</button>
-        <button class="category-button" data-category="baixo">Baixos</button>
-        <button class="category-button" data-category="cavaquinho">Cavaquinhos</button>
-        <button class="category-button" data-category="ukulele">Ukuleles</button>
-        <button class="category-button" data-category="viola_caipira">Violas Caipiras</button>
-        <button class="category-button" data-category="banjo">Banjos</button>
-        <button class="category-button" data-category="charango">Charangos</button>
-        <button class="category-button" data-category="bandolim">Bandolins</button>
-    </div>
-
-
-    <h3 id="current-category-display"></h3>
-
-    <div id="product-list">
-        </div>
-
-    <div id="pagination" class="pagination-controls">
-        </div>
 
 
 
@@ -89,7 +65,7 @@
 <div class="page-btn" id="pagination"></div>
 
 
-
+<!-- Modal Detalhes do Produto -->
 <div id="modal">
   <div class="modal-content">
     <span class="modal-close" id="modal-close">&times;</span>
@@ -103,12 +79,8 @@
       <p class="description" id="modal-description"></p>
 
 
-
-
       <label for="quantity">Quantidade:</label>
       <input type="number" id="quantity" min="1" value="1" />
-
-
 
 
       <label for="payment-method">Forma de pagamento:</label>
@@ -120,17 +92,10 @@
       </select>
 
 
-
-
       <button class="buy-btn" id="buy-btn">Comprar</button>
     </div>
   </div>
 </div>
-
-
-
-
-
 
 
 </section>
@@ -171,7 +136,6 @@
   <div class="cordas" id="cordas"></div>
   <button class="btn-todas" onclick="tocarTodasCordas()">Tocar todas as cordas</button>
 </div>
-
 <script>
   const afinacoes = {
     violino: [
@@ -1029,6 +993,7 @@ update();
 
 
    <!-- script de paginação dos instrumentos em catálogo -->
+
 
    <!-- carrinho -->
 
