@@ -18,8 +18,8 @@
   <button class="bubbles">
   <span class="text">Informe seu CEP</span>
 </button>
-            <button class="bubbles" a href="loja.html">
-                <span class="text">Loja</span>
+            <button class="bubbles">
+                <span class="text" >Loja</span>
             </button>
 
 <button class="bubbles" onclick="toggleCarrinho()">
@@ -70,7 +70,7 @@
 
   // Carregar imagem salva
   const fotoSalva = localStorage.getItem("fotoPerfil");
-  if (fotoSalva) {
+  if (fotoSalva && fotoSalva !== avatarPadrao) {
     avatar.src = fotoSalva;
     btnRemover.style.display = "inline-block";
   }
@@ -81,8 +81,9 @@
     if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onload = function (e) {
-        avatar.src = e.target.result;
-        localStorage.setItem("fotoPerfil", e.target.result);
+        const novaImagem = e.target.result;
+        avatar.src = novaImagem;
+        localStorage.setItem("fotoPerfil", novaImagem);
         btnRemover.style.display = "inline-block";
       };
       reader.readAsDataURL(file);
@@ -91,12 +92,17 @@
 
   // Remoção da imagem personalizada
   btnRemover.addEventListener("click", function () {
-    localStorage.removeItem("fotoPerfil");
-    avatar.src = avatarPadrao;
-    btnRemover.style.display = "none";
-    inputFoto.value = ""; // limpa o input
+    const confirmar = confirm("Tem certeza de que deseja remover a foto de perfil?");
+    if (confirmar) {
+      localStorage.removeItem("fotoPerfil");
+      avatar.src = avatarPadrao;
+      btnRemover.style.display = "none";
+      inputFoto.value = "";
+    }
   });
 </script>
+
+
 
 
 
