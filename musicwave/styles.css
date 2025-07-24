@@ -272,6 +272,69 @@ header input[type="text"] {
     }
 }
 
+/* Botões de categoria ativos */
+.categoria-btn.ativo {
+  background-color: #444;
+  color: #fff;
+}
+
+/* Botão da página atual */
+.page-btn-ativo {
+  font-weight: bold;
+  border-bottom: 2px solid #333;
+}
+
+/* Modal */
+#modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+}
+#modal-content {
+  background: white;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  border-radius: 8px;
+  position: relative;
+}
+#modal-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* Carrinho lateral */
+#carrinho {
+  position: fixed;
+  right: -400px;
+  top: 0;
+  width: 300px;
+  height: 100%;
+  background: #f8f8f8;
+  border-left: 1px solid #ddd;
+  transition: right 0.3s ease;
+  z-index: 999;
+}
+#carrinho.ativo {
+  right: 0;
+}
+#lista-carrinho {
+  list-style: none;
+  padding: 1rem;
+}
+#lista-carrinho li {
+  margin-bottom: 10px;
+}
+
+
+
 /* carrinho */
 
 
@@ -516,6 +579,7 @@ aside {
       align-items: center;
       gap: 10px;
       margin-bottom: 20px;
+      justify-content: center;
     }
 
     .cards {
@@ -528,9 +592,9 @@ aside {
 
     .card {
       background-color: rgb(183, 182, 182);
-      height: 270px;  
+      height: 220px;  
       max-width: 800px; 
-      width: 190px;
+      width: 140px;
       border-radius: 18px;
       transition: transform 0.3s ease;
        margin: 0 auto;
@@ -1104,6 +1168,15 @@ h4 {
   padding-top: 100px;
 }
 
+.feedbacks h2 {
+   display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      justify-content: center;
+       color: #333;
+}
+
 .feedbacks .col-3 {
   text-align: center;
   padding: 40px 20px;
@@ -1140,6 +1213,145 @@ h4 {
   color: #f7bd6d;
 }
 
+/* botao que refireciona ao afinador */
+
+.btn-laranja {
+  display: inline-block;
+  background-color: #ffa500;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.2s, transform 0.2s;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.btn-laranja:hover {
+  background-color: #ff8800;
+  transform: translateY(-2px);
+}
+
+
+/* botao que refireciona ao afinador */
+
+
+/* campo para inserir feedbacks */
+
+
+.feedback-section {
+  max-width: 500px;
+  margin: 2rem auto;
+  background: #fff8ef;
+  border: 1px solid #ffa500;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.feedback-form label {
+  font-weight: bold;
+  color: #e67b09;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.feedback-form textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  background-color: #fffdfa;
+  resize: vertical;
+  margin-bottom: 1rem;
+}
+
+.feedback-form button {
+  background-color: #ffa500;
+  color: white;
+  font-weight: bold;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: block;
+  margin: 0 auto;
+}
+
+.feedback-form button:hover {
+  background-color: #ff8800;
+}
+
+
+/* seção de configurações */
+
+.site-settings {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #fff8ef;
+  border: 1px solid #ffa500;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+.site-settings h2 {
+  color: #b45f06;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.settings-form label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 15px;
+  color: inherit;
+}
+.settings-form input[type="checkbox"] {
+  transform: scale(1.2);
+}
+.settings-form select {
+  padding: 0.4rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: white;
+  color: inherit;
+}
+.btn-laranja {
+  display: inline-block;
+  background-color: #ffa500;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.2s, transform 0.2s;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin-top: 1rem;
+}
+.btn-laranja:hover {
+  background-color: #ff8800;
+  transform: translateY(-2px);
+}
+body.escuro {
+  background-color: #1e1e1e;
+  color: #f5f5f5;
+}
+body.escuro .site-settings {
+  background: #2a2a2a;
+  border-color: #ff8800;
+}
+body.escuro select {
+  background-color: #3a3a3a;
+  color: #f5f5f5;
+  border-color: #777;
+}
+
+/* seção de configurações */
+
+/* campo para inserir feedbacks */
 
 
 /* rodape */
@@ -1228,12 +1440,6 @@ footer p{
 
 
 /* rodape */
-
-
-
-
-
-
 
 /* Responsividade */
 @media (max-width: 768px) {
