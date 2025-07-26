@@ -1413,6 +1413,7 @@ body.escuro select {
 }
 .btn-laranja {
   display: inline-block;
+  cursor: pointer;
   background-color: #ffa500;
   color: white;
   padding: 0.6rem 1.2rem;

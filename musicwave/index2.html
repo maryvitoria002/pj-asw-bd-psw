@@ -15,9 +15,11 @@
       <img src="img/logomw.png" alt="logo">
     </div>
     <input type="text" placeholder="Navegue..." />
-  <button class="bubbles">
-  <span class="text">Informe seu CEP</span>
+  <button class="bubbles" onclick="pedirCep()">
+  <span class="text" id="cep-texto">Informe seu CEP</span>
 </button>
+
+
             <button class="bubbles" a href="loja.html">
                 <span class="text">Loja</span>
             </button>
@@ -219,7 +221,8 @@
         <h1>Afinador On-line</h1>
         <p>Descubra a harmonia perfeita com o afinador online exclusivo da MusicWave! Ele é a ferramenta ideal para garantir que cada instrumento do nosso catálogo — seja um violão, ukulele, baixo ou cavaquinho — soe impecável. Afine seu instrumento de forma rápida e precisa, e mergulhe na música sem preocupações.</p> <br><br>
        
-        <a href="#" class="btn-laranja">Afine seu instrumento agora &#8594;</a>
+        <a href="#" class="btn-laranja" onclick="abrirAfinador()">Afine seu instrumento agora &#8594;</a>
+
 
 
       </div>
@@ -293,10 +296,50 @@
 <!-- feedbacks -->
 
 
-<!-- patrocinadores -->
 
-<!-- patrocinadores -->
   </main>
+
+
+ <script>
+  const cepTexto = document.getElementById("cep-texto");
+
+  // Mostra o CEP salvo (caso exista)
+  window.addEventListener("DOMContentLoaded", () => {
+    const cepSalvo = localStorage.getItem("cepSalvo");
+    if (cepSalvo) {
+      cepTexto.textContent = "CEP: " + cepSalvo;
+    }
+  });
+
+  function pedirCep() {
+    const cepAtual = localStorage.getItem("cepSalvo") || "";
+    const novoCep = prompt(
+      "Digite seu CEP:\n\n(Para remover, deixe vazio ou digite 'remover')",
+      cepAtual
+    );
+
+    if (novoCep === null) return; // cancelou
+
+    if (novoCep.trim() === "" || novoCep.toLowerCase() === "remover" || novoCep.toLowerCase() === "excluir") {
+      localStorage.removeItem("cepSalvo");
+      cepTexto.textContent = "Informe seu CEP";
+      alert("CEP removido.");
+      return;
+    }
+
+    const cepFormatado = novoCep.replace(/\D/g, ""); // remove tudo que não for número
+
+    if (/^[0-9]{8}$/.test(cepFormatado)) {
+      const cepFinal = cepFormatado.replace(/(\d{5})(\d{3})/, "$1-$2"); // Formata para 12345-678
+      localStorage.setItem("cepSalvo", cepFinal);
+      cepTexto.textContent = "CEP: " + cepFinal;
+    } else {
+      alert("CEP inválido. Digite no formato 12345678 ou 12345-678.");
+    }
+  }
+</script>
+
+
 
 
   <!-- slideshow -->
@@ -306,7 +349,14 @@
   const dots = document.querySelectorAll(".dot");
   const wrapper = document.querySelector(".slideshow-wrapper");
 
-  const bgColors = ["#f0e3dc", "#ffd7c1", "#1b273d", "#fa98b1", "#e4a777"];
+  const bgColors = [
+  "#f0e3dc",
+  "#ffd7c1",
+  "linear-gradient(to right, #374253, #1b2d4a)",
+  "#fa98b1",
+  "linear-gradient(to right, #e4a777, #f1eae2)"
+];
+
 
   let index = 0;
   let intervalId;
@@ -317,7 +367,8 @@
     index = i;
     slides[index].classList.add("active");
     dots[index].classList.add("active");
-    wrapper.style.backgroundColor = bgColors[index];
+  wrapper.style.background = bgColors[index];
+
   }
 
   function nextSlide() {
