@@ -16,8 +16,8 @@
       <img src="img/logomw.png" alt="logo">
     </div>
     <input type="text" placeholder="Navegue..." />
-  <button class="bubbles">
-  <span class="text">Informe seu CEP</span>
+  <button class="bubbles" onclick="pedirCep()">
+  <span class="text" id="cep-texto">Informe seu CEP</span>
 </button>
       <button class="bubbles">
   <span class="text"><a href="loja.html">Loja</a></span>
@@ -100,16 +100,49 @@
 
 </section>
 
-
-
-
-
-
   </main>
  
 
 
 
+<script>
+  const cepTexto = document.getElementById("cep-texto");
+
+  // Mostra o CEP salvo (caso exista)
+  window.addEventListener("DOMContentLoaded", () => {
+    const cepSalvo = localStorage.getItem("cepSalvo");
+    if (cepSalvo) {
+      cepTexto.textContent = "CEP: " + cepSalvo;
+    }
+  });
+
+  function pedirCep() {
+    const cepAtual = localStorage.getItem("cepSalvo") || "";
+    const novoCep = prompt(
+      "Digite seu CEP:\n\n(Para remover, deixe vazio ou digite 'remover')",
+      cepAtual
+    );
+
+    if (novoCep === null) return; // cancelou
+
+    if (novoCep.trim() === "" || novoCep.toLowerCase() === "remover" || novoCep.toLowerCase() === "excluir") {
+      localStorage.removeItem("cepSalvo");
+      cepTexto.textContent = "Informe seu CEP";
+      alert("CEP removido.");
+      return;
+    }  
+
+    const cepFormatado = novoCep.replace(/\D/g, ""); // remove tudo que não for número
+
+    if (/^[0-9]{8}$/.test(cepFormatado)) {
+      const cepFinal = cepFormatado.replace(/(\d{5})(\d{3})/, "$1-$2"); // Formata para 12345-678
+      localStorage.setItem("cepSalvo", cepFinal);
+      cepTexto.textContent = "CEP: " + cepFinal;
+    } else {
+      alert("CEP inválido. Digite no formato 12345678 ou 12345-678.");
+    }
+  }
+</script>
 
 
 
