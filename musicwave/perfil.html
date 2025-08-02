@@ -37,113 +37,134 @@
     <a href="#notificacoes"><i class="bi bi-bell" style="color: black; font-size: 30px"></i></a>
     <a href="#alvaro-coin"><i class="bi bi-coin" style="color: black; font-size: 30px"></i></a>
     <a href="#jogos"><i class="bi bi-controller" style="color: black; font-size: 30px"></i></a>
-    <a href="configuracoes.html" style="margin-top:auto;"><i class="bi bi-gear-fill" style="color: black; font-size: 30px"></i></a>
-  </aside>
+  <a id="dark-toggle-wrapper" title="Ativar/Desativar modo escuro">
+    <label class="container" id="dark-toggle">
+      <input type="checkbox" id="darkModeSwitch">
+      <svg viewBox="0 0 384 512" class="moon">
+        <path d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path>
+      </svg>
+      <svg viewBox="0 0 512 512" class="sun">
+        <path d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"></path>
+      </svg>
+    </label>
+  </a>  </aside>
 
 
   <main>
 <section class="user-profile">
-  <h2>Perfil do Usuário</h2>
-  <div class="profile-box">
-    <div class="avatar-container">
-  <img src="img/webberzinhoo.jpg" alt="Avatar" class="avatar" id="avatar">
-  <label for="foto-perfil" class="foto-label">Inserir foto</label>
-  <input type="file" id="foto-perfil" accept="image/*">
-  <button id="remover-foto" class="btn-remover" style="display: none;">Remover foto</button>
-</div>
+    <h2>Cadastro de Usuário</h2>
+    <form id="cadastro-form" enctype="multipart/form-data">
+    <div class="profile-box">
+      <div class="avatar-container">
+        <img src="https://via.placeholder.com/100" alt="Avatar" class="avatar" id="preview-avatar">
+        <label for="foto-perfil" class="foto-label">Adicionar Foto</label>
+        <input type="file" id="foto-perfil" accept="image/*">
+        <button type="button" id="remover-foto" class="btn-remover" style="display: none;">Remover Foto</button>
+      </div>
 
-    <div class="profile-info">
-      <p><strong>Nome:</strong> Webberzinho Fantini</p>
-      <p><strong>Email:</strong> profwebberfantini@gmail.com</p>
-      <p><strong>Telefone:</strong> (11) 98765-4321</p>
-      <p><strong>Endereço:</strong> Rua das Panquecas, 123 - Guanambi - BA</p>
-      <a href="#" class="btn-laranja">Editar Perfil</a>
+      <div class="profile-info">
+        <input type="text" id="nome" name="nome" placeholder="Nome completo" required><br>
+        <input type="email" id="email" name="email" placeholder="E-mail" required><br>
+        <input type="password" id="senha" name="senha" placeholder="Senha" required><br>
+        <input type="text" id="cep" name="cep" placeholder="CEP" required><br>
+
+        <button type="submit" class="btn-laranja">Cadastrar</button>
+        <button type="button" class="btn-laranja" id="logout" style="display: none;">Logout</button>
+      </div>
     </div>
-  </div>
-</section>
+  </form>
+  </section>
+
+  <!-- botao do darkmode -->
 
 <script>
-  const inputFoto = document.getElementById("foto-perfil");
-  const avatar = document.getElementById("avatar");
-  const btnRemover = document.getElementById("remover-foto");
-  const avatarPadrao = "https://via.placeholder.com/100";
+const switchEl = document.getElementById("darkModeSwitch");
 
-  // Carregar imagem salva
-  const fotoSalva = localStorage.getItem("fotoPerfil");
-  if (fotoSalva && fotoSalva !== avatarPadrao) {
-    avatar.src = fotoSalva;
-    btnRemover.style.display = "inline-block";
+if (localStorage.getItem("darkMode") === "true") {
+  document.body.classList.add("dark-mode");
+  switchEl.checked = true;
+}
+
+switchEl.addEventListener("change", function () {
+  document.body.classList.toggle("dark-mode", this.checked);
+  localStorage.setItem("darkMode", this.checked);
+});
+</script>
+
+<!-- botao do darkmode -->
+
+<script>
+  const fotoInput = document.getElementById('foto-perfil');
+  const avatarPreview = document.getElementById('preview-avatar');
+  const removerBtn = document.getElementById('remover-foto');
+  const form = document.getElementById('cadastro-form');
+  const logoutBtn = document.getElementById('logout');
+  const nomeInput = document.getElementById('nome');
+  const emailInput = document.getElementById('email');
+  const senhaInput = document.getElementById('senha');
+  const cepInput = document.getElementById('cep');
+
+  // Carregar dados do localStorage
+  window.onload = () => {
+    const dados = JSON.parse(localStorage.getItem('usuario'));
+    if (dados) {
+      nomeInput.value = dados.nome;
+      emailInput.value = dados.email;
+      senhaInput.value = dados.senha;
+      cepInput.value = dados.cep;
+      if (dados.foto) {
+        avatarPreview.src = dados.foto;
+        removerBtn.style.display = 'inline-block';
+      }
+      logoutBtn.style.display = 'inline-block';
+    }
   }
 
-  // Seleção de nova imagem
-  inputFoto.addEventListener("change", function () {
-    const file = this.files[0];
-    if (file && file.type.startsWith("image/")) {
+  // Preview de imagem
+  fotoInput.addEventListener('change', () => {
+    const file = fotoInput.files[0];
+    if (file) {
       const reader = new FileReader();
-      reader.onload = function (e) {
-        const novaImagem = e.target.result;
-        avatar.src = novaImagem;
-        localStorage.setItem("fotoPerfil", novaImagem);
-        btnRemover.style.display = "inline-block";
+      reader.onload = e => {
+        avatarPreview.src = e.target.result;
+        removerBtn.style.display = 'inline-block';
       };
       reader.readAsDataURL(file);
     }
   });
 
-  // Remoção da imagem personalizada
-  btnRemover.addEventListener("click", function () {
-    const confirmar = confirm("Tem certeza de que deseja remover a foto de perfil?");
-    if (confirmar) {
-      localStorage.removeItem("fotoPerfil");
-      avatar.src = avatarPadrao;
-      btnRemover.style.display = "none";
-      inputFoto.value = "";
-    }
-  });
-</script>
-
-  </main>
-
-
-  <script>
-  const cepTexto = document.getElementById("cep-texto");
-
-  // Mostra o CEP salvo (caso exista)
-  window.addEventListener("DOMContentLoaded", () => {
-    const cepSalvo = localStorage.getItem("cepSalvo");
-    if (cepSalvo) {
-      cepTexto.textContent = "CEP: " + cepSalvo;
-    }
+  // Remover imagem
+  removerBtn.addEventListener('click', () => {
+    avatarPreview.src = 'https://via.placeholder.com/100';
+    fotoInput.value = '';
+    removerBtn.style.display = 'none';
   });
 
-  function pedirCep() {
-    const cepAtual = localStorage.getItem("cepSalvo") || "";
-    const novoCep = prompt(
-      "Digite seu CEP:\n\n(Para remover, deixe vazio ou digite 'remover')",
-      cepAtual
-    );
+  // Envio do formulário
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const foto = avatarPreview.src;
+    const usuario = {
+      nome: nomeInput.value,
+      email: emailInput.value,
+      senha: senhaInput.value,
+      cep: cepInput.value,
+      foto: foto
+    };
+    localStorage.setItem('usuario', JSON.stringify(usuario));
+    alert("Cadastro salvo localmente!");
+    logoutBtn.style.display = 'inline-block';
+  });
 
-    if (novoCep === null) return; // cancelou
-
-    if (novoCep.trim() === "" || novoCep.toLowerCase() === "remover" || novoCep.toLowerCase() === "excluir") {
-      localStorage.removeItem("cepSalvo");
-      cepTexto.textContent = "Informe seu CEP";
-      alert("CEP removido.");
-      return;
-    }  
-
-    const cepFormatado = novoCep.replace(/\D/g, ""); // remove tudo que não for número
-
-    if (/^[0-9]{8}$/.test(cepFormatado)) {
-      const cepFinal = cepFormatado.replace(/(\d{5})(\d{3})/, "$1-$2"); // Formata para 12345-678
-      localStorage.setItem("cepSalvo", cepFinal);
-      cepTexto.textContent = "CEP: " + cepFinal;
-    } else {
-      alert("CEP inválido. Digite no formato 12345678 ou 12345-678.");
-    }
-  }
+  // Logout
+  logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem('usuario');
+    form.reset();
+    avatarPreview.src = 'https://via.placeholder.com/100';
+    removerBtn.style.display = 'none';
+    logoutBtn.style.display = 'none';
+  });
 </script>
-
 
 
    <!-- Afinador lateral (off-canvas) -->
