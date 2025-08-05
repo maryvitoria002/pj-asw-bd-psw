@@ -219,6 +219,135 @@ body.dark-mode aside i {
   color: #f0f0f0 !important;
 }
 
+body.dark-mode header {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-bottom: 1px solid #333;
+}
+
+body.dark-mode header input[type="text"] {
+  background-color: #2c2c2c;
+  color: #f5f5f5;
+  border: 1px solid #555;
+}
+
+body.dark-mode footer {
+  background-color: #1e1e1e;
+  color: #ffa500;
+}
+
+body.dark-mode footer ul li a,
+body.dark-mode .footer-list_header,
+body.dark-mode footer p {
+  color: #f7bd6d;
+}
+
+body.dark-mode footer ul li a:hover,
+body.dark-mode .socials a:hover {
+  color: #ffa500;
+}
+
+body.dark-mode .feedback-section,
+body.dark-mode .site-settings,
+body.dark-mode .user-profile,
+body.dark-mode .modal-content,
+body.dark-mode .painel-lateral {
+  background-color: #2a2a2a;
+  color: #f5f5f5;
+  border-color: #444;
+}
+
+body.dark-mode .feedbacks .col-3, body.dark-mode .feedbacks .col-3 h3 {
+  color: #f7bd6d;
+  background-color: #5b5b5b;
+}
+
+body.dark-mode .feedbacks h2 {
+  color: #f5f5f5;
+}
+
+body.dark-mode .afinador {
+  background: radial-gradient(#2e2e2e, #1a1a1a);
+  color: #f5f5f5;
+}
+
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+  background-color: #333;
+  color: #f5f5f5;
+  border: 1px solid #666;
+}
+
+body.dark-mode .btn-laranja {
+  background-color: #ffa500;
+  color: #1e1e1e;
+}
+
+body.dark-mode .btn-laranja:hover {
+  background-color: #ff8800;
+}
+
+body.dark-mode .carrinho-lateral,
+body.dark-mode .carrinho-header,
+body.dark-mode .carrinho-footer,
+body.dark-mode .instrumento-card-home,
+body.dark-mode .instrumento-card,
+body.dark-mode .slideshow-wrapper {
+  background-color: #2e2e2e;
+  color: #f5f5f5;
+}
+
+body.dark-mode .ver-detalhes-btn {
+  border-color: #ffa500;
+  color: #ffa500;
+}
+
+body.dark-mode .ver-detalhes-btn:hover {
+  background-color: #ffa500;
+  color: #1e1e1e;
+}
+
+body.dark-mode .finalizar-compra-btn {
+  background-color: #ffa500;
+  color: #1e1e1e;
+}
+
+body.dark-mode .finalizar-compra-btn:hover {
+  background-color: #e6a12d;
+}
+
+body.dark-mode .modal-thumbnails img.active {
+  border-color: #ffa500;
+}
+
+body.dark-mode .modal-close:hover {
+  color: #ffa500;
+}
+
+body.dark-mode .card {
+  background-color: #3a3a3a;
+}
+
+body.dark-mode .dot.active {
+  background-color: #ffa500;
+}
+
+body.dark-mode .page-btn span,
+body.dark-mode .page-btn .active {
+  border-color: #ffa500;
+  color: #ffa500;
+}
+
+body.dark-mode .page-btn span:hover {
+  background-color: #ff8800;
+  color: #1e1e1e;
+}
+
+body.dark-mode .modal-right .price {
+  color: #ffa500;
+}
+
+
 /* botao do dark mode */
 
 
@@ -1230,6 +1359,8 @@ h4 {
   font-weight: normal;
 }
 
+/* seçaozinha sobre o afinador */
+
 .afinador {
   background: radial-gradient(#fff, #ffe7d6);
   margin-top: 80px;
@@ -1268,6 +1399,8 @@ h4 {
   font-family: 'Playrite';
   text-align: justify;
 }
+
+/* seçaozinha sobre o afinador */
 
 /* tutorial */
 
