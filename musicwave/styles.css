@@ -352,25 +352,6 @@ body.dark-mode .modal-right .price {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* filtragem e paginação */
 
 .categoria-filtros {
@@ -399,9 +380,6 @@ body.dark-mode .modal-right .price {
 
 /* carrinho */
 
-/* ========================
-   ESTILOS DO CARRINHO
-   ======================== */
 
 .carrinho-lateral {
     position: fixed;
