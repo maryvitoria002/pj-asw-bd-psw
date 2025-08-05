@@ -8,9 +8,10 @@
    <link rel="shortcut icon" href="img/mw..png" type="image/x-icon">
   <title>LOJA</title>
 
-
 </head>
 <body>
+
+  <!-- cabeçalho -->
   <header>
     <div class="logo-img">
       <img src="img/logomw.png" alt="logo">
@@ -30,7 +31,10 @@
   <span class="text">Afinador</span>
 </button>
   </header>
+  <!-- cabeçalho -->
 
+
+   <!-- sidebar -->
 
    <aside id="sidebar">
     <a href="#perfil"><i class="bi bi-person-circle" style="color: black; font-size: 30px"></i></a>
@@ -52,32 +56,32 @@
   
   </aside>
 
+   <!-- sidebar -->
+
 
   <main>
-
-
-
-
-    <!-- instrumentos em destaque -->
+    
+    <!-- catálogo de instrumentos -->
 
 
     <section class="jogos-destacados">
   <h2><i class="bi bi-music-note-beamed" style="font-size: 30px"></i> COMPRE AGORA SEU INSTRUMENTO!</h2>
       <div class="small-container-instrumentos">
   <div class="row-instrumentos-" id="product-list">
-    <!-- Produtos serão inseridos aqui pelo JS -->
+    <!-- os produtos serão inseridos aqui pelo js -->
   </div>
 </div>
 <div class="page-btn" id="pagination"></div>
 
+<!-- catálogo de instrumentos -->
 
 
 
-<!-- Paginação -->
-<div class="page-btn" id="pagination"></div>
+<!-- paginação -->
 
 
-<!-- Modal Detalhes do Produto -->
+
+<!-- modal de detalhes do produto -->
 <div id="modal">
   <div class="modal-content">
     <span class="modal-close" id="modal-close">&times;</span>
@@ -108,6 +112,7 @@
     </div>
   </div>
 </div>
+<!-- modal de detalhes do produto -->
 
 
 </section>
@@ -178,7 +183,7 @@ switchEl.addEventListener("change", function () {
 
 
 
-     <!-- Afinador lateral -->
+     <!-- afinador lateral -->
 <div id="afinadorLateral" class="painel-lateral">
   <button onclick="fecharAfinador()">✖</button>
   <h2 style="text-align:center; color:#b45f06;">Afinador</h2>
@@ -389,23 +394,17 @@ switchEl.addEventListener("change", function () {
   });
 </script>
 
-
-  <!-- Afinador lateral  -->
-
-
-
+ <!-- afinador lateral -->
 
 
 
   <!-- script de paginação dos instrumentos em catálogo -->
 
-
-
   <script>
-    /* ===== Dados dos produtos ===== */
+  //  dados do produto
 
 const products = [
-  // Violinos 1-8
+  // violinos 1-8
   {
     id: 1,
     category: "violino",
@@ -511,7 +510,7 @@ const products = [
     ]
   },
 
-  // Violas 9-16
+  // violas 9-16
   {
     id: 9,
     category: "viola",
@@ -617,7 +616,7 @@ const products = [
     ]
   },
 
-  // Violoncelos 17-24
+  // violoncelos 17-24
   {
     id: 17,
     category: "violoncelo",
@@ -725,7 +724,7 @@ const products = [
 
 let carrinho = [];
 
-// Para os demais produtos (25 a 96) simbólicos
+// para os demais produtos (25 a 96) simbólicos
 for (let i = 25; i <= 96; i++) {
   products.push({
     id: i,
@@ -738,7 +737,7 @@ for (let i = 25; i <= 96; i++) {
   });
 }
 
-/* ===== Paginação e renderização ===== */
+// paginação e renderização
 
 const productsPerPage = 8;
 let currentPage = 1;
@@ -757,7 +756,7 @@ function renderProducts(page) {
     const card = document.createElement("div");
     card.className = "instrumento-card";
 
-    //  Envolvemos a tag <img> com a nova div <div class="card-image-container"> 
+    //   a tag <img> foi envolvida com a nova div <div class="card-image-container"> 
 
     card.innerHTML = `
       <div class="card-image-container">
@@ -782,7 +781,7 @@ function renderPagination() {
 
   const pageCount = Math.ceil(products.length / productsPerPage);
 
-  // Botão "Anterior"
+  // botão "anterior"
   const prevBtn = document.createElement("span");
   prevBtn.textContent = "«";
   prevBtn.className = "prev-btn";
@@ -796,10 +795,10 @@ function renderPagination() {
   });
   paginationEl.appendChild(prevBtn);
 
-  // Para paginar com botões numéricos simplificados (1,2,3...n)
-  // Se quiser, pode melhorar depois para um esquema com "..." etc.
+  // para paginar com botões numéricos simplificados (1,2,3...n)
 
-  // Exibir botões de página (simplificado, todos)
+
+  // exibição de botões de página 
   for (let i = 1; i <= pageCount; i++) {
     const pageBtn = document.createElement("span");
     pageBtn.textContent = i;
@@ -813,7 +812,7 @@ function renderPagination() {
     paginationEl.appendChild(pageBtn);
   }
 
-  // Botão "Próximo"
+  // botão "Próximo"
   const nextBtn = document.createElement("span");
   nextBtn.textContent = "»";
   nextBtn.className = "next-btn";
@@ -833,7 +832,7 @@ function update() {
   renderPagination();
 }
 
-/* ===== Modal Detalhes ===== */
+// modal de detalhes do produto
 
 const modal = document.getElementById("modal");
 const modalClose = document.getElementById("modal-close");
@@ -868,11 +867,11 @@ function openModal(id) {
   quantityInput.value = 1;
   paymentMethodSelect.value = "";
 
-  // Imagem principal
+  // imagem principal do instrumento
   modalMainImage.src = currentModalProduct.image;
   modalMainImage.alt = currentModalProduct.title;
 
-  // Thumbnails
+  // thumbnails
   modalThumbnails.innerHTML = "";
   currentModalProduct.thumbnails.forEach((thumb, index) => {
     const img = document.createElement("img");
@@ -903,7 +902,7 @@ modal.onclick = (e) => {
 };
 
 buyBtn.onclick = () => {
-    // Validação do formulário (já existente)
+    // validação do formulário (já existente)
     if (!paymentMethodSelect.value) {
         alert("Por favor, selecione a forma de pagamento.");
         paymentMethodSelect.focus();
@@ -916,22 +915,20 @@ buyBtn.onclick = () => {
         return;
     }
 
-    // NOVA LÓGICA: Adiciona o produto ao carrinho
+    // adiciona o produto ao carrinho
     adicionarAoCarrinho(currentModalProduct, quantity);
     
-    // Fecha o modal após adicionar ao carrinho
+    // fecha o modal após adicionar ao carrinho
     modal.classList.remove("active"); 
 };
 
-/* =================================
-   FUNÇÕES DO CARRINHO DE COMPRAS
-   ================================= */
+// funções do carrinho de compras
 function toggleCarrinho() {
     document.getElementById('carrinho').classList.toggle('ativo');
 }
 
 function adicionarAoCarrinho(produto, quantidade) {
-    // Adiciona o produto ao carrinho a quantidade de vezes especificada
+    // adiciona o produto ao carrinho a quantidade de vezes especificada
     for (let i = 0; i < quantidade; i++) {
         carrinho.push(produto);
     }
@@ -940,7 +937,7 @@ function adicionarAoCarrinho(produto, quantidade) {
 }
 
 function removerDoCarrinho(index) {
-    carrinho.splice(index, 1); // Remove o item pelo seu índice no array
+    carrinho.splice(index, 1); // remove o item pelo seu índice no array
     atualizarCarrinho();
 }
 
@@ -949,7 +946,7 @@ function atualizarCarrinho() {
     const listaCarrinhoEl = document.getElementById('lista-carrinho');
     const totalCarrinhoEl = document.getElementById('total-carrinho');
     
-    cartCountEl.innerText = carrinho.length; // Atualiza o contador no header
+    cartCountEl.innerText = carrinho.length; // atualiza o contador no header
 
     if (carrinho.length === 0) {
         listaCarrinhoEl.innerHTML = '<li class="carrinho-vazio">Seu carrinho está vazio.</li>';
@@ -957,11 +954,11 @@ function atualizarCarrinho() {
         return;
     }
 
-    listaCarrinhoEl.innerHTML = ''; // Limpa a lista antes de recriar
+    listaCarrinhoEl.innerHTML = ''; // limpa a lista antes de recriar
 
     let total = 0;
     carrinho.forEach((item, index) => {
-        // Converte o preço de string "R$1.799,00" para número 1799.00
+        // converte o preço de string "R$1.799,00" para número 1799.00
         const precoNumerico = parseFloat(item.price.replace('R$', '').replace('.', '').replace(',', '.'));
         total += precoNumerico;
 
@@ -994,12 +991,12 @@ function finalizarCompra() {
 
     alert(`Compra finalizada!\nTotal de itens: ${carrinho.length}\nValor total: R$ ${total.toFixed(2).replace('.', ',')}\n\nObrigado por comprar na MusicWave!`);
 
-    carrinho = []; // Esvazia o carrinho
-    atualizarCarrinho(); // Atualiza a exibição
-    toggleCarrinho(); // Fecha o painel do carrinho
+    carrinho = []; // esvazia o carrinho
+    atualizarCarrinho(); // atualiza a exibição
+    toggleCarrinho(); // fecha o painel do carrinho
 }
 
-/* ===== Inicialização ===== */
+// inicialização
 
 update();
 
@@ -1009,8 +1006,8 @@ update();
    <!-- script de paginação dos instrumentos em catálogo -->
 
 
-   <!-- carrinho -->
 
+   <!-- carrinho -->
 
    <div id="carrinho" class="carrinho-lateral">
     <div class="carrinho-header">
@@ -1025,13 +1022,7 @@ update();
         <button class="finalizar-compra-btn" onclick="finalizarCompra()">Finalizar Compra</button>
     </div>
 </div>
-
-
-
-
    <!-- carrinho -->
-
-
 
 
   <footer>
