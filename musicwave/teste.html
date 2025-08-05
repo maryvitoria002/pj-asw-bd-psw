@@ -181,29 +181,41 @@ body.dark-mode .modal-thumbnails img.active {
   color: #fff;
 }
 
-#modal {
-  display: none;
+.modal {
   position: fixed;
-  z-index: 1000;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  background-color: rgba(0,0,0,0.5);
   justify-content: center;
   align-items: center;
+  z-index: 9999;
 }
-#modal-content {
-  background: white;
-  padding: 2rem;
-  max-width: 500px;
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 900px;
   width: 90%;
-  border-radius: 8px;
-  position: relative;
+  border-radius: 10px;
+  padding: 20px;
+  gap: 20px;
 }
-#modal-close {
-  position: absolute;
-  top: 8px;
-  right: 12px;
-  font-size: 1.2rem;
-  cursor: pointer;
+
+.modal-left, .modal-right {
+  flex: 1 1 300px;
+}
+
+.modal-right input[type="number"] {
+  width: 60px;
+  padding: 5px;
+  margin: 10px 0;
 }
 
 .buy-btn {
@@ -380,7 +392,7 @@ const orderedCategories = ["violino","viola","violoncelo","violao","guitarra","b
 const categoriesMap = {"violino":"Violino","viola":"Viola","violoncelo":"Violoncelo","violao":"Violão","guitarra":"Guitarra","baixo":"Baixo","cavaquinho":"Cavaquinho","ukulele":"Ukulele","viola caipira":"Viola Caipira","banjo":"Banjo","charango":"Charango","bandolim":"Bandolim"};
 
 const products = [
-  {id:1,title:"Violino Profissional 4/4",price:"R$ 2.199,00",image:"violinos/violino1.webp",category:"violino",description:"Violino com madeira nobre, estojos inclusos."},
+  {id:1,title:"Violino Profissional 4/4",price:"R$ 2.199,00",image:"violinos/Violino Tarttan Série 100 Preto Brilho 4/4/violin1.png",category:"violino",description:"Violino com madeira nobre, estojos inclusos."},
   {id:2,title:"Violino Acústico Iniciante",price:"R$ 999,00",image:"violinos/violino2.webp",category:"violino",description:"Ideal para estudantes iniciantes."},
   {id:3,title:"Viola Clássica Fina",price:"R$ 1.599,00",image:"violas/viola1.webp",category:"viola",description:"Som encorpado e acabamento impecável."},
   {id:4,title:"Viola Estudante",price:"R$ 789,00",image:"violas/viola2.webp",category:"viola",description:"Para estudos e uso intermediário."},
