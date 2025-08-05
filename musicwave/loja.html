@@ -68,6 +68,7 @@
     <!-- Produtos serão inseridos aqui pelo JS -->
   </div>
 </div>
+<div class="page-btn" id="pagination"></div>
 
 
 
@@ -397,9 +398,11 @@ switchEl.addEventListener("change", function () {
 
 
   <!-- script de paginação dos instrumentos em catálogo -->
-   <script>
-    /* ===== Dados dos produtos ===== */
 
+
+
+  <script>
+    /* ===== Dados dos produtos ===== */
 
 const products = [
   // Violinos 1-8
@@ -508,7 +511,6 @@ const products = [
     ]
   },
 
-
   // Violas 9-16
   {
     id: 9,
@@ -614,7 +616,6 @@ const products = [
       "violas/8 Viola De Arco Antoni Marsale Série Ya110/viola8- case.png"
     ]
   },
-
 
   // Violoncelos 17-24
   {
@@ -722,9 +723,7 @@ const products = [
   }
 ];
 
-
 let carrinho = [];
-
 
 // Para os demais produtos (25 a 96) simbólicos
 for (let i = 25; i <= 96; i++) {
@@ -739,34 +738,26 @@ for (let i = 25; i <= 96; i++) {
   });
 }
 
-
 /* ===== Paginação e renderização ===== */
-
 
 const productsPerPage = 8;
 let currentPage = 1;
 
-
 const productListEl = document.getElementById("product-list");
 const paginationEl = document.getElementById("pagination");
 
-
 function renderProducts(page) {
   productListEl.innerHTML = "";
-
 
   const start = (page - 1) * productsPerPage;
   const end = start + productsPerPage;
   const paginatedProducts = products.slice(start, end);
 
-
   paginatedProducts.forEach(product => {
     const card = document.createElement("div");
     card.className = "instrumento-card";
 
-
-    //  Envolvemos a tag <img> com a nova div <div class="card-image-container">
-
+    //  Envolvemos a tag <img> com a nova div <div class="card-image-container"> 
 
     card.innerHTML = `
       <div class="card-image-container">
@@ -780,21 +771,16 @@ function renderProducts(page) {
       <button class="ver-detalhes-btn" data-id="${product.id}">Ver detalhes</button>
     `;
 
-
     productListEl.appendChild(card);
   });
-
 
   setupDetailButtons();
 }
 
-
 function renderPagination() {
   paginationEl.innerHTML = "";
 
-
   const pageCount = Math.ceil(products.length / productsPerPage);
-
 
   // Botão "Anterior"
   const prevBtn = document.createElement("span");
@@ -810,10 +796,8 @@ function renderPagination() {
   });
   paginationEl.appendChild(prevBtn);
 
-
   // Para paginar com botões numéricos simplificados (1,2,3...n)
   // Se quiser, pode melhorar depois para um esquema com "..." etc.
-
 
   // Exibir botões de página (simplificado, todos)
   for (let i = 1; i <= pageCount; i++) {
@@ -828,7 +812,6 @@ function renderPagination() {
     });
     paginationEl.appendChild(pageBtn);
   }
-
 
   // Botão "Próximo"
   const nextBtn = document.createElement("span");
@@ -845,15 +828,12 @@ function renderPagination() {
   paginationEl.appendChild(nextBtn);
 }
 
-
 function update() {
   renderProducts(currentPage);
   renderPagination();
 }
 
-
 /* ===== Modal Detalhes ===== */
-
 
 const modal = document.getElementById("modal");
 const modalClose = document.getElementById("modal-close");
@@ -866,9 +846,7 @@ const quantityInput = document.getElementById("quantity");
 const paymentMethodSelect = document.getElementById("payment-method");
 const buyBtn = document.getElementById("buy-btn");
 
-
 let currentModalProduct = null;
-
 
 function setupDetailButtons() {
   const buttons = document.querySelectorAll(".ver-detalhes-btn");
@@ -880,11 +858,9 @@ function setupDetailButtons() {
   });
 }
 
-
 function openModal(id) {
   currentModalProduct = products.find(p => p.id === id);
   if (!currentModalProduct) return;
-
 
   modalTitle.textContent = currentModalProduct.title;
   modalPrice.textContent = currentModalProduct.price;
@@ -892,11 +868,9 @@ function openModal(id) {
   quantityInput.value = 1;
   paymentMethodSelect.value = "";
 
-
   // Imagem principal
   modalMainImage.src = currentModalProduct.image;
   modalMainImage.alt = currentModalProduct.title;
-
 
   // Thumbnails
   modalThumbnails.innerHTML = "";
@@ -906,33 +880,27 @@ function openModal(id) {
     img.alt = currentModalProduct.title + " - imagem " + (index + 1);
     if(index === 0) img.classList.add("active");
 
-
     img.onclick = () => {
       document.querySelectorAll("#modal-thumbnails img").forEach(im => im.classList.remove("active"));
       img.classList.add("active");
       modalMainImage.src = thumb;
     };
 
-
     modalThumbnails.appendChild(img);
   });
-
 
   modal.classList.add("active");
 }
 
-
 modalClose.onclick = () => {
   modal.classList.remove("active");
 };
-
 
 modal.onclick = (e) => {
   if(e.target === modal){
     modal.classList.remove("active");
   }
 };
-
 
 buyBtn.onclick = () => {
     // Validação do formulário (já existente)
@@ -948,14 +916,12 @@ buyBtn.onclick = () => {
         return;
     }
 
-
     // NOVA LÓGICA: Adiciona o produto ao carrinho
     adicionarAoCarrinho(currentModalProduct, quantity);
-   
+    
     // Fecha o modal após adicionar ao carrinho
-    modal.classList.remove("active");
+    modal.classList.remove("active"); 
 };
-
 
 /* =================================
    FUNÇÕES DO CARRINHO DE COMPRAS
@@ -963,7 +929,6 @@ buyBtn.onclick = () => {
 function toggleCarrinho() {
     document.getElementById('carrinho').classList.toggle('ativo');
 }
-
 
 function adicionarAoCarrinho(produto, quantidade) {
     // Adiciona o produto ao carrinho a quantidade de vezes especificada
@@ -974,20 +939,17 @@ function adicionarAoCarrinho(produto, quantidade) {
     alert(`${quantidade}x "${produto.title}" adicionado(s) ao carrinho!`);
 }
 
-
 function removerDoCarrinho(index) {
     carrinho.splice(index, 1); // Remove o item pelo seu índice no array
     atualizarCarrinho();
 }
 
-
 function atualizarCarrinho() {
     const cartCountEl = document.getElementById('cart-count');
     const listaCarrinhoEl = document.getElementById('lista-carrinho');
     const totalCarrinhoEl = document.getElementById('total-carrinho');
-   
+    
     cartCountEl.innerText = carrinho.length; // Atualiza o contador no header
-
 
     if (carrinho.length === 0) {
         listaCarrinhoEl.innerHTML = '<li class="carrinho-vazio">Seu carrinho está vazio.</li>';
@@ -995,16 +957,13 @@ function atualizarCarrinho() {
         return;
     }
 
-
     listaCarrinhoEl.innerHTML = ''; // Limpa a lista antes de recriar
-
 
     let total = 0;
     carrinho.forEach((item, index) => {
         // Converte o preço de string "R$1.799,00" para número 1799.00
         const precoNumerico = parseFloat(item.price.replace('R$', '').replace('.', '').replace(',', '.'));
         total += precoNumerico;
-
 
         const li = document.createElement('li');
         li.className = 'carrinho-item';
@@ -1019,10 +978,8 @@ function atualizarCarrinho() {
         listaCarrinhoEl.appendChild(li);
     });
 
-
     totalCarrinhoEl.innerText = total.toFixed(2).replace('.', ',');
 }
-
 
 function finalizarCompra() {
     if (carrinho.length === 0) {
@@ -1030,31 +987,24 @@ function finalizarCompra() {
         return;
     }
 
-
     const total = carrinho.reduce((acc, item) => {
         const preco = parseFloat(item.price.replace('R$', '').replace('.', '').replace(',', '.'));
         return acc + preco;
     }, 0);
 
-
     alert(`Compra finalizada!\nTotal de itens: ${carrinho.length}\nValor total: R$ ${total.toFixed(2).replace('.', ',')}\n\nObrigado por comprar na MusicWave!`);
-
 
     carrinho = []; // Esvazia o carrinho
     atualizarCarrinho(); // Atualiza a exibição
     toggleCarrinho(); // Fecha o painel do carrinho
 }
 
-
 /* ===== Inicialização ===== */
-
 
 update();
 
-
 </script>
   </script>
-
 
    <!-- script de paginação dos instrumentos em catálogo -->
 

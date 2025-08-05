@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title>Document</title>
+</head>
+<body>
+
+    <style>
+
+        .category-btn { background-color: transparent; border: 2px solid #f7bd6d; color: #f7bd6d; font-weight: 700; padding: 8px 14px; border-radius: 6px; cursor: pointer; margin: 5px; }
+.category-btn:hover { background-color: #f7bd6d; color: #212121; }
+.category-btn.active { background-color: #f7bd6d; color: #212121; font-weight: 900; }
+.carrinho-item { display: flex; align-items: center; gap: 10px; margin: 10px 0; }
+.carrinho-item img { width: 50px; height: 50px; object-fit: cover; }
+.quantidade-controles { display: flex; gap: 5px; align-items: center; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #fdfaf5;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+body.dark-mode {
+  background: #1e1e1e;
+  color: #f5f5f5;
+}
+
+body.dark-mode .instrumento-card,
+body.dark-mode .modal-content,
+body.dark-mode .carrinho-lateral {
+  background: #2a2a2a;
+  color: #f5f5f5;
+}
+
+body.dark-mode .ver-detalhes-btn,
+body.dark-mode .buy-btn {
+  background-color: #f7bd6d;
+  color: #1e1e1e;
+}
+
+body.dark-mode .page-btn span {
+  border-color: #f7bd6d;
+  color: #f7bd6d;
+}
+
+body.dark-mode .page-btn .active {
+  background-color: #f7bd6d;
+  color: #1e1e1e;
+}
+
+body.dark-mode .quantidade-controles button,
+body.dark-mode .remover-item-btn {
+  background-color: #3a3a3a;
+  color: #f5f5f5;
+}
+
+body.dark-mode .modal-thumbnails img.active {
+  border-color: #f7bd6d;
+}
+
+.small-container-instrumentos {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.row-instrumentos- {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.instrumento-card {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.instrumento-card:hover {
+  transform: scale(1.03);
+}
+
+.card-image-container {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.card-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ver-detalhes-btn {
+  background-color: #ffa500;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.ver-detalhes-btn:hover {
+  background-color: #e69500;
+}
+
+.page-btn {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.page-btn span {
+  display: inline-block;
+  padding: 8px 14px;
+  border: 1px solid #ffa500;
+  margin: 0 4px;
+  cursor: pointer;
+  border-radius: 5px;
+  color: #ffa500;
+  font-weight: bold;
+}
+
+.page-btn .active {
+  background-color: #ffa500;
+  color: #fff;
+}
+
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  background-color: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 900px;
+  width: 90%;
+  border-radius: 10px;
+  padding: 20px;
+  gap: 20px;
+}
+
+.modal-left, .modal-right {
+  flex: 1 1 300px;
+}
+
+.modal-right input[type="number"] {
+  width: 60px;
+  padding: 5px;
+  margin: 10px 0;
+}
+
+.buy-btn {
+  background-color: #ffa500;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  background: transparent;
+  border: none;
+  font-size: 30px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.modal-thumbnails img {
+  width: 60px;
+  height: 60px;
+  margin-top: 10px;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.modal-thumbnails img.active {
+  border-color: #ffa500;
+}
+
+/* Carrinho lateral */
+.carrinho-lateral {
+  position: fixed;
+  top: 60px;
+  right: 0;
+  width: 320px;
+  background-color: #fff;
+  box-shadow: -3px 0 10px rgba(0,0,0,0.1);
+  padding: 20px;
+  height: calc(100% - 60px);
+  overflow-y: auto;
+  z-index: 9998;
+}
+
+.carrinho-lateral h3 {
+  margin-top: 0;
+}
+
+.carrinho-item-info h4 {
+  margin: 4px 0;
+  font-size: 15px;
+}
+
+.quantidade-controles button {
+  padding: 4px 8px;
+  background-color: #eee;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.remover-item-btn {
+  background: none;
+  border: none;
+  color: #e00;
+  font-size: 12px;
+  cursor: pointer;
+  margin-top: 6px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .modal-content {
+    flex-direction: column;
+  }
+  .carrinho-lateral {
+    width: 100%;
+    top: auto;
+    bottom: 0;
+    height: 50vh;
+  }
+  .small-container-instrumentos {
+    padding: 10px;
+  }
+  .row-instrumentos- {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+}
+</style>
+
+<!-- (todo restante do HTML e <script> permanece abaixo intacto) -->
+
+
+ <!-- FILTROS POR CATEGORIA -->
+<div class="categoria-filtros" id="category-buttons"></div>
+
+<!-- LISTAGEM DE PRODUTOS -->
+<div class="small-container-instrumentos">
+  <div class="row-instrumentos-" id="product-list"></div>
+</div>
+
+<!-- PAGINAÇÃO -->
+<div class="page-btn" id="pagination"></div>
+
+<!-- MODAL DE DETALHES DO PRODUTO -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-left">
+      <img id="modal-main-img" src="" alt="Imagem do Produto" />
+      <div class="modal-thumbnails" id="modal-thumbnails"></div>
+    </div>
+    <div class="modal-right">
+      <h3 id="modal-title"></h3>
+      <p class="price" id="modal-price"></p>
+      <p class="description" id="modal-description"></p>
+      <label for="quantity">Quantidade:</label>
+      <input type="number" id="quantity" min="1" value="1" />
+      <button class="buy-btn" id="buy-btn">Adicionar ao carrinho</button>
+    </div>
+  </div>
+  <button class="modal-close" onclick="modal.classList.remove('active')">&times;</button>
+</div>
+
+<!-- CARRINHO DE COMPRAS -->
+<div id="carrinho" class="carrinho-lateral">
+  <h3>Meu Carrinho (<span id="cart-count">0</span>)</h3>
+  <ul id="lista-carrinho"></ul>
+  <p>Total: R$ <span id="total-carrinho">0,00</span></p>
+</div>
+
+
+<script>
+const orderedCategories = ["violino","viola","violoncelo","violao","guitarra","baixo","cavaquinho","ukulele","viola caipira","banjo","charango","bandolim"];
+const categoriesMap = {"violino":"Violino","viola":"Viola","violoncelo":"Violoncelo","violao":"Violão","guitarra":"Guitarra","baixo":"Baixo","cavaquinho":"Cavaquinho","ukulele":"Ukulele","viola caipira":"Viola Caipira","banjo":"Banjo","charango":"Charango","bandolim":"Bandolim"};
+
+const products = [
+  {id:1,title:"Violino Profissional 4/4",price:"R$ 2.199,00",image:"violinos/violino1.webp",category:"violino",description:"Violino com madeira nobre, estojos inclusos."},
+  {id:2,title:"Violino Acústico Iniciante",price:"R$ 999,00",image:"violinos/violino2.webp",category:"violino",description:"Ideal para estudantes iniciantes."},
+  {id:3,title:"Viola Clássica Fina",price:"R$ 1.599,00",image:"violas/viola1.webp",category:"viola",description:"Som encorpado e acabamento impecável."},
+  {id:4,title:"Viola Estudante",price:"R$ 789,00",image:"violas/viola2.webp",category:"viola",description:"Para estudos e uso intermediário."},
+  {id:5,title:"Violoncelo Master Series",price:"R$ 3.499,00",image:"violoncelos/violoncelo1.webp",category:"violoncelo",description:"Violoncelo completo com arco e case."},
+  {id:6,title:"Violoncelo Semi Novo",price:"R$ 2.899,00",image:"violoncelos/violoncelo2.webp",category:"violoncelo",description:"Pouco uso. Excelente estado."},
+  // Produtos de exemplo com imagens fictícias
+];
+
+for (let i = 7; i <= 30; i++) {
+  const cat = orderedCategories[i % orderedCategories.length];
+  products.push({
+    id: i,
+    title: `Produto ${i}`,
+    price: `R$ ${(1000 + i * 10).toFixed(2).replace('.', ',')}`,
+    image: `imagens/placeholder.png`,
+    category: cat,
+    description: `Descrição fictícia do produto ${i}`
+  });
+}
+
+let filteredCategory = localStorage.getItem("selectedCategory") || null;
+let currentPage = parseInt(localStorage.getItem("currentPage")) || 1;
+const productsPerPage = 8;
+const productListEl = document.getElementById("product-list");
+const paginationEl = document.getElementById("pagination");
+const modal = document.getElementById("modal");
+const modalTitle = document.getElementById("modal-title");
+const modalPrice = document.getElementById("modal-price");
+const modalDescription = document.getElementById("modal-description");
+const modalMainImg = document.getElementById("modal-main-img");
+const modalThumbnails = document.getElementById("modal-thumbnails");
+const cartCountEl = document.getElementById("cart-count");
+const listaCarrinhoEl = document.getElementById("lista-carrinho");
+const totalCarrinhoEl = document.getElementById("total-carrinho");
+
+let carrinho = [];
+let currentModalProduct = null;
+
+function updateURL() {
+  const params = new URLSearchParams(window.location.search);
+  if (filteredCategory) params.set("categoria", filteredCategory);
+  else params.delete("categoria");
+  window.history.replaceState({}, '', `${location.pathname}?${params}`);
+}
+
+function renderCategoryButtons() {
+  const container = document.getElementById("category-buttons");
+  container.innerHTML = "";
+  orderedCategories.forEach((cat) => {
+    const btn = document.createElement("button");
+    btn.className = "category-btn";
+    btn.textContent = categoriesMap[cat];
+    if (filteredCategory === cat) btn.classList.add("active");
+    btn.addEventListener("click", () => {
+      filteredCategory = cat;
+      currentPage = 1;
+      localStorage.setItem("selectedCategory", filteredCategory);
+      localStorage.setItem("currentPage", currentPage);
+      updateURL();
+      update();
+    });
+    container.appendChild(btn);
+  });
+}
+
+function renderProducts(page) {
+  productListEl.innerHTML = "";
+  const list = filteredCategory ? products.filter((p) => p.category === filteredCategory) : products;
+  const paginatedProducts = list.slice((page - 1) * productsPerPage, page * productsPerPage);
+
+  paginatedProducts.forEach((product) => {
+    const card = document.createElement("div");
+    card.className = "instrumento-card";
+    card.innerHTML = `
+      <div class="card-image-container">
+        <img src="${product.image}" alt="${product.title}">
+      </div>
+      <h4>${product.title}</h4>
+      <p>${product.price}</p>
+      <button class="ver-detalhes-btn" data-id="${product.id}">Ver detalhes</button>
+    `;
+    card.querySelector(".ver-detalhes-btn").addEventListener("click", () => openModal(product));
+    productListEl.appendChild(card);
+  });
+}
+
+function renderPagination() {
+  paginationEl.innerHTML = "";
+  const list = filteredCategory ? products.filter(p => p.category === filteredCategory) : products;
+  const pageCount = Math.ceil(list.length / productsPerPage);
+
+  for (let i = 1; i <= pageCount; i++) {
+    const pageBtn = document.createElement("span");
+    pageBtn.textContent = i;
+    if (i === currentPage) pageBtn.classList.add("active");
+    pageBtn.addEventListener("click", () => {
+      currentPage = i;
+      localStorage.setItem("currentPage", currentPage);
+      update();
+    });
+    paginationEl.appendChild(pageBtn);
+  }
+}
+
+function openModal(produto) {
+  currentModalProduct = produto;
+  modal.classList.add("active");
+  modalTitle.textContent = produto.title;
+  modalPrice.textContent = produto.price;
+  modalDescription.textContent = produto.description;
+  modalMainImg.src = produto.image;
+  modalThumbnails.innerHTML = `<img src="${produto.image}" alt="" class="active">`;
+  document.getElementById("quantity").value = 1;
+}
+
+document.getElementById("buy-btn").onclick = () => {
+  const qtd = parseInt(document.getElementById("quantity").value);
+  if (qtd >= 1) adicionarAoCarrinho(currentModalProduct, qtd);
+  modal.classList.remove("active");
+};
+
+function adicionarAoCarrinho(produto, quantidade) {
+  const existente = carrinho.find(item => item.id === produto.id);
+  if (existente) existente.quantidade += quantidade;
+  else carrinho.push({ ...produto, quantidade });
+  atualizarCarrinho();
+  alert(`${quantidade}x "${produto.title}" adicionado(s) ao carrinho!`);
+}
+
+function atualizarCarrinho() {
+  let totalItens = carrinho.reduce((acc, item) => acc + item.quantidade, 0);
+  cartCountEl.innerText = totalItens;
+  listaCarrinhoEl.innerHTML = '';
+  let total = 0;
+
+  carrinho.forEach((item, index) => {
+    const precoNumerico = parseFloat(item.price.replace('R$', '').replace('.', '').replace(',', '.'));
+    total += precoNumerico * item.quantidade;
+
+    const li = document.createElement('li');
+    li.className = 'carrinho-item';
+    li.innerHTML = `
+      <img src="${item.image}" alt="${item.title}">
+      <div class="carrinho-item-info">
+        <h4>${item.title}</h4>
+        <p>${item.price}</p>
+        <div class="quantidade-controles">
+          <button onclick="alterarQuantidade(${index}, -1)">-</button>
+          <span>${item.quantidade}</span>
+          <button onclick="alterarQuantidade(${index}, 1)">+</button>
+        </div>
+        <button class="remover-item-btn" onclick="removerDoCarrinho(${index})">Remover</button>
+      </div>
+    `;
+    listaCarrinhoEl.appendChild(li);
+  });
+  totalCarrinhoEl.innerText = total.toFixed(2).replace('.', ',');
+}
+
+function alterarQuantidade(index, delta) {
+  carrinho[index].quantidade += delta;
+  if (carrinho[index].quantidade <= 0) carrinho.splice(index, 1);
+  atualizarCarrinho();
+}
+
+function removerDoCarrinho(index) {
+  carrinho.splice(index, 1);
+  atualizarCarrinho();
+}
+
+// Inicializar
+const params = new URLSearchParams(window.location.search);
+if (params.get("categoria") && orderedCategories.includes(params.get("categoria"))) {
+  filteredCategory = params.get("categoria");
+  localStorage.setItem("selectedCategory", filteredCategory);
+}
+
+renderCategoryButtons();
+update();
+
+function update() {
+  renderCategoryButtons();
+  renderProducts(currentPage);
+  renderPagination();
+  updateURL();
+}
+</script>
+
+
+    
+</body>
+</html>

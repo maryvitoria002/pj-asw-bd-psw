@@ -371,7 +371,29 @@ body.dark-mode .modal-right .price {
 
 
 
+/* filtragem e paginação */
 
+.categoria-filtros {
+  text-align: center;
+  margin: 30px auto 30px;
+}
+.category-btn {
+  background-color: transparent;
+  border: 2px solid #f7bd6d;
+  color: #f7bd6d;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 5px;
+}
+.category-btn:hover {
+  background-color: #f7bd6d;
+  color: #212121;
+}
+
+/* filtragem e paginação */
 
 
 
