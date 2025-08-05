@@ -54,7 +54,8 @@ button:hover {
   min-height: 24px;
 }
 
-/* FORCA SIMPLES COM PARTES ESCONDIDAS */
+/* forca */
+
 .forca {
   position: relative;
   height: 200px;
@@ -140,3 +141,5 @@ button:hover {
   left: 120px;
   transform: rotate(-30deg);
 }
+
+/* forca */

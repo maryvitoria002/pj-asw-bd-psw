@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Quiz</title>
 </head>
 <body>
     <style>
@@ -42,7 +42,6 @@ button {
   font-size: 1rem;
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
   header {
     flex-direction: column;
@@ -59,7 +58,7 @@ button {
     </style>
     <br><br><br><br><br><br><br>
     <section class="quiz">
-  <h2>🎵 Quiz Musical: acerte e ganhe pontos!</h2>
+  <h2> Quiz Musical: acerte e ganhe pontos!</h2>
   <div id="pergunta"></div>
   <div id="opcoes"></div>
   <button onclick="proximaPergunta()">Próxima</button>
@@ -93,9 +92,9 @@ button {
       btn.onclick = () => {
         if (i === p.a) {
           pontos += 10;
-          alert("✅ Correto! +10 pontos");
+          alert(" Correto! +10 pontos");
         } else {
-          alert("❌ Errado!");
+          alert(" Errado!");
         }
         proximaPergunta();
       };
@@ -104,7 +103,7 @@ button {
   }
 
   if (atual >= perguntas.length) {
-  alert(`🎉 Quiz finalizado! Você ganhou ${pontos} pontos.`);
+  alert(` Quiz finalizado! Você ganhou ${pontos} pontos.`);
   aplicarCupom(pontos);
   atual = 0;
   pontos = 0;
@@ -114,7 +113,7 @@ button {
   function proximaPergunta() {
     atual++;
     if (atual >= perguntas.length) {
-      alert(`🎉 Quiz finalizado! Você ganhou ${pontos} pontos.`);
+      alert(` Quiz finalizado! Você ganhou ${pontos} pontos.`);
       atual = 0;
       pontos = 0;
     }
@@ -125,8 +124,8 @@ button {
   function aplicarCupom(pontos) {
   const descontos = Math.floor(pontos / 50);
   if (descontos > 0) {
-    alert(`🎁 Você ganhou ${descontos} cupom(ns) de 10% de desconto! Use: CUPOM10`);
-    // Simule adicionar ao carrinho aqui
+    alert(` Você ganhou ${descontos} cupom(ns) de 10% de desconto! Use: CUPOM10`);
+  
   }
 }
 
