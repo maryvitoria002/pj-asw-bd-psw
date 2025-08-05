@@ -75,46 +75,90 @@ body.dark-mode .modal-thumbnails img.active {
   gap: 20px;
 }
 
+
 .instrumento-card {
-  background: #fff;
+  flex: 0 1 calc(25% - 20px);
+  box-sizing: border-box;
   padding: 15px;
+  background-color: var(--fundo-card);
   border-radius: 10px;
+  box-shadow: 0 0 20px 0px var(--sombra);
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   transition: transform 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  max-width: 280px;
 }
 
 .instrumento-card:hover {
-  transform: scale(1.03);
+  transform: translateY(-10px);
+}
+
+.instrumento-card h4 {
+  font-weight: 600;
+  color: #555;
+  margin: 0 0 8px;
+  font-size: 16px;
+  min-height: 48px;
+}
+
+.instrumento-card .rating {
+  margin-bottom: 8px;
+}
+
+.instrumento-card .rating .bi {
+  color: #ee971d;
+  font-size: 18px;
+  margin: 0 2px;
+}
+
+.instrumento-card p {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  color: var(--texto-escuro);
 }
 
 .card-image-container {
   width: 100%;
-  height: 200px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
   overflow: hidden;
-  border-radius: 8px;
-  margin-bottom: 10px;
 }
 
 .card-image-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+  width: auto;
+  object-fit: contain;
+  border-radius: 10px;
 }
 
 .ver-detalhes-btn {
-  background-color: #ffa500;
-  color: #fff;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 5px;
+  background-color: transparent;
+  border: 2px solid var(--laranja);
+  color: var(--laranja);
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 6px;
   cursor: pointer;
-  margin-top: 10px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-top: auto;
+  width: 100%;
 }
 
 .ver-detalhes-btn:hover {
-  background-color: #e69500;
+  background-color: var(--laranja);
+  color: var(--texto-escuro);
 }
+
 
 .page-btn {
   text-align: center;
@@ -204,6 +248,42 @@ body.dark-mode .modal-thumbnails img.active {
 
 .modal-thumbnails img.active {
   border-color: #ffa500;
+}
+
+.modal-right button.buy-btn {
+  background-color: var(--laranja);
+  border: none;
+  color: black;
+  font-weight: 700;
+  padding: 12px 25px;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-right button.buy-btn:hover {
+  background-color: var(--laranja-hover);
+}
+
+@media (max-width: 900px) {
+  .instrumento-card {
+    flex: 0 1 calc(50% - 20px);
+  }
+  .modal-content {
+    flex-direction: column;
+    align-items: center;
+  }
+  .modal-left,
+  .modal-right {
+    flex-basis: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .instrumento-card {
+    flex: 0 1 100%;
+  }
 }
 
 /* Carrinho lateral */
