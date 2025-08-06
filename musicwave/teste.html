@@ -1,587 +1,593 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
-    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>Catálogo de Instrumentos - MusicWave</title>
+    <style>
+        /* =================================
+           CSS COMPLETO E CONSOLIDADO
+        ================================= */
+        :root {
+            --cor-primaria: #f7bd6d;
+            --cor-primaria-hover: #e6a12d;
+            --cor-texto-claro: #f5f5f5;
+            --cor-texto-escuro: #212121;
+            --fundo-pagina: #fdfaf5;
+            --fundo-card: #f9f1e984;
+            --sombra: #372e271a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--fundo-pagina);
+            color: var(--cor-texto-escuro);
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* --- FILTROS DE CATEGORIA --- */
+        .filtros-container {
+            text-align: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            display: flex;
+            justify-content: center;
+        }
+
+        .category-btn {
+            background-color: transparent;
+            border: 2px solid var(--cor-primaria);
+            color: var(--cor-primaria);
+            font-weight: 700;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .category-btn:hover {
+            background-color: var(--cor-primaria-hover);
+            color: var(--cor-texto-escuro);
+            border-color: var(--cor-primaria-hover);
+        }
+
+        .category-btn.active {
+            background-color: var(--cor-primaria);
+            color: var(--cor-texto-escuro);
+            font-weight: 900;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* --- CARDS DOS INSTRUMENTOS --- */
+        .small-container-instrumentos {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        .row-instrumentos- {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .instrumento-card {
+            padding: 15px;
+            background-color: var(--fundo-card);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px 0px var(--sombra);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .instrumento-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px 0px #372e272a;
+        }
+
+        .card-image-container {
+            width: 100%;
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .card-image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .instrumento-card h4 {
+            font-weight: 600;
+            color: #444;
+            margin: 8px 0;
+            font-size: 16px;
+            min-height: 48px;
+        }
+        
+        .instrumento-card p {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 8px 0 15px;
+            color: var(--cor-texto-escuro);
+        }
+        
+        .ver-detalhes-btn {
+            background-color: transparent;
+            border: 2px solid var(--cor-primaria);
+            color: var(--cor-primaria);
+            font-weight: 700;
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .ver-detalhes-btn:hover {
+            background-color: var(--cor-primaria);
+            color: var(--cor-texto-escuro);
+        }
+
+        /* --- PAGINAÇÃO --- */
+        .page-btn {
+            text-align: center;
+            margin: 40px auto 80px;
+            user-select: none;
+        }
+
+        .page-btn span {
+            display: inline-block;
+            border: 1px solid var(--cor-primaria);
+            margin: 0 5px;
+            height: 40px;
+            width: 40px;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--cor-primaria);
+            font-weight: 700;
+        }
+
+        .page-btn span:hover {
+            background-color: var(--cor-primaria-hover);
+            color: var(--cor-texto-escuro);
+            border-color: var(--cor-primaria-hover);
+        }
+
+        .page-btn span.active {
+            background-color: var(--cor-primaria);
+            color: var(--cor-texto-escuro);
+            border-color: var(--cor-primaria);
+            pointer-events: none;
+        }
+
+        /* --- MODAL DE DETALHES --- */
+        #modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(55, 46, 39, 0.8);
+            display: none; justify-content: center; align-items: center;
+            z-index: 9999; padding: 20px;
+        }
+        #modal.active { display: flex; }
+        .modal-content {
+            background: #fff; border-radius: 12px; max-width: 800px;
+            width: 100%; max-height: 90vh; overflow-y: auto; padding: 30px 40px;
+            position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            display: flex; flex-wrap: wrap; gap: 30px;
+        }
+        .modal-left, .modal-right {
+            flex: 1 1 300px; display: flex; flex-direction: column;
+        }
+        .modal-left img.main-image { width: 100%; border-radius: 12px; object-fit: contain; }
+        .modal-thumbnails { margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap; }
+        .modal-thumbnails img { width: 70px; height: 70px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: border-color 0.3s ease; }
+        .modal-thumbnails img.active, .modal-thumbnails img:hover { border-color: var(--cor-primaria); }
+        .modal-right h3 { margin: 0 0 15px; font-size: 24px; }
+        .modal-right p.price { font-size: 22px; font-weight: 700; color: var(--cor-primaria); margin-bottom: 15px; }
+        .modal-right p.description { font-size: 15px; margin-bottom: 25px; color: #555; line-height: 1.6; }
+        .modal-right .add-to-cart-btn {
+            background-color: var(--cor-primaria); border: none; color: black; font-weight: 700;
+            padding: 12px 25px; font-size: 16px; border-radius: 10px; cursor: pointer; transition: background-color 0.3s ease; width: 100%;
+        }
+        .modal-right .add-to-cart-btn:hover { background-color: var(--cor-primaria-hover); }
+        .modal-close {
+            position: absolute; top: 15px; right: 20px; font-size: 30px;
+            color: #333; cursor: pointer; font-weight: 700;
+        }
+
+        /* --- CARRINHO DE COMPRAS --- */
+        .carrinho-lateral {
+            position: fixed; top: 0; right: 0; width: 380px; height: 100%;
+            background-color: #fdfaf6; box-shadow: -5px 0 15px rgba(0,0,0,0.15);
+            z-index: 10000; display: flex; flex-direction: column;
+            transform: translateX(100%); transition: transform 0.4s ease-in-out;
+        }
+        .carrinho-lateral.ativo { transform: translateX(0); }
+        .carrinho-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-bottom: 1px solid #e0e0e0; }
+        .carrinho-header h2 { margin: 0; font-size: 20px; }
+        .carrinho-fechar { background: none; border: none; font-size: 30px; cursor: pointer; color: #888; }
+        .carrinho-body { flex-grow: 1; list-style: none; padding: 10px 20px; margin: 0; overflow-y: auto; }
+        .carrinho-item { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #f0f0f0; }
+        .carrinho-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
+        .carrinho-item-info { flex-grow: 1; }
+        .carrinho-item-info h4 { margin: 0 0 5px; font-size: 14px; }
+        .carrinho-item-info p { margin: 0 0 8px; font-size: 14px; color: var(--cor-primaria); font-weight: bold; }
+        .quantidade-controles { display: flex; align-items: center; gap: 8px; }
+        .quantidade-controles button { background-color: #eee; border: 1px solid #ddd; cursor: pointer; width: 25px; height: 25px; border-radius: 50%; font-weight: bold; }
+        .remover-item-btn { background: none; border: none; color: #e74c3c; cursor: pointer; margin-left: auto; font-size: 20px; }
+        .carrinho-vazio { text-align: center; color: #888; padding: 40px 0; }
+        .carrinho-footer { padding: 20px; border-top: 1px solid #e0e0e0; background-color: #fff; }
+        .total-section { display: flex; justify-content: space-between; align-items: center; font-size: 18px; margin-bottom: 15px; }
+        #limpar-carrinho-btn { background: none; border: none; color: #888; text-decoration: underline; cursor: pointer; font-size: 12px; }
+        .payment-section { margin-top: 15px; }
+        .payment-section label { font-weight: 600; display: block; margin-bottom: 8px; }
+        .payment-section select { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc; }
+        .finalizar-compra-btn {
+            width: 100%; padding: 12px; background-color: var(--cor-primaria); border: none; color: black;
+            font-weight: bold; font-size: 16px; border-radius: 8px; cursor: pointer; margin-top: 15px;
+        }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 900px) {
+            .row-instrumentos- { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+        }
+        @media (max-width: 480px) {
+            .row-instrumentos- { grid-template-columns: 1fr; }
+            .carrinho-lateral { width: 100%; }
+        }
+    </style>
 </head>
 <body>
 
-    <style>
-
-        .category-btn { background-color: transparent; border: 2px solid #f7bd6d; color: #f7bd6d; font-weight: 700; padding: 8px 14px; border-radius: 6px; cursor: pointer; margin: 5px; }
-.category-btn:hover { background-color: #f7bd6d; color: #212121; }
-.category-btn.active { background-color: #f7bd6d; color: #212121; font-weight: 900; }
-.carrinho-item { display: flex; align-items: center; gap: 10px; margin: 10px 0; }
-.carrinho-item img { width: 50px; height: 50px; object-fit: cover; }
-.quantidade-controles { display: flex; gap: 5px; align-items: center; }
-
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #fdfaf5;
-  color: #333;
-  margin: 0;
-  padding: 0;
-}
-
-body.dark-mode {
-  background: #1e1e1e;
-  color: #f5f5f5;
-}
-
-body.dark-mode .instrumento-card,
-body.dark-mode .modal-content,
-body.dark-mode .carrinho-lateral {
-  background: #2a2a2a;
-  color: #f5f5f5;
-}
-
-body.dark-mode .ver-detalhes-btn,
-body.dark-mode .buy-btn {
-  background-color: #f7bd6d;
-  color: #1e1e1e;
-}
-
-body.dark-mode .page-btn span {
-  border-color: #f7bd6d;
-  color: #f7bd6d;
-}
-
-body.dark-mode .page-btn .active {
-  background-color: #f7bd6d;
-  color: #1e1e1e;
-}
-
-body.dark-mode .quantidade-controles button,
-body.dark-mode .remover-item-btn {
-  background-color: #3a3a3a;
-  color: #f5f5f5;
-}
-
-body.dark-mode .modal-thumbnails img.active {
-  border-color: #f7bd6d;
-}
-
-.small-container-instrumentos {
-  max-width: 1200px;
-  margin: auto;
-  padding: 20px;
-}
-
-.row-instrumentos- {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-}
-
-
-.instrumento-card {
-  flex: 0 1 calc(25% - 20px);
-  box-sizing: border-box;
-  padding: 15px;
-  background-color: var(--fundo-card);
-  border-radius: 10px;
-  box-shadow: 0 0 20px 0px var(--sombra);
-  text-align: center;
-  transition: transform 0.3s ease;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  max-width: 280px;
-}
-
-.instrumento-card:hover {
-  transform: translateY(-10px);
-}
-
-.instrumento-card h4 {
-  font-weight: 600;
-  color: #555;
-  margin: 0 0 8px;
-  font-size: 16px;
-  min-height: 48px;
-}
-
-.instrumento-card .rating {
-  margin-bottom: 8px;
-}
-
-.instrumento-card .rating .bi {
-  color: #ee971d;
-  font-size: 18px;
-  margin: 0 2px;
-}
-
-.instrumento-card p {
-  font-size: 14px;
-  font-weight: 700;
-  margin: 0 0 12px;
-  color: var(--texto-escuro);
-}
-
-.card-image-container {
-  width: 100%;
-  height: 220px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 15px;
-  overflow: hidden;
-}
-
-.card-image-container img {
-  max-width: 100%;
-  max-height: 100%;
-  height: auto;
-  width: auto;
-  object-fit: contain;
-  border-radius: 10px;
-}
-
-.ver-detalhes-btn {
-  background-color: transparent;
-  border: 2px solid var(--laranja);
-  color: var(--laranja);
-  font-weight: 700;
-  padding: 8px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  margin-top: auto;
-  width: 100%;
-}
-
-.ver-detalhes-btn:hover {
-  background-color: var(--laranja);
-  color: var(--texto-escuro);
-}
-
-
-.page-btn {
-  text-align: center;
-  margin: 30px 0;
-}
-
-.page-btn span {
-  display: inline-block;
-  padding: 8px 14px;
-  border: 1px solid #ffa500;
-  margin: 0 4px;
-  cursor: pointer;
-  border-radius: 5px;
-  color: #ffa500;
-  font-weight: bold;
-}
-
-.page-btn .active {
-  background-color: #ffa500;
-  color: #fff;
-}
-
-.modal {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  display: none;
-  background-color: rgba(0,0,0,0.5);
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.modal.active {
-  display: flex;
-}
-
-.modal-content {
-  background: #fff;
-  display: flex;
-  flex-wrap: wrap;
-  max-width: 900px;
-  width: 90%;
-  border-radius: 10px;
-  padding: 20px;
-  gap: 20px;
-}
-
-.modal-left, .modal-right {
-  flex: 1 1 300px;
-}
-
-.modal-right input[type="number"] {
-  width: 60px;
-  padding: 5px;
-  margin: 10px 0;
-}
-
-.buy-btn {
-  background-color: #ffa500;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.modal-close {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  background: transparent;
-  border: none;
-  font-size: 30px;
-  color: #fff;
-  cursor: pointer;
-}
-
-.modal-thumbnails img {
-  width: 60px;
-  height: 60px;
-  margin-top: 10px;
-  border: 2px solid transparent;
-  cursor: pointer;
-}
-
-.modal-thumbnails img.active {
-  border-color: #ffa500;
-}
-
-.modal-right button.buy-btn {
-  background-color: var(--laranja);
-  border: none;
-  color: black;
-  font-weight: 700;
-  padding: 12px 25px;
-  font-size: 16px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.modal-right button.buy-btn:hover {
-  background-color: var(--laranja-hover);
-}
-
-@media (max-width: 900px) {
-  .instrumento-card {
-    flex: 0 1 calc(50% - 20px);
-  }
-  .modal-content {
-    flex-direction: column;
-    align-items: center;
-  }
-  .modal-left,
-  .modal-right {
-    flex-basis: 100%;
-  }
-}
-
-@media (max-width: 500px) {
-  .instrumento-card {
-    flex: 0 1 100%;
-  }
-}
-
-/* Carrinho lateral */
-.carrinho-lateral {
-  position: fixed;
-  top: 60px;
-  right: 0;
-  width: 320px;
-  background-color: #fff;
-  box-shadow: -3px 0 10px rgba(0,0,0,0.1);
-  padding: 20px;
-  height: calc(100% - 60px);
-  overflow-y: auto;
-  z-index: 9998;
-}
-
-.carrinho-lateral h3 {
-  margin-top: 0;
-}
-
-.carrinho-item-info h4 {
-  margin: 4px 0;
-  font-size: 15px;
-}
-
-.quantidade-controles button {
-  padding: 4px 8px;
-  background-color: #eee;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.remover-item-btn {
-  background: none;
-  border: none;
-  color: #e00;
-  font-size: 12px;
-  cursor: pointer;
-  margin-top: 6px;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-  .modal-content {
-    flex-direction: column;
-  }
-  .carrinho-lateral {
-    width: 100%;
-    top: auto;
-    bottom: 0;
-    height: 50vh;
-  }
-  .small-container-instrumentos {
-    padding: 10px;
-  }
-  .row-instrumentos- {
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  }
-}
-</style>
-
-<!-- (todo restante do HTML e <script> permanece abaixo intacto) -->
-
-
- <!-- FILTROS POR CATEGORIA -->
-<div class="categoria-filtros" id="category-buttons"></div>
-
-<!-- LISTAGEM DE PRODUTOS -->
-<div class="small-container-instrumentos">
-  <div class="row-instrumentos-" id="product-list"></div>
-</div>
-
-<!-- PAGINAÇÃO -->
-<div class="page-btn" id="pagination"></div>
-
-<!-- MODAL DE DETALHES DO PRODUTO -->
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <div class="modal-left">
-      <img id="modal-main-img" src="" alt="Imagem do Produto" />
-      <div class="modal-thumbnails" id="modal-thumbnails"></div>
+    <div class="filtros-container" id="category-filters"></div>
+    
+    <div class="small-container-instrumentos">
+        <div class="row-instrumentos-" id="product-list"></div>
     </div>
-    <div class="modal-right">
-      <h3 id="modal-title"></h3>
-      <p class="price" id="modal-price"></p>
-      <p class="description" id="modal-description"></p>
-      <label for="quantity">Quantidade:</label>
-      <input type="number" id="quantity" min="1" value="1" />
-      <button class="buy-btn" id="buy-btn">Adicionar ao carrinho</button>
+    
+    <div class="page-btn" id="pagination"></div>
+    
+    <div id="modal">
+        <div class="modal-content">
+            <span class="modal-close" id="modal-close">&times;</span>
+            <div class="modal-left">
+                <img src="" alt="Imagem principal" class="main-image" id="modal-main-image" />
+                <div class="modal-thumbnails" id="modal-thumbnails"></div>
+            </div>
+            <div class="modal-right">
+                <h3 id="modal-title"></h3>
+                <p class="price" id="modal-price"></p>
+                <p class="description" id="modal-description"></p>
+                <button class="add-to-cart-btn" id="add-to-cart-btn">Adicionar ao carrinho</button>
+            </div>
+        </div>
     </div>
-  </div>
-  <button class="modal-close" onclick="modal.classList.remove('active')">&times;</button>
-</div>
 
-<!-- CARRINHO DE COMPRAS -->
-<div id="carrinho" class="carrinho-lateral">
-  <h3>Meu Carrinho (<span id="cart-count">0</span>)</h3>
-  <ul id="lista-carrinho"></ul>
-  <p>Total: R$ <span id="total-carrinho">0,00</span></p>
-</div>
-
+    <div id="carrinho" class="carrinho-lateral">
+        <div class="carrinho-header">
+            <h2><i class="bi bi-cart3"></i> Seu Carrinho</h2>
+            <button class="carrinho-fechar" onclick="toggleCarrinho()">&times;</button>
+        </div>
+        <ul id="lista-carrinho" class="carrinho-body">
+            </ul>
+        <div class="carrinho-footer">
+            <div class="total-section">
+                <span><strong>Total:</strong></span>
+                <span id="total-carrinho">R$ 0,00</span>
+            </div>
+            <button id="limpar-carrinho-btn" onclick="limparCarrinho()">Esvaziar carrinho</button>
+            <div class="payment-section">
+                <label for="payment-method">Forma de pagamento:</label>
+                <select id="payment-method">
+                    <option value="" disabled selected>Selecione</option>
+                    <option value="cartao">Cartão de crédito</option>
+                    <option value="boleto">Boleto bancário</option>
+                    <option value="pix">PIX</option>
+                </select>
+            </div>
+            <button class="finalizar-compra-btn" onclick="finalizarCompra()">Finalizar Compra</button>
+        </div>
+    </div>
 
 <script>
-const orderedCategories = ["violino","viola","violoncelo","violao","guitarra","baixo","cavaquinho","ukulele","viola caipira","banjo","charango","bandolim"];
-const categoriesMap = {"violino":"Violino","viola":"Viola","violoncelo":"Violoncelo","violao":"Violão","guitarra":"Guitarra","baixo":"Baixo","cavaquinho":"Cavaquinho","ukulele":"Ukulele","viola caipira":"Viola Caipira","banjo":"Banjo","charango":"Charango","bandolim":"Bandolim"};
+/* =================================
+   JAVASCRIPT COMPLETO E CONSOLIDADO
+================================= */
+
+// --- 1. CONFIGURAÇÃO E DADOS DOS PRODUTOS ---
+
+const orderedCategories = ["Violino", "Viola", "Violoncelo", "Violão", "Guitarra", "Baixo", "Cavaquinho", "Ukulele", "Viola Caipira", "Banjo", "Charango", "Bandolim"];
 
 const products = [
-  {id:1,title:"Violino Profissional 4/4",price:"R$ 2.199,00",image:"violinos/Violino Tarttan Série 100 Preto Brilho 4/4/violin1.png",category:"violino",description:"Violino com madeira nobre, estojos inclusos."},
-  {id:2,title:"Violino Acústico Iniciante",price:"R$ 999,00",image:"violinos/violino2.webp",category:"violino",description:"Ideal para estudantes iniciantes."},
-  {id:3,title:"Viola Clássica Fina",price:"R$ 1.599,00",image:"violas/viola1.webp",category:"viola",description:"Som encorpado e acabamento impecável."},
-  {id:4,title:"Viola Estudante",price:"R$ 789,00",image:"violas/viola2.webp",category:"viola",description:"Para estudos e uso intermediário."},
-  {id:5,title:"Violoncelo Master Series",price:"R$ 3.499,00",image:"violoncelos/violoncelo1.webp",category:"violoncelo",description:"Violoncelo completo com arco e case."},
-  {id:6,title:"Violoncelo Semi Novo",price:"R$ 2.899,00",image:"violoncelos/violoncelo2.webp",category:"violoncelo",description:"Pouco uso. Excelente estado."},
-  // Produtos de exemplo com imagens fictícias
+    // Violinos
+    { id: 1, category: "Violino", title: "Violino Tarttan Série 100 Preto 4/4", price: "R$697,00", description: "Violino Tarttan Série 100, 4/4, acabamento preto brilhante, madeira laminada. Ajustado por luthier, inclui arco, breu e estojo.", image: "violinos/Violino Tarttan Série 100 Preto Brilho 4/4/violin1-removebg-preview.png", thumbnails: ["violinos/Violino Tarttan Série 100 Preto Brilho 4/4/violin1-removebg-preview.png", "violinos/Violino Tarttan Série 100 Preto Brilho 4/4/violin1-verso.png", "violinos/Violino Tarttan Série 100 Preto Brilho 4/4/violin1-case.png"] },
+    { id: 2, category: "Violino", title: "Violino Acústico 4/4", price: "R$299,99", description: "Violino acústico 4/4 da marca Mix, corpo em MDF, completo com arco, breu, cavalete e estojo.", image: "violinos/2 Violino Acústico 44 Arco Breu Cavalete Mdf Estojo Luxo/violino2.png", thumbnails: ["violinos/2 Violino Acústico 44 Arco Breu Cavalete Mdf Estojo Luxo/violino2.png", "violinos/2 Violino Acústico 44 Arco Breu Cavalete Mdf Estojo Luxo/violino2- pessoas.jpg", "violinos/2 Violino Acústico 44 Arco Breu Cavalete Mdf Estojo Luxo/violino2- completo.png"] },
+    { id: 3, category: "Violino", title: "Violino Alan 4/4 AL-1410 Completo", price: "R$391,00", description: "Violino Alan AL-1410 4/4 Sunburst, tampo em Spruce, completo com acessórios e estojo térmico de luxo.", image: "violinos/3 Violino Alan 44 Al-1410 Completo/violino3.png", thumbnails: ["violinos/3 Violino Alan 44 Al-1410 Completo/violino3.png", "violinos/3 Violino Alan 44 Al-1410 Completo/violino3- case.png", "violinos/3 Violino Alan 44 Al-1410 Completo/violino3- com case.png"] },
+    // Violas
+    { id: 9, category: "Viola", title: "Viola De Arco Rolim Milor 40cm", price: "R$2.687,90", description: "Viola de Arco Rolim Milor, 40 cm, para destros, com acabamento brilhante. Inclui arco, breu e estojo.", image: "violas/1 Viola De Arco Rolim Milor/viola1- frente e verso.png", thumbnails: ["violas/1 Viola De Arco Rolim Milor/viola1- frente e verso.png", "violas/1 Viola De Arco Rolim Milor/viola1-.png", "violas/1 Viola De Arco Rolim Milor/viola1- case.png"] },
+    { id: 10, category: "Viola", title: "Viola Clássica Alan AL 1310 4/4", price: "R$647,00", description: "Viola clássica Alan 4/4, cor madeira, tampo em Spruce, com estojo térmico e acessórios.", image: "violas/2 Viola Clássica de Arco AL 1310 44 Alan Com Case Arco Breu Cavalete/viola2.png", thumbnails: ["violas/2 Viola Clássica de Arco AL 1310 44 Alan Com Case Arco Breu Cavalete/viola2.png", "violas/2 Viola Clássica de Arco AL 1310 44 Alan Com Case Arco Breu Cavalete/viola2- completa.png", "violas/2 Viola Clássica de Arco AL 1310 44 Alan Com Case Arco Breu Cavalete/viola2- case.png"] },
+    // Violoncelos
+    { id: 17, category: "Violoncelo", title: "Violoncelo AL 1210 4/4 Alan", price: "R$1.500,00", description: "Violoncelo Alan AL 1210 4/4, marrom avermelhado, com capa, arco e breu.", image: "violoncelos/1 Violoncelo AL 1210 44 Alan Com Capa Arco Breu/violoncelo1.png", thumbnails: ["violoncelos/1 Violoncelo AL 1210 44 Alan Com Capa Arco Breu/violoncelo1.png", "violoncelos/1 Violoncelo AL 1210 44 Alan Com Capa Arco Breu/violoncelo1- verso.png", "violoncelos/1 Violoncelo AL 1210 44 Alan Com Capa Arco Breu/violoncelo1- com case.png"] },
+    { id: 18, category: "Violoncelo", title: "Violoncelo Envelhecido AL 1210 4/4", price: "R$1.836,10", description: "Violoncelo Envelhecido Alan AL 1210 4/4 E, acabamento marrom fosco, acompanha capa, arco e breu.", image: "violoncelos/2 Alan, Violoncelo Envelhecido AL 1210 44 E Alan Com Capa Arco Breu/violoncelo2.png", thumbnails: ["violoncelos/2 Alan, Violoncelo Envelhecido AL 1210 44 E Alan Com Capa Arco Breu/violoncelo2.png", "violoncelos/2 Alan, Violoncelo Envelhecido AL 1210 44 E Alan Com Capa Arco Breu/violoncelo2- verso.png", "violoncelos/2 Alan, Violoncelo Envelhecido AL 1210 44 E Alan Com Capa Arco Breu/violoncelo2- com case.png"] },
 ];
 
-for (let i = 7; i <= 30; i++) {
-  const cat = orderedCategories[i % orderedCategories.length];
-  products.push({
-    id: i,
-    title: `Produto ${i}`,
-    price: `R$ ${(1000 + i * 10).toFixed(2).replace('.', ',')}`,
-    image: `imagens/placeholder.png`,
-    category: cat,
-    description: `Descrição fictícia do produto ${i}`
-  });
+// Gerar produtos fictícios para as outras categorias
+const startId = 25;
+for (let i = 0; i < 70; i++) {
+    const catIndex = (i + 3) % orderedCategories.length; // Começa de Violão em diante
+    const category = orderedCategories[catIndex];
+    products.push({
+        id: startId + i,
+        category: category,
+        title: `${category} Modelo ${i + 1}`,
+        price: `R$${(400 + i * 50).toFixed(2).replace('.', ',')}`,
+        description: `Descrição fictícia para o instrumento ${category} Modelo ${i + 1}.`,
+        image: `img/placeholder.png`, // Use uma imagem placeholder
+        thumbnails: [`img/placeholder.png`]
+    });
 }
 
-let filteredCategory = localStorage.getItem("selectedCategory") || null;
-let currentPage = parseInt(localStorage.getItem("currentPage")) || 1;
-const productsPerPage = 8;
+
+// --- 2. VARIÁVEIS DE ESTADO E ELEMENTOS DO DOM ---
+
 const productListEl = document.getElementById("product-list");
 const paginationEl = document.getElementById("pagination");
-const modal = document.getElementById("modal");
-const modalTitle = document.getElementById("modal-title");
-const modalPrice = document.getElementById("modal-price");
-const modalDescription = document.getElementById("modal-description");
-const modalMainImg = document.getElementById("modal-main-img");
-const modalThumbnails = document.getElementById("modal-thumbnails");
-const cartCountEl = document.getElementById("cart-count");
-const listaCarrinhoEl = document.getElementById("lista-carrinho");
-const totalCarrinhoEl = document.getElementById("total-carrinho");
+const categoryFiltersEl = document.getElementById("category-filters");
+const modalEl = document.getElementById("modal");
+const modalCloseBtn = document.getElementById("modal-close");
+const addToCartBtn = document.getElementById("add-to-cart-btn");
 
-let carrinho = [];
-let currentModalProduct = null;
+let carrinho = JSON.parse(localStorage.getItem('carrinhoMusicWave')) || [];
+let currentProduct = null;
+let productsPerPage = 8;
+
+const params = new URLSearchParams(window.location.search);
+let currentFilter = params.get("categoria") || "Todos";
+let currentPage = parseInt(params.get("page")) || 1;
+
+
+// --- 3. LÓGICA DE FILTRAGEM E PAGINAÇÃO ---
 
 function updateURL() {
-  const params = new URLSearchParams(window.location.search);
-  if (filteredCategory) params.set("categoria", filteredCategory);
-  else params.delete("categoria");
-  window.history.replaceState({}, '', `${location.pathname}?${params}`);
+    const params = new URLSearchParams();
+    if (currentFilter && currentFilter !== "Todos") {
+        params.set("categoria", currentFilter);
+    }
+    if (currentPage > 1) {
+        params.set("page", currentPage);
+    }
+    window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`);
 }
 
 function renderCategoryButtons() {
-  const container = document.getElementById("category-buttons");
-  container.innerHTML = "";
-  orderedCategories.forEach((cat) => {
-    const btn = document.createElement("button");
-    btn.className = "category-btn";
-    btn.textContent = categoriesMap[cat];
-    if (filteredCategory === cat) btn.classList.add("active");
-    btn.addEventListener("click", () => {
-      filteredCategory = cat;
-      currentPage = 1;
-      localStorage.setItem("selectedCategory", filteredCategory);
-      localStorage.setItem("currentPage", currentPage);
-      updateURL();
-      update();
+    categoryFiltersEl.innerHTML = "";
+    const allBtn = document.createElement("button");
+    allBtn.className = "category-btn";
+    allBtn.textContent = "Todos";
+    if (currentFilter === "Todos") allBtn.classList.add("active");
+    allBtn.addEventListener("click", () => {
+        currentFilter = "Todos";
+        currentPage = 1;
+        renderAll();
     });
-    container.appendChild(btn);
-  });
+    categoryFiltersEl.appendChild(allBtn);
+
+    orderedCategories.forEach(cat => {
+        const btn = document.createElement("button");
+        btn.className = "category-btn";
+        btn.textContent = cat;
+        if (currentFilter === cat) btn.classList.add("active");
+        btn.addEventListener("click", () => {
+            currentFilter = cat;
+            const categoryIndex = Math.floor(products.findIndex(p => p.category === cat) / productsPerPage);
+            currentPage = categoryIndex + 1;
+            renderAll();
+        });
+        categoryFiltersEl.appendChild(btn);
+    });
 }
 
-function renderProducts(page) {
-  productListEl.innerHTML = "";
-  const list = filteredCategory ? products.filter((p) => p.category === filteredCategory) : products;
-  const paginatedProducts = list.slice((page - 1) * productsPerPage, page * productsPerPage);
+function renderProducts() {
+    productListEl.innerHTML = "";
+    const filteredProducts = currentFilter === "Todos"
+        ? products
+        : products.filter(p => p.category === currentFilter);
 
-  paginatedProducts.forEach((product) => {
-    const card = document.createElement("div");
-    card.className = "instrumento-card";
-    card.innerHTML = `
-      <div class="card-image-container">
-        <img src="${product.image}" alt="${product.title}">
-      </div>
-      <h4>${product.title}</h4>
-      <p>${product.price}</p>
-      <button class="ver-detalhes-btn" data-id="${product.id}">Ver detalhes</button>
-    `;
-    card.querySelector(".ver-detalhes-btn").addEventListener("click", () => openModal(product));
-    productListEl.appendChild(card);
-  });
+    const start = (currentPage - 1) * productsPerPage;
+    const end = start + productsPerPage;
+    const paginatedProducts = filteredProducts.slice(start, end);
+
+    paginatedProducts.forEach(product => {
+        const card = document.createElement("div");
+        card.className = "instrumento-card";
+        card.innerHTML = `
+            <div class="card-image-container">
+                <img src="${product.image}" alt="${product.title}" loading="lazy">
+            </div>
+            <h4>${product.title}</h4>
+            <p>${product.price}</p>
+        `;
+        card.addEventListener("click", () => openModal(product));
+        productListEl.appendChild(card);
+    });
 }
 
 function renderPagination() {
-  paginationEl.innerHTML = "";
-  const list = filteredCategory ? products.filter(p => p.category === filteredCategory) : products;
-  const pageCount = Math.ceil(list.length / productsPerPage);
+    paginationEl.innerHTML = "";
+    const filteredProducts = currentFilter === "Todos"
+        ? products
+        : products.filter(p => p.category === currentFilter);
+    
+    const pageCount = Math.ceil(filteredProducts.length / productsPerPage);
 
-  for (let i = 1; i <= pageCount; i++) {
-    const pageBtn = document.createElement("span");
-    pageBtn.textContent = i;
-    if (i === currentPage) pageBtn.classList.add("active");
-    pageBtn.addEventListener("click", () => {
-      currentPage = i;
-      localStorage.setItem("currentPage", currentPage);
-      update();
+    for (let i = 1; i <= pageCount; i++) {
+        const pageBtn = document.createElement("span");
+        pageBtn.textContent = i;
+        if (i === currentPage) pageBtn.classList.add("active");
+        pageBtn.addEventListener("click", () => {
+            currentPage = i;
+            renderAll();
+        });
+        paginationEl.appendChild(pageBtn);
+    }
+}
+
+function renderAll() {
+    updateURL();
+    renderCategoryButtons();
+    renderProducts();
+    renderPagination();
+}
+
+
+// --- 4. LÓGICA DO MODAL ---
+
+function openModal(product) {
+    currentProduct = product;
+    document.getElementById("modal-title").textContent = product.title;
+    document.getElementById("modal-price").textContent = product.price;
+    document.getElementById("modal-description").textContent = product.description;
+    document.getElementById("modal-main-image").src = product.image;
+
+    const thumbnailsEl = document.getElementById("modal-thumbnails");
+    thumbnailsEl.innerHTML = "";
+    product.thumbnails.forEach((thumbSrc, index) => {
+        const thumbImg = document.createElement("img");
+        thumbImg.src = thumbSrc;
+        if (index === 0) thumbImg.classList.add("active");
+        thumbImg.addEventListener("click", (e) => {
+            document.getElementById("modal-main-image").src = thumbSrc;
+            thumbnailsEl.querySelector('.active')?.classList.remove('active');
+            e.target.classList.add('active');
+        });
+        thumbnailsEl.appendChild(thumbImg);
     });
-    paginationEl.appendChild(pageBtn);
-  }
+    
+    modalEl.classList.add("active");
 }
 
-function openModal(produto) {
-  currentModalProduct = produto;
-  modal.classList.add("active");
-  modalTitle.textContent = produto.title;
-  modalPrice.textContent = produto.price;
-  modalDescription.textContent = produto.description;
-  modalMainImg.src = produto.image;
-  modalThumbnails.innerHTML = `<img src="${produto.image}" alt="" class="active">`;
-  document.getElementById("quantity").value = 1;
+modalCloseBtn.addEventListener("click", () => modalEl.classList.remove("active"));
+addToCartBtn.addEventListener("click", () => {
+    adicionarAoCarrinho(currentProduct, 1);
+    modalEl.classList.remove("active");
+});
+
+
+// --- 5. LÓGICA DO CARRINHO DE COMPRAS ---
+
+function salvarCarrinho() {
+    localStorage.setItem('carrinhoMusicWave', JSON.stringify(carrinho));
 }
 
-document.getElementById("buy-btn").onclick = () => {
-  const qtd = parseInt(document.getElementById("quantity").value);
-  if (qtd >= 1) adicionarAoCarrinho(currentModalProduct, qtd);
-  modal.classList.remove("active");
-};
+function toggleCarrinho() {
+    document.getElementById('carrinho').classList.toggle('ativo');
+}
 
 function adicionarAoCarrinho(produto, quantidade) {
-  const existente = carrinho.find(item => item.id === produto.id);
-  if (existente) existente.quantidade += quantidade;
-  else carrinho.push({ ...produto, quantidade });
-  atualizarCarrinho();
-  alert(`${quantidade}x "${produto.title}" adicionado(s) ao carrinho!`);
+    const itemExistente = carrinho.find(item => item.id === produto.id);
+    if (itemExistente) {
+        itemExistente.quantidade += quantidade;
+    } else {
+        carrinho.push({ ...produto, quantidade: quantidade });
+    }
+    salvarCarrinho();
+    atualizarCarrinho();
+}
+
+function alterarQuantidade(itemId, delta) {
+    const item = carrinho.find(i => i.id === itemId);
+    if (item) {
+        item.quantidade += delta;
+        if (item.quantidade <= 0) {
+            carrinho = carrinho.filter(i => i.id !== itemId);
+        }
+    }
+    salvarCarrinho();
+    atualizarCarrinho();
+}
+
+function limparCarrinho() {
+    if (confirm("Tem certeza que deseja esvaziar o carrinho?")) {
+        carrinho = [];
+        salvarCarrinho();
+        atualizarCarrinho();
+    }
 }
 
 function atualizarCarrinho() {
-  let totalItens = carrinho.reduce((acc, item) => acc + item.quantidade, 0);
-  cartCountEl.innerText = totalItens;
-  listaCarrinhoEl.innerHTML = '';
-  let total = 0;
+    const listaCarrinhoEl = document.getElementById('lista-carrinho');
+    listaCarrinhoEl.innerHTML = "";
+    
+    if (carrinho.length === 0) {
+        listaCarrinhoEl.innerHTML = '<li class="carrinho-vazio">Seu carrinho está vazio.</li>';
+    }
 
-  carrinho.forEach((item, index) => {
-    const precoNumerico = parseFloat(item.price.replace('R$', '').replace('.', '').replace(',', '.'));
-    total += precoNumerico * item.quantidade;
+    let total = 0;
+    carrinho.forEach(item => {
+        const precoNumerico = parseFloat(item.price.replace('R$', '').replace(/\./g, '').replace(',', '.'));
+        total += precoNumerico * item.quantidade;
 
-    const li = document.createElement('li');
-    li.className = 'carrinho-item';
-    li.innerHTML = `
-      <img src="${item.image}" alt="${item.title}">
-      <div class="carrinho-item-info">
-        <h4>${item.title}</h4>
-        <p>${item.price}</p>
-        <div class="quantidade-controles">
-          <button onclick="alterarQuantidade(${index}, -1)">-</button>
-          <span>${item.quantidade}</span>
-          <button onclick="alterarQuantidade(${index}, 1)">+</button>
-        </div>
-        <button class="remover-item-btn" onclick="removerDoCarrinho(${index})">Remover</button>
-      </div>
-    `;
-    listaCarrinhoEl.appendChild(li);
-  });
-  totalCarrinhoEl.innerText = total.toFixed(2).replace('.', ',');
+        const li = document.createElement('li');
+        li.className = 'carrinho-item';
+        li.innerHTML = `
+            <img src="${item.image}" alt="${item.title}">
+            <div class="carrinho-item-info">
+                <h4>${item.title}</h4>
+                <p>${item.price}</p>
+                <div class="quantidade-controles">
+                    <button onclick="alterarQuantidade(${item.id}, -1)">-</button>
+                    <span>${item.quantidade}</span>
+                    <button onclick="alterarQuantidade(${item.id}, 1)">+</button>
+                </div>
+            </div>
+            <button class="remover-item-btn" onclick="alterarQuantidade(${item.id}, -Infinity)"><i class="bi bi-trash"></i></button>
+        `;
+        listaCarrinhoEl.appendChild(li);
+    });
+
+    document.getElementById('total-carrinho').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
 }
 
-function alterarQuantidade(index, delta) {
-  carrinho[index].quantidade += delta;
-  if (carrinho[index].quantidade <= 0) carrinho.splice(index, 1);
-  atualizarCarrinho();
+function finalizarCompra() {
+    const formaPagamento = document.getElementById('payment-method').value;
+    if (carrinho.length === 0) {
+        alert("Seu carrinho está vazio!");
+        return;
+    }
+    if (!formaPagamento) {
+        alert("Por favor, selecione uma forma de pagamento.");
+        return;
+    }
+    alert("Obrigado pela sua compra! (Esta é uma demonstração)");
+    carrinho = [];
+    salvarCarrinho();
+    atualizarCarrinho();
+    toggleCarrinho();
 }
 
-function removerDoCarrinho(index) {
-  carrinho.splice(index, 1);
-  atualizarCarrinho();
-}
+// --- 6. INICIALIZAÇÃO ---
 
-// Inicializar
-const params = new URLSearchParams(window.location.search);
-if (params.get("categoria") && orderedCategories.includes(params.get("categoria"))) {
-  filteredCategory = params.get("categoria");
-  localStorage.setItem("selectedCategory", filteredCategory);
-}
+document.addEventListener('DOMContentLoaded', () => {
+    renderAll();
+    atualizarCarrinho();
+});
 
-renderCategoryButtons();
-update();
-
-function update() {
-  renderCategoryButtons();
-  renderProducts(currentPage);
-  renderPagination();
-  updateURL();
-}
 </script>
 
-
-    
 </body>
 </html>
