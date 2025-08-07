@@ -1,95 +1,162 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <title>Catálogo de Instrumentos - MusicWave</title>
+    <title>Catálogo de Instrumentos</title>
     <style>
-        /* =================================
-           CSS COMPLETO E CONSOLIDADO
-        ================================= */
         :root {
-            --cor-primaria: #f7bd6d;
-            --cor-primaria-hover: #e6a12d;
-            --cor-texto-claro: #f5f5f5;
-            --cor-texto-escuro: #212121;
-            --fundo-pagina: #fdfaf5;
+            --laranja: #f7bd6d;
+            --laranja-hover: #e6a12d;
+            --texto-escuro: #212121;
             --fundo-card: #f9f1e984;
             --sombra: #372e271a;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--fundo-pagina);
-            color: var(--cor-texto-escuro);
+            background: #fdfaf5;
+            color: #333;
             margin: 0;
-            padding: 20px;
+            padding: 0;
         }
 
-        /* --- FILTROS DE CATEGORIA --- */
-        .filtros-container {
+        body.dark-mode {
+            background: #1e1e1e;
+            color: #f5f5f5;
+        }
+
+        body.dark-mode .instrumento-card,
+        body.dark-mode .modal-content,
+        body.dark-mode .carrinho-lateral {
+            background: #2a2a2a;
+            color: #f5f5f5;
+        }
+
+        body.dark-mode .ver-detalhes-btn,
+        body.dark-mode .buy-btn,
+        body.dark-mode .category-btn.active {
+            background-color: var(--laranja);
+            color: var(--texto-escuro);
+        }
+
+        body.dark-mode .category-btn {
+            border-color: var(--laranja);
+            color: var(--laranja);
+        }
+
+        body.dark-mode .page-btn span {
+            border-color: var(--laranja);
+            color: var(--laranja);
+        }
+
+        body.dark-mode .page-btn .active {
+            background-color: var(--laranja);
+            color: var(--texto-escuro);
+        }
+
+        body.dark-mode .quantidade-controles button,
+        body.dark-mode .remover-item-btn {
+            background-color: #3a3a3a;
+            color: #f5f5f5;
+        }
+
+        body.dark-mode .modal-thumbnails img.active {
+            border-color: var(--laranja);
+        }
+
+        /* FILTROS POR CATEGORIA */
+        .categoria-filtros {
             text-align: center;
-            margin-bottom: 30px;
+            margin: 20px 0;
+            padding: 0 10px;
             flex-wrap: wrap;
-            display: flex;
             justify-content: center;
+            display: flex; /* Adicionado para centralizar e quebrar linha */
         }
 
         .category-btn {
             background-color: transparent;
-            border: 2px solid var(--cor-primaria);
-            color: var(--cor-primaria);
+            border: 2px solid var(--laranja);
+            color: var(--laranja);
             font-weight: 700;
-            padding: 10px 18px;
-            border-radius: 8px;
+            padding: 8px 14px;
+            border-radius: 6px;
             cursor: pointer;
             margin: 5px;
-            transition: all 0.3s ease;
-            font-size: 14px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            white-space: nowrap; /* Evita que o texto do botão quebre */
         }
 
         .category-btn:hover {
-            background-color: var(--cor-primaria-hover);
-            color: var(--cor-texto-escuro);
-            border-color: var(--cor-primaria-hover);
+            background-color: var(--laranja);
+            color: var(--texto-escuro);
         }
 
         .category-btn.active {
-            background-color: var(--cor-primaria);
-            color: var(--cor-texto-escuro);
+            background-color: var(--laranja);
+            color: var(--texto-escuro);
             font-weight: 900;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        
-        /* --- CARDS DOS INSTRUMENTOS --- */
+
+        /* LISTAGEM DE PRODUTOS */
         .small-container-instrumentos {
             max-width: 1200px;
             margin: auto;
-            padding: 0 20px;
+            padding: 20px;
         }
 
         .row-instrumentos- {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            justify-items: center; /* Centraliza os cards dentro das colunas */
         }
 
         .instrumento-card {
+            box-sizing: border-box;
             padding: 15px;
             background-color: var(--fundo-card);
-            border-radius: 12px;
-            box-shadow: 0 5px 15px 0px var(--sombra);
+            border-radius: 10px;
+            box-shadow: 0 0 20px 0px var(--sombra);
             text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease;
+            position: relative;
             display: flex;
             flex-direction: column;
+            align-items: center;
             cursor: pointer;
+            max-width: 280px;
+            width: 100%; /* Garante que o card ocupe a largura total do grid item */
         }
 
         .instrumento-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 20px 0px #372e272a;
+            transform: translateY(-10px);
+        }
+
+        .instrumento-card h4 {
+            font-weight: 600;
+            color: #555;
+            margin: 0 0 8px;
+            font-size: 16px;
+            min-height: 48px; /* Mantém o alinhamento dos títulos */
+        }
+
+        .instrumento-card .rating {
+            margin-bottom: 8px;
+        }
+
+        .instrumento-card .rating .bi {
+            color: #ee971d;
+            font-size: 18px;
+            margin: 0 2px;
+        }
+
+        .instrumento-card p {
+            font-size: 14px;
+            font-weight: 700;
+            margin: 0 0 12px;
+            color: var(--texto-escuro);
         }
 
         .card-image-container {
@@ -105,489 +172,977 @@
         .card-image-container img {
             max-width: 100%;
             max-height: 100%;
+            height: auto;
+            width: auto;
             object-fit: contain;
+            border-radius: 10px;
         }
-        
-        .instrumento-card h4 {
-            font-weight: 600;
-            color: #444;
-            margin: 8px 0;
-            font-size: 16px;
-            min-height: 48px;
-        }
-        
-        .instrumento-card p {
-            font-size: 18px;
-            font-weight: 700;
-            margin: 8px 0 15px;
-            color: var(--cor-texto-escuro);
-        }
-        
+
         .ver-detalhes-btn {
             background-color: transparent;
-            border: 2px solid var(--cor-primaria);
-            color: var(--cor-primaria);
+            border: 2px solid var(--laranja);
+            color: var(--laranja);
             font-weight: 700;
-            padding: 10px 14px;
-            border-radius: 8px;
+            padding: 8px 14px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease;
             margin-top: auto;
             width: 100%;
         }
 
         .ver-detalhes-btn:hover {
-            background-color: var(--cor-primaria);
-            color: var(--cor-texto-escuro);
+            background-color: var(--laranja);
+            color: var(--texto-escuro);
         }
 
-        /* --- PAGINAÇÃO --- */
+        /* PAGINAÇÃO */
         .page-btn {
             text-align: center;
-            margin: 40px auto 80px;
-            user-select: none;
+            margin: 30px 0;
         }
 
         .page-btn span {
             display: inline-block;
-            border: 1px solid var(--cor-primaria);
-            margin: 0 5px;
-            height: 40px;
-            width: 40px;
-            line-height: 40px;
-            text-align: center;
-            border-radius: 50%;
+            padding: 8px 14px;
+            border: 1px solid var(--laranja);
+            margin: 0 4px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            color: var(--cor-primaria);
-            font-weight: 700;
+            border-radius: 5px;
+            color: var(--laranja);
+            font-weight: bold;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .page-btn span:hover {
-            background-color: var(--cor-primaria-hover);
-            color: var(--cor-texto-escuro);
-            border-color: var(--cor-primaria-hover);
+            background-color: var(--laranja);
+            color: var(--texto-escuro);
         }
 
-        .page-btn span.active {
-            background-color: var(--cor-primaria);
-            color: var(--cor-texto-escuro);
-            border-color: var(--cor-primaria);
-            pointer-events: none;
+        .page-btn .active {
+            background-color: var(--laranja);
+            color: var(--texto-escuro);
         }
 
-        /* --- MODAL DE DETALHES --- */
-        #modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(55, 46, 39, 0.8);
-            display: none; justify-content: center; align-items: center;
-            z-index: 9999; padding: 20px;
+        /* MODAL DE DETALHES DO PRODUTO */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
         }
-        #modal.active { display: flex; }
+
+        .modal.active {
+            display: flex;
+        }
+
         .modal-content {
-            background: #fff; border-radius: 12px; max-width: 800px;
-            width: 100%; max-height: 90vh; overflow-y: auto; padding: 30px 40px;
-            position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-            display: flex; flex-wrap: wrap; gap: 30px;
+            background: #fff;
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 900px;
+            width: 90%;
+            border-radius: 10px;
+            padding: 20px;
+            gap: 20px;
+            position: relative; /* Para posicionar o botão de fechar */
         }
-        .modal-left, .modal-right {
-            flex: 1 1 300px; display: flex; flex-direction: column;
+
+        .modal-left,
+        .modal-right {
+            flex: 1 1 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centraliza conteúdo no modal-left/right */
         }
-        .modal-left img.main-image { width: 100%; border-radius: 12px; object-fit: contain; }
-        .modal-thumbnails { margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap; }
-        .modal-thumbnails img { width: 70px; height: 70px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: border-color 0.3s ease; }
-        .modal-thumbnails img.active, .modal-thumbnails img:hover { border-color: var(--cor-primaria); }
-        .modal-right h3 { margin: 0 0 15px; font-size: 24px; }
-        .modal-right p.price { font-size: 22px; font-weight: 700; color: var(--cor-primaria); margin-bottom: 15px; }
-        .modal-right p.description { font-size: 15px; margin-bottom: 25px; color: #555; line-height: 1.6; }
-        .modal-right .add-to-cart-btn {
-            background-color: var(--cor-primaria); border: none; color: black; font-weight: 700;
-            padding: 12px 25px; font-size: 16px; border-radius: 10px; cursor: pointer; transition: background-color 0.3s ease; width: 100%;
+
+        .modal-left img { /* Ajuste para modal-main-img */
+            width: 100%;
+            max-width: 350px;
+            border-radius: 12px;
+            object-fit: contain;
         }
-        .modal-right .add-to-cart-btn:hover { background-color: var(--cor-primaria-hover); }
+
+        .modal-right input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            margin: 10px 0;
+        }
+
+        .modal-thumbnails {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .modal-thumbnails img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border: 2px solid transparent;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+
+        .modal-thumbnails img.active {
+            border-color: var(--laranja);
+        }
+
+        .modal-right button.buy-btn {
+            background-color: var(--laranja);
+            border: none;
+            color: black;
+            font-weight: 700;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px; /* Espaçamento abaixo da quantidade */
+        }
+
+        .modal-right button.buy-btn:hover {
+            background-color: var(--laranja-hover);
+        }
+
         .modal-close {
-            position: absolute; top: 15px; right: 20px; font-size: 30px;
-            color: #333; cursor: pointer; font-weight: 700;
+            position: absolute;
+            top: 10px; /* Ajuste para não colidir com o canto */
+            right: 20px;
+            background: transparent;
+            border: none;
+            font-size: 30px;
+            color: #333; /* Cor mais visível */
+            cursor: pointer;
+            z-index: 10000; /* Para garantir que fique acima do conteúdo */
         }
 
-        /* --- CARRINHO DE COMPRAS --- */
+        /* Carrinho lateral */
         .carrinho-lateral {
-            position: fixed; top: 0; right: 0; width: 380px; height: 100%;
-            background-color: #fdfaf6; box-shadow: -5px 0 15px rgba(0,0,0,0.15);
-            z-index: 10000; display: flex; flex-direction: column;
-            transform: translateX(100%); transition: transform 0.4s ease-in-out;
-        }
-        .carrinho-lateral.ativo { transform: translateX(0); }
-        .carrinho-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-bottom: 1px solid #e0e0e0; }
-        .carrinho-header h2 { margin: 0; font-size: 20px; }
-        .carrinho-fechar { background: none; border: none; font-size: 30px; cursor: pointer; color: #888; }
-        .carrinho-body { flex-grow: 1; list-style: none; padding: 10px 20px; margin: 0; overflow-y: auto; }
-        .carrinho-item { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #f0f0f0; }
-        .carrinho-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
-        .carrinho-item-info { flex-grow: 1; }
-        .carrinho-item-info h4 { margin: 0 0 5px; font-size: 14px; }
-        .carrinho-item-info p { margin: 0 0 8px; font-size: 14px; color: var(--cor-primaria); font-weight: bold; }
-        .quantidade-controles { display: flex; align-items: center; gap: 8px; }
-        .quantidade-controles button { background-color: #eee; border: 1px solid #ddd; cursor: pointer; width: 25px; height: 25px; border-radius: 50%; font-weight: bold; }
-        .remover-item-btn { background: none; border: none; color: #e74c3c; cursor: pointer; margin-left: auto; font-size: 20px; }
-        .carrinho-vazio { text-align: center; color: #888; padding: 40px 0; }
-        .carrinho-footer { padding: 20px; border-top: 1px solid #e0e0e0; background-color: #fff; }
-        .total-section { display: flex; justify-content: space-between; align-items: center; font-size: 18px; margin-bottom: 15px; }
-        #limpar-carrinho-btn { background: none; border: none; color: #888; text-decoration: underline; cursor: pointer; font-size: 12px; }
-        .payment-section { margin-top: 15px; }
-        .payment-section label { font-weight: 600; display: block; margin-bottom: 8px; }
-        .payment-section select { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc; }
-        .finalizar-compra-btn {
-            width: 100%; padding: 12px; background-color: var(--cor-primaria); border: none; color: black;
-            font-weight: bold; font-size: 16px; border-radius: 8px; cursor: pointer; margin-top: 15px;
+            position: fixed;
+            top: 60px; /* Ajuste se houver um header */
+            right: 0;
+            width: 320px;
+            background-color: #fff;
+            box-shadow: -3px 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            height: calc(100% - 60px);
+            overflow-y: auto;
+            z-index: 9998;
+            transform: translateX(100%); /* Esconde o carrinho por padrão */
+            transition: transform 0.3s ease-in-out;
         }
 
-        /* --- RESPONSIVIDADE --- */
-        @media (max-width: 900px) {
-            .row-instrumentos- { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+        .carrinho-lateral.active {
+            transform: translateX(0); /* Mostra o carrinho */
         }
-        @media (max-width: 480px) {
-            .row-instrumentos- { grid-template-columns: 1fr; }
-            .carrinho-lateral { width: 100%; }
+
+        .carrinho-lateral h3 {
+            margin-top: 0;
+            color: var(--texto-escuro);
+        }
+
+        .carrinho-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            border-bottom: 1px solid #eee; /* Separador de itens */
+            padding-bottom: 10px;
+        }
+
+        .carrinho-item:last-child {
+            border-bottom: none;
+        }
+
+        .carrinho-item img {
+            width: 70px; /* Tamanho maior para imagem no carrinho */
+            height: 70px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .carrinho-item-info {
+            flex-grow: 1; /* Ocupa espaço restante */
+        }
+
+        .carrinho-item-info h4 {
+            margin: 4px 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .carrinho-item-info p {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 5px;
+        }
+
+        .quantidade-controles {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+        .quantidade-controles button {
+            padding: 4px 10px;
+            background-color: #eee;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background-color 0.2s ease;
+        }
+
+        .quantidade-controles button:hover {
+            background-color: #ddd;
+        }
+
+        .remover-item-btn {
+            background: none;
+            border: none;
+            color: #e00;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 6px;
+            padding: 0;
+            text-align: left; /* Alinha o botão remover à esquerda */
+        }
+
+        #clear-cart-btn {
+            background-color: #e00;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        #clear-cart-btn:hover {
+            background-color: #c00;
+        }
+
+        /* Responsividade */
+        @media (max-width: 900px) {
+            .instrumento-card {
+                flex-basis: 45%;
+                max-width: none; /* Permite que o card se ajuste melhor em telas menores */
+            }
+            .modal-content {
+                flex-direction: column;
+                align-items: center;
+                max-height: 95vh; /* Ajusta a altura máxima do modal */
+                overflow-y: auto;
+            }
+            .modal-left,
+            .modal-right {
+                flex-basis: 100%;
+            }
+            .modal-close {
+                top: 5px;
+                right: 5px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .carrinho-lateral {
+                width: 100%;
+                top: auto;
+                bottom: 0;
+                height: 50vh;
+            }
+            .small-container-instrumentos {
+                padding: 10px;
+            }
+            .row-instrumentos- {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            }
+        }
+
+        @media (max-width: 500px) {
+            .instrumento-card {
+                flex-basis: 100%;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="filtros-container" id="category-filters"></div>
-    
+    <div class="categoria-filtros" id="category-buttons"></div>
+
     <div class="small-container-instrumentos">
         <div class="row-instrumentos-" id="product-list"></div>
     </div>
-    
+
     <div class="page-btn" id="pagination"></div>
-    
-    <div id="modal">
+
+    <div id="modal" class="modal">
         <div class="modal-content">
-            <span class="modal-close" id="modal-close">&times;</span>
+            <button class="modal-close" onclick="modal.classList.remove('active')">&times;</button>
             <div class="modal-left">
-                <img src="" alt="Imagem principal" class="main-image" id="modal-main-image" />
+                <img id="modal-main-img" src="" alt="Imagem do Produto" />
                 <div class="modal-thumbnails" id="modal-thumbnails"></div>
             </div>
             <div class="modal-right">
                 <h3 id="modal-title"></h3>
                 <p class="price" id="modal-price"></p>
                 <p class="description" id="modal-description"></p>
-                <button class="add-to-cart-btn" id="add-to-cart-btn">Adicionar ao carrinho</button>
+                <label for="quantity">Quantidade:</label>
+                <input type="number" id="quantity" min="1" value="1" />
+                <button class="buy-btn" id="buy-btn">Adicionar ao carrinho</button>
             </div>
         </div>
     </div>
 
     <div id="carrinho" class="carrinho-lateral">
-        <div class="carrinho-header">
-            <h2><i class="bi bi-cart3"></i> Seu Carrinho</h2>
-            <button class="carrinho-fechar" onclick="toggleCarrinho()">&times;</button>
+        <h3>Meu Carrinho (<span id="cart-count">0</span>)</h3>
+        <ul id="lista-carrinho"></ul>
+        <p>Total: R$ <span id="total-carrinho">0,00</span></p>
+        <button id="clear-cart-btn">Esvaziar Carrinho</button>
         </div>
-        <ul id="lista-carrinho" class="carrinho-body">
-            </ul>
-        <div class="carrinho-footer">
-            <div class="total-section">
-                <span><strong>Total:</strong></span>
-                <span id="total-carrinho">R$ 0,00</span>
-            </div>
-            <button id="limpar-carrinho-btn" onclick="limparCarrinho()">Esvaziar carrinho</button>
-            <div class="payment-section">
-                <label for="payment-method">Forma de pagamento:</label>
-                <select id="payment-method">
-                    <option value="" disabled selected>Selecione</option>
-                    <option value="cartao">Cartão de crédito</option>
-                    <option value="boleto">Boleto bancário</option>
-                    <option value="pix">PIX</option>
-                </select>
-            </div>
-            <button class="finalizar-compra-btn" onclick="finalizarCompra()">Finalizar Compra</button>
-        </div>
-    </div>
-
-<script>
-/* =================================
-   JAVASCRIPT COMPLETO E CONSOLIDADO
-================================= */
-
-// --- 1. CONFIGURAÇÃO E DADOS DOS PRODUTOS ---
-
-const orderedCategories = ["Violino", "Viola", "Violoncelo", "Violão", "Guitarra", "Baixo", "Cavaquinho", "Ukulele", "Viola Caipira", "Banjo", "Charango", "Bandolim"];
-
-const products = [
-    // Violinos
-    { id: 1, category: "Violino", title: "Violino Tarttan Série 100 Preto 4/4", price: "R$697,00", description: "Violino Tarttan Série 100, 4/4, acabamento preto brilhante, madeira laminada. Ajustado por luthier, inclui arco, breu e estojo.", image: "violinos/Violino Tarttan Série 100 Preto Brilho 4/4/violin1-removebg-preview.png", thumbnails: ["violinos/Violino Tarttan Série 100 Preto Brilho 4/4/violin1-removebg-preview.png", "violinos/Violino Tarttan Série 100 Preto Brilho 4/4/violin1-verso.png", "violinos/Violino Tarttan Série 100 Preto Brilho 4/4/violin1-case.png"] },
-    { id: 2, category: "Violino", title: "Violino Acústico 4/4", price: "R$299,99", description: "Violino acústico 4/4 da marca Mix, corpo em MDF, completo com arco, breu, cavalete e estojo.", image: "violinos/2 Violino Acústico 44 Arco Breu Cavalete Mdf Estojo Luxo/violino2.png", thumbnails: ["violinos/2 Violino Acústico 44 Arco Breu Cavalete Mdf Estojo Luxo/violino2.png", "violinos/2 Violino Acústico 44 Arco Breu Cavalete Mdf Estojo Luxo/violino2- pessoas.jpg", "violinos/2 Violino Acústico 44 Arco Breu Cavalete Mdf Estojo Luxo/violino2- completo.png"] },
-    { id: 3, category: "Violino", title: "Violino Alan 4/4 AL-1410 Completo", price: "R$391,00", description: "Violino Alan AL-1410 4/4 Sunburst, tampo em Spruce, completo com acessórios e estojo térmico de luxo.", image: "violinos/3 Violino Alan 44 Al-1410 Completo/violino3.png", thumbnails: ["violinos/3 Violino Alan 44 Al-1410 Completo/violino3.png", "violinos/3 Violino Alan 44 Al-1410 Completo/violino3- case.png", "violinos/3 Violino Alan 44 Al-1410 Completo/violino3- com case.png"] },
-    // Violas
-    { id: 9, category: "Viola", title: "Viola De Arco Rolim Milor 40cm", price: "R$2.687,90", description: "Viola de Arco Rolim Milor, 40 cm, para destros, com acabamento brilhante. Inclui arco, breu e estojo.", image: "violas/1 Viola De Arco Rolim Milor/viola1- frente e verso.png", thumbnails: ["violas/1 Viola De Arco Rolim Milor/viola1- frente e verso.png", "violas/1 Viola De Arco Rolim Milor/viola1-.png", "violas/1 Viola De Arco Rolim Milor/viola1- case.png"] },
-    { id: 10, category: "Viola", title: "Viola Clássica Alan AL 1310 4/4", price: "R$647,00", description: "Viola clássica Alan 4/4, cor madeira, tampo em Spruce, com estojo térmico e acessórios.", image: "violas/2 Viola Clássica de Arco AL 1310 44 Alan Com Case Arco Breu Cavalete/viola2.png", thumbnails: ["violas/2 Viola Clássica de Arco AL 1310 44 Alan Com Case Arco Breu Cavalete/viola2.png", "violas/2 Viola Clássica de Arco AL 1310 44 Alan Com Case Arco Breu Cavalete/viola2- completa.png", "violas/2 Viola Clássica de Arco AL 1310 44 Alan Com Case Arco Breu Cavalete/viola2- case.png"] },
-    // Violoncelos
-    { id: 17, category: "Violoncelo", title: "Violoncelo AL 1210 4/4 Alan", price: "R$1.500,00", description: "Violoncelo Alan AL 1210 4/4, marrom avermelhado, com capa, arco e breu.", image: "violoncelos/1 Violoncelo AL 1210 44 Alan Com Capa Arco Breu/violoncelo1.png", thumbnails: ["violoncelos/1 Violoncelo AL 1210 44 Alan Com Capa Arco Breu/violoncelo1.png", "violoncelos/1 Violoncelo AL 1210 44 Alan Com Capa Arco Breu/violoncelo1- verso.png", "violoncelos/1 Violoncelo AL 1210 44 Alan Com Capa Arco Breu/violoncelo1- com case.png"] },
-    { id: 18, category: "Violoncelo", title: "Violoncelo Envelhecido AL 1210 4/4", price: "R$1.836,10", description: "Violoncelo Envelhecido Alan AL 1210 4/4 E, acabamento marrom fosco, acompanha capa, arco e breu.", image: "violoncelos/2 Alan, Violoncelo Envelhecido AL 1210 44 E Alan Com Capa Arco Breu/violoncelo2.png", thumbnails: ["violoncelos/2 Alan, Violoncelo Envelhecido AL 1210 44 E Alan Com Capa Arco Breu/violoncelo2.png", "violoncelos/2 Alan, Violoncelo Envelhecido AL 1210 44 E Alan Com Capa Arco Breu/violoncelo2- verso.png", "violoncelos/2 Alan, Violoncelo Envelhecido AL 1210 44 E Alan Com Capa Arco Breu/violoncelo2- com case.png"] },
-];
-
-// Gerar produtos fictícios para as outras categorias
-const startId = 25;
-for (let i = 0; i < 70; i++) {
-    const catIndex = (i + 3) % orderedCategories.length; // Começa de Violão em diante
-    const category = orderedCategories[catIndex];
-    products.push({
-        id: startId + i,
-        category: category,
-        title: `${category} Modelo ${i + 1}`,
-        price: `R$${(400 + i * 50).toFixed(2).replace('.', ',')}`,
-        description: `Descrição fictícia para o instrumento ${category} Modelo ${i + 1}.`,
-        image: `img/placeholder.png`, // Use uma imagem placeholder
-        thumbnails: [`img/placeholder.png`]
-    });
-}
 
 
-// --- 2. VARIÁVEIS DE ESTADO E ELEMENTOS DO DOM ---
+    <script>
+        const orderedCategories = [
+            "all", "violino", "viola", "violoncelo", "violao", "guitarra", "baixo",
+            "cavaquinho", "ukulele", "viola caipira", "banjo", "charango", "bandolim"
+        ];
+        const categoriesMap = {
+            "all": "Todos os Instrumentos",
+            "violino": "Violino",
+            "viola": "Viola",
+            "violoncelo": "Violoncelo",
+            "violao": "Violão",
+            "guitarra": "Guitarra",
+            "baixo": "Baixo",
+            "cavaquinho": "Cavaquinho",
+            "ukulele": "Ukulele",
+            "viola caipira": "Viola Caipira",
+            "banjo": "Banjo",
+            "charango": "Charango",
+            "bandolim": "Bandolim"
+        };
 
-const productListEl = document.getElementById("product-list");
-const paginationEl = document.getElementById("pagination");
-const categoryFiltersEl = document.getElementById("category-filters");
-const modalEl = document.getElementById("modal");
-const modalCloseBtn = document.getElementById("modal-close");
-const addToCartBtn = document.getElementById("add-to-cart-btn");
+        const products = [
+            [cite_start]// Violinos 1-8 [cite: 961, 962, 963, 964, 965, 966, 967, 968, 969, 970, 971, 972, 973]
+            {
+                id: 1,
+                category: "violino",
+                title: "Violino Tarttan Série 100 Preto Brilho 4/4",
+                price: "R$697,00",
+                description: "Este violino Tarttan Série 100, importado da China, é um 4/4 com acabamento preto brilhante. Fabricado com madeira laminada, é ajustado por luthier e vem com estandarte de 4 micro afinadores. Inclui arco, breu e estojo preto.",
+                image: "violinos/Violino Tarttan Série 100 Preto Brilho 4/4/violin1-removebg-preview.png",
+                thumbnails: [
+                    "violinos/Violino Tarttan Série 100 Preto Brilho 4/4/violin1-removebg-preview.png",
+                    "violinos/Violino Tarttan Série 100 Preto Brilho 4/4/violin1-verso.png",
+                    "violinos/Violino Tarttan Série 100 Preto Brilho 4/4/violin1-case.png"
+                ]
+            },
+            {
+                id: 2,
+                category: "violino",
+                title: "Violino Acústico 4/4",
+                price: "R$299,99",
+                description: "Este violino acústico 4/4 da marca Mix, na cor marrom, possui corpo em MDF tanto na parte superior quanto na traseira. Suas dimensões são 70 x 30 x 70 cm e vem completo com arco, breu, cavalete e um luxuoso estojo.",
+                image: "violinos/2 Violino Acústico 44 Arco Breu Cavalete Mdf Estojo Luxo/violino2.png",
+                thumbnails: [
+                    "violinos/2 Violino Acústico 44 Arco Breu Cavalete Mdf Estojo Luxo/violino2.png",
+                    "violinos/2 Violino Acústico 44 Arco Breu Cavalete Mdf Estojo Luxo/violino2- pessoas.jpg",
+                    "violinos/2 Violino Acústico 44 Arco Breu Cavalete Mdf Estojo Luxo/violino2- completo.png"
+                ]
+            },
+            {
+                id: 3,
+                category: "violino",
+                title: "Violino Alan 4/4 Al-1410 Completo",
+                price: "R$391,00",
+                description: "O Violino Alan AL-1410 é um modelo 4/4 completo na cor Sunburst. Com tampo em Spruce (revestido), traseira e lateral em Maple, cravelhas, queixeira e estandarte em Boxwood, e escala em Maple. Inclui 4 micro afinadores, filetes entalhados, estojo térmico de luxo e arco de crina sintética de 75 cm. Suas dimensões são 60 x 21 x 4 cm.",
+                image: "violinos/3 Violino Alan 44 Al-1410 Completo/violino3.png",
+                thumbnails: [
+                    "violinos/3 Violino Alan 44 Al-1410 Completo/violino3.png",
+                    "violinos/3 Violino Alan 44 Al-1410 Completo/violino3- case.png",
+                    "violinos/3 Violino Alan 44 Al-1410 Completo/violino3- com case.png"
+                ]
+            },
+            {
+                id: 4,
+                category: "violino",
+                title: "Violino Dominante 9649 3/4",
+                price: "R$439,00",
+                description: "Este violino acústico Dominante 9649, tamanho 3/4, apresenta acabamento brilhante na cor natural. Não é para canhotos. O corpo é feito de Spruce e o diapasão de Ébano. Acompanha arco e estojo.",
+                image: "violinos/4 Violino Dominante 9649 34 Natural Acabamento Brilhante/violino4.png",
+                thumbnails: [
+                    "violinos/4 Violino Dominante 9649 34 Natural Acabamento Brilhante/violino4.png",
+                    "violinos/4 Violino Dominante 9649 34 Natural Acabamento Brilhante/violino4- dentro da case.png",
+                    "violinos/4 Violino Dominante 9649 34 Natural Acabamento Brilhante/violino4- detalhes.jpg"
+                ]
+            },
+            {
+                id: 5,
+                category: "violino",
+                title: "Violino Tarttan Série 100 Natural 4/4 com Case",
+                price: "R$697,00",
+                description: "O Violino Tarttan Série 100 da marca Xenox é um modelo 4/4 natural, com acabamento em verniz. Possui tampo de Ácer e parte traseira em madeira compensada. Acompanha case.",
+                image: "violinos/5 Violino Tarttan Série 100 Natural 44 com Case/violino5- com case.png",
+                thumbnails: [
+                    "violinos/5 Violino Tarttan Série 100 Natural 44 com Case/violino5- com case.png",
+                    "violinos/5 Violino Tarttan Série 100 Natural 44 com Case/violino5- interior.jpg",
+                    "violinos/5 Violino Tarttan Série 100 Natural 44 com Case/violino5- parte inferior.png"
+                ]
+            },
+            {
+                id: 6,
+                category: "violino",
+                title: "Violino Eagle VE441 Classic Series 4/4",
+                price: "R$1.140,00",
+                description: "O Violino Eagle VE441 Classic Series da marca TMZUAMOZ é um modelo 4/4 na cor natural. Possui tampo de Abeto. Suas dimensões são 80 x 30 x 20 cm.",
+                image: "violinos/6 Violino Eagle VE441 Classic Series 44/violino6.png",
+                thumbnails: [
+                    "violinos/6 Violino Eagle VE441 Classic Series 44/violino6.png",
+                    "violinos/6 Violino Eagle VE441 Classic Series 44/violino6- dentro da case.png",
+                    "violinos/6 Violino Eagle VE441 Classic Series 44/violino6- frente e verso.png"
+                ]
+            },
+            {
+                id: 7,
+                category: "violino",
+                title: "Violino Vogga VON144N 4/4",
+                price: "R$439,00",
+                description: "O Violino Vogga VON144N é um modelo 4/4 na cor Natural Fosco, de origem chinesa. Possui tampo em Spruce. Suas dimensões são 80 x 26 x 11 cm.",
+                image: "violinos/7 VIOLINO VOGGA VON144N 44/violino7- completo.png",
+                thumbnails: [
+                    "violinos/7 VIOLINO VOGGA VON144N 44/violino7- completo.png",
+                    "violinos/7 VIOLINO VOGGA VON144N 44/violino7- frente.png",
+                    "violinos/7 VIOLINO VOGGA VON144N 44/violino7- verso.png"
+                ]
+            },
+            {
+                id: 8,
+                category: "violino",
+                title: "Violino Vivace Strauss 4/4 Fosco",
+                price: "R$1.799,00",
+                description: "O Violino Vivace Strauss é um modelo 4/4 com acabamento fosco. Possui tampo de Abeto e parte traseira de madeira de bordo. Acompanha case térmico.",
+                image: "violinos/8 Violino Vivace Strauss 44 Fosco Com Case Térmico/violino8.png",
+                thumbnails: [
+                    "violinos/8 Violino Vivace Strauss 44 Fosco Com Case Térmico/violino8.png",
+                    "violinos/8 Violino Vivace Strauss 44 Fosco Com Case Térmico/violino8- frente.png",
+                    "violinos/8 Violino Vivace Strauss 44 Fosco Com Case Térmico/violino8- verso.png"
+                ]
+            },
 
-let carrinho = JSON.parse(localStorage.getItem('carrinhoMusicWave')) || [];
-let currentProduct = null;
-let productsPerPage = 8;
+            [cite_start]// Violas 9-16 [cite: 974, 975, 976, 977, 978, 979, 980, 981]
+            {
+                id: 9,
+                category: "viola",
+                title: "Viola De Arco Rolim Milor 40cm Serie Especial ",
+                price: "R$2.687,90",
+                description: "A Viola de Arco Rolim Milor é um modelo acústico de 40 cm, para destros, com acabamento brilhante e 4 cordas. Inclui como acessórios: arco de crina genuína, breu e estojo.",
+                image: "violas/1 Viola De Arco Rolim Milor/viola1- frente e verso.png",
+                thumbnails: [
+                    "violas/1 Viola De Arco Rolim Milor/viola1- frente e verso.png",
+                    "violas/1 Viola De Arco Rolim Milor/viola1-.png",
+                    "violas/1 Viola De Arco Rolim Milor/viola1- case.png"
+                ]
+            },
+            {
+                id: 10,
+                category: "viola",
+                title: "Viola Clássica de Arco Alan AL 1310 4/4",
+                price: "R$647,00",
+                description: "Esta viola clássica de arco Alan, tamanho 4/4, na cor madeira, possui dimensões de 66 x 23 x 4,5 cm. Seu tampo é revestido em Spruce, enquanto a traseira e as laterais são em Maple. Conta com cravelhas, queixeira e estandarte em Boxwood, escala em Maple, e 4 micro afinadores metálicos. Os filetes são entalhados, e o instrumento vem com um luxuoso estojo térmico, arco de crina sintética de 75 cm, breu e cavalete.",
+                image: "violas/2 Viola Clássica de Arco AL 1310 44 Alan Com Case Arco Breu Cavalete/viola2.png",
+                thumbnails: [
+                    "violas/2 Viola Clássica de Arco AL 1310 44 Alan Com Case Arco Breu Cavalete/viola2.png",
+                    "violas/2 Viola Clássica de Arco AL 1310 44 Alan Com Case Arco Breu Cavalete/viola2- completa.png",
+                    "violas/2 Viola Clássica de Arco AL 1310 44 Alan Com Case Arco Breu Cavalete/viola2- case.png"
+                ]
+            },
+            {
+                id: 11,
+                category: "viola",
+                title: "Viola de Arco Profissional Stradivarius",
+                price: "R$5.999,00",
+                description: "A Viola de Arco Profissional Stradivarius, da marca 'Viola Chinesa Harmonizada', é um modelo acústico para destros.",
+                image: "violas/3 Viola De Arco Profissional STRADIVARIUS/viola3- frente e verso.png",
+                thumbnails: [
+                    "violas/3 Viola De Arco Profissional STRADIVARIUS/viola3- frente e verso.png",
+                    "violas/3 Viola De Arco Profissional STRADIVARIUS/viola3- cavalete.jpg",
+                    "violas/3 Viola De Arco Profissional STRADIVARIUS/viola3.png"
+                ]
+            },
+            {
+                id: 12,
+                category: "viola",
+                title: "Viola de Arco 4/4 VA150 Envernizado EAGLE",
+                price: "R$1.279,00",
+                description: "A Viola de Arco Eagle VA150 é um modelo 4/4 com dimensões de 13 x 31 x 86 cm. Possui tampo em Maple e parte traseira em Ébano e Maple, com acabamento envernizado.",
+                image: "violas/4 Viola de Arco 44 VA150 Envernizado EAGLE/viola4- frente.png",
+                thumbnails: [
+                    "violas/4 Viola de Arco 44 VA150 Envernizado EAGLE/viola4- frente.png",
+                    "violas/4 Viola de Arco 44 VA150 Envernizado EAGLE/viola4- verso.png",
+                    "violas/4 Viola de Arco 44 VA150 Envernizado EAGLE/viola4- dentro da case.png"
+                ]
+            },
+            {
+                id: 13,
+                category: "viola",
+                title: "Viola Clássica Envelhecida Alan AL 1310 3/4 E",
+                price: "R$660,00",
+                description: "A Viola Clássica Envelhecida Alan AL 1310 3/4 E possui acabamento marrom fosco envelhecido. Com dimensões de 88 x 36 x 16 cm, seu tampo é feito de Plywood e as cordas são de aço inoxidável.",
+                image: "violas/5 Viola Clássica Envelhecida AL 1310 34 E Alan/viola5- completa.png",
+                thumbnails: [
+                    "violas/5 Viola Clássica Envelhecida AL 1310 34 E Alan/viola5- completa.png",
+                    "violas/5 Viola Clássica Envelhecida AL 1310 34 E Alan/viola5- verso.png",
+                    "violas/5 Viola Clássica Envelhecida AL 1310 34 E Alan/viola5- inclinada.png"
+                ]
+            },
+            {
+                id: 14,
+                category: "viola",
+                title: "Viola Antoni Marsale Série YA320 40,5cm 16",
+                price: "R$2.297,00",
+                description: "A Viola Antoni Marsale série YA320, de 40,5 cm (16 polegadas), é feita de madeiras maciças (Acero e Abeto) e possui 4 cordas. É ajustada por luthier, vem com estandarte com micro afinador na corda Lá, e acompanha breu.",
+                image: "violas/6 Viola Antoni Marsale Série YA320 40,5cm 16/viola6.png",
+                thumbnails: [
+                    "violas/6 Viola Antoni Marsale Série YA320 40,5cm 16/viola6.png",
+                    "violas/6 Viola Antoni Marsale Série YA320 40,5cm 16/viola6-verso.png",
+                    "violas/6 Viola Antoni Marsale Série YA320 40,5cm 16/viola6-case.png"
+                ]
+            },
+            {
+                id: 15,
+                category: "viola",
+                title: "Viola Eagle VA100 Envernizado 3/4",
+                price: "R$1.150,00",
+                description: "A Viola Eagle VA100 é um modelo 3/4 com acabamento envernizado natural. Ideal para estudantes.",
+                image: "violas/7 Viola Eagle VA100 Envernizado 34/viola7.png",
+                thumbnails: [
+                    "violas/7 Viola Eagle VA100 Envernizado 34/viola7.png",
+                    "violas/7 Viola Eagle VA100 Envernizado 34/viola7-completa.png",
+                    "violas/7 Viola Eagle VA100 Envernizado 34/viola7-case.png"
+                ]
+            },
+            {
+                id: 16,
+                category: "viola",
+                title: "Viola de Orquestra Michael VOM400 40cm",
+                price: "R$1.500,00",
+                description: "A Viola de Orquestra Michael VOM400, de 40cm, oferece excelente sonoridade e acabamento. Ideal para músicos de orquestra.",
+                image: "violas/8 Viola de Orquestra Michael VOM400 40cm/viola8.png",
+                thumbnails: [
+                    "violas/8 Viola de Orquestra Michael VOM400 40cm/viola8.png",
+                    "violas/8 Viola de Orquestra Michael VOM400 40cm/viola8-verso.png",
+                    "violas/8 Viola de Orquestra Michael VOM400 40cm/viola8-detalhe.png"
+                ]
+            },
 
-const params = new URLSearchParams(window.location.search);
-let currentFilter = params.get("categoria") || "Todos";
-let currentPage = parseInt(params.get("page")) || 1;
+            // Violoncelos 17-24 (8 produtos)
+            {
+                id: 17,
+                category: "violoncelo",
+                title: "Violoncelo 4/4 Envernizado Spring",
+                price: "R$3.500,00",
+                description: "Violoncelo 4/4 da marca Spring, acabamento envernizado. Acompanha arco e capa.",
+                image: "violoncelos/1 Violoncelo 44 Envernizado Spring/violoncelo1.png",
+                thumbnails: [
+                    "violoncelos/1 Violoncelo 44 Envernizado Spring/violoncelo1.png",
+                    "violoncelos/1 Violoncelo 44 Envernizado Spring/violoncelo1-completo.png",
+                    "violoncelos/1 Violoncelo 44 Envernizado Spring/violoncelo1-case.png"
+                ]
+            },
+            {
+                id: 18,
+                category: "violoncelo",
+                title: "Violoncelo Clássico 3/4 Alan AL2010",
+                price: "R$2.800,00",
+                description: "Violoncelo 3/4 clássico da Alan, modelo AL2010. Excelente para estudantes avançados.",
+                image: "violoncelos/2 Violoncelo Clássico 34 Alan AL2010/violoncelo2.png",
+                thumbnails: [
+                    "violoncelos/2 Violoncelo Clássico 34 Alan AL2010/violoncelo2.png",
+                    "violoncelos/2 Violoncelo Clássico 34 Alan AL2010/violoncelo2-verso.png",
+                    "violoncelos/2 Violoncelo Clássico 34 Alan AL2010/violoncelo2-detalhe.png"
+                ]
+            },
+            {
+                id: 19,
+                category: "violoncelo",
+                title: "Violoncelo Michael VCM400 4/4 Acústico",
+                price: "R$4.100,00",
+                description: "Violoncelo acústico Michael VCM400 4/4, com sonoridade rica e projeção.",
+                image: "violoncelos/3 Violoncelo Michael VCM400 44 Acústico/violoncelo3.png",
+                thumbnails: [
+                    "violoncelos/3 Violoncelo Michael VCM400 44 Acústico/violoncelo3.png",
+                    "violoncelos/3 Violoncelo Michael VCM400 44 Acústico/violoncelo3-completo.png",
+                    "violoncelos/3 Violoncelo Michael VCM400 44 Acústico/violoncelo3-frente.png"
+                ]
+            },
+            {
+                id: 20,
+                category: "violoncelo",
+                title: "Violoncelo Eagle CE300 1/2 Com Case",
+                price: "R$2.950,00",
+                description: "Violoncelo Eagle CE300 tamanho 1/2, ideal para jovens estudantes. Acompanha case de transporte.",
+                image: "violoncelos/4 Violoncelo Eagle CE300 12 Com Case/violoncelo4.png",
+                thumbnails: [
+                    "violoncelos/4 Violoncelo Eagle CE300 12 Com Case/violoncelo4.png",
+                    "violoncelos/4 Violoncelo Eagle CE300 12 Com Case/violoncelo4-aberto.png",
+                    "violoncelos/4 Violoncelo Eagle CE300 12 Com Case/violoncelo4-verso.png"
+                ]
+            },
+            {
+                id: 21,
+                category: "violoncelo",
+                title: "Violoncelo Elétrico Yamaha SVC-50",
+                price: "R$7.500,00",
+                description: "Violoncelo elétrico Yamaha SVC-50, ideal para performances e prática silenciosa.",
+                image: "violoncelos/5 Violoncelo Eletrico Yamaha SVC-50/violoncelo5.png",
+                thumbnails: [
+                    "violoncelos/5 Violoncelo Eletrico Yamaha SVC-50/violoncelo5.png",
+                    "violoncelos/5 Violoncelo Eletrico Yamaha SVC-50/violoncelo5-detalhe.png",
+                    "violoncelos/5 Violoncelo Eletrico Yamaha SVC-50/violoncelo5-frontal.png"
+                ]
+            },
+            {
+                id: 22,
+                category: "violoncelo",
+                title: "Violoncelo Vogga VCA44N 4/4 Natural",
+                price: "R$2.700,00",
+                description: "Violoncelo Vogga VCA44N 4/4 na cor natural. Ótima opção para iniciantes com bom custo-benefício.",
+                image: "violoncelos/6 Violoncelo Vogga VCA44N 44 Natural/violoncelo6.png",
+                thumbnails: [
+                    "violoncelos/6 Violoncelo Vogga VCA44N 44 Natural/violoncelo6.png",
+                    "violoncelos/6 Violoncelo Vogga VCA44N 44 Natural/violoncelo6-completo.png",
+                    "violoncelos/6 Violoncelo Vogga VCA44N 44 Natural/violoncelo6-detalhe.png"
+                ]
+            },
+            {
+                id: 23,
+                category: "violoncelo",
+                title: "Violoncelo Luthier Profissional 4/4",
+                price: "R$8.900,00",
+                description: "Violoncelo artesanal construído por luthier renomado. Som excepcional e acabamento superior.",
+                image: "violoncelos/7 Violoncelo Luthier Profissional 44/violoncelo7.png",
+                thumbnails: [
+                    "violoncelos/7 Violoncelo Luthier Profissional 44/violoncelo7.png",
+                    "violoncelos/7 Violoncelo Luthier Profissional 44/violoncelo7-case.png",
+                    "violoncelos/7 Violoncelo Luthier Profissional 44/violoncelo7-frontal.png"
+                ]
+            },
+            {
+                id: 24,
+                category: "violoncelo",
+                title: "Violoncelo Student Series 1/4 (Marca Fictícia)",
+                price: "R$1.900,00",
+                description: "Violoncelo de estudo tamanho 1/4, ideal para crianças. Fácil de manusear e boa sonoridade para aprendizado.",
+                image: "violoncelos/8 Violoncelo Student Series 14/violoncelo8.png",
+                thumbnails: [
+                    "violoncelos/8 Violoncelo Student Series 14/violoncelo8.png",
+                    "violoncelos/8 Violoncelo Student Series 14/violoncelo8-completo.png",
+                    "violoncelos/8 Violoncelo Student Series 14/violoncelo8-detalhe.png"
+                ]
+            },
+        ];
 
+        // Adicionar produtos fictícios para as demais categorias
+        const existingProductCount = products.length;
+        let nextId = existingProductCount + 1;
 
-// --- 3. LÓGICA DE FILTRAGEM E PAGINAÇÃO ---
-
-function updateURL() {
-    const params = new URLSearchParams();
-    if (currentFilter && currentFilter !== "Todos") {
-        params.set("categoria", currentFilter);
-    }
-    if (currentPage > 1) {
-        params.set("page", currentPage);
-    }
-    window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`);
-}
-
-function renderCategoryButtons() {
-    categoryFiltersEl.innerHTML = "";
-    const allBtn = document.createElement("button");
-    allBtn.className = "category-btn";
-    allBtn.textContent = "Todos";
-    if (currentFilter === "Todos") allBtn.classList.add("active");
-    allBtn.addEventListener("click", () => {
-        currentFilter = "Todos";
-        currentPage = 1;
-        renderAll();
-    });
-    categoryFiltersEl.appendChild(allBtn);
-
-    orderedCategories.forEach(cat => {
-        const btn = document.createElement("button");
-        btn.className = "category-btn";
-        btn.textContent = cat;
-        if (currentFilter === cat) btn.classList.add("active");
-        btn.addEventListener("click", () => {
-            currentFilter = cat;
-            const categoryIndex = Math.floor(products.findIndex(p => p.category === cat) / productsPerPage);
-            currentPage = categoryIndex + 1;
-            renderAll();
-        });
-        categoryFiltersEl.appendChild(btn);
-    });
-}
-
-function renderProducts() {
-    productListEl.innerHTML = "";
-    const filteredProducts = currentFilter === "Todos"
-        ? products
-        : products.filter(p => p.category === currentFilter);
-
-    const start = (currentPage - 1) * productsPerPage;
-    const end = start + productsPerPage;
-    const paginatedProducts = filteredProducts.slice(start, end);
-
-    paginatedProducts.forEach(product => {
-        const card = document.createElement("div");
-        card.className = "instrumento-card";
-        card.innerHTML = `
-            <div class="card-image-container">
-                <img src="${product.image}" alt="${product.title}" loading="lazy">
-            </div>
-            <h4>${product.title}</h4>
-            <p>${product.price}</p>
-        `;
-        card.addEventListener("click", () => openModal(product));
-        productListEl.appendChild(card);
-    });
-}
-
-function renderPagination() {
-    paginationEl.innerHTML = "";
-    const filteredProducts = currentFilter === "Todos"
-        ? products
-        : products.filter(p => p.category === currentFilter);
-    
-    const pageCount = Math.ceil(filteredProducts.length / productsPerPage);
-
-    for (let i = 1; i <= pageCount; i++) {
-        const pageBtn = document.createElement("span");
-        pageBtn.textContent = i;
-        if (i === currentPage) pageBtn.classList.add("active");
-        pageBtn.addEventListener("click", () => {
-            currentPage = i;
-            renderAll();
-        });
-        paginationEl.appendChild(pageBtn);
-    }
-}
-
-function renderAll() {
-    updateURL();
-    renderCategoryButtons();
-    renderProducts();
-    renderPagination();
-}
-
-
-// --- 4. LÓGICA DO MODAL ---
-
-function openModal(product) {
-    currentProduct = product;
-    document.getElementById("modal-title").textContent = product.title;
-    document.getElementById("modal-price").textContent = product.price;
-    document.getElementById("modal-description").textContent = product.description;
-    document.getElementById("modal-main-image").src = product.image;
-
-    const thumbnailsEl = document.getElementById("modal-thumbnails");
-    thumbnailsEl.innerHTML = "";
-    product.thumbnails.forEach((thumbSrc, index) => {
-        const thumbImg = document.createElement("img");
-        thumbImg.src = thumbSrc;
-        if (index === 0) thumbImg.classList.add("active");
-        thumbImg.addEventListener("click", (e) => {
-            document.getElementById("modal-main-image").src = thumbSrc;
-            thumbnailsEl.querySelector('.active')?.classList.remove('active');
-            e.target.classList.add('active');
-        });
-        thumbnailsEl.appendChild(thumbImg);
-    });
-    
-    modalEl.classList.add("active");
-}
-
-modalCloseBtn.addEventListener("click", () => modalEl.classList.remove("active"));
-addToCartBtn.addEventListener("click", () => {
-    adicionarAoCarrinho(currentProduct, 1);
-    modalEl.classList.remove("active");
-});
-
-
-// --- 5. LÓGICA DO CARRINHO DE COMPRAS ---
-
-function salvarCarrinho() {
-    localStorage.setItem('carrinhoMusicWave', JSON.stringify(carrinho));
-}
-
-function toggleCarrinho() {
-    document.getElementById('carrinho').classList.toggle('ativo');
-}
-
-function adicionarAoCarrinho(produto, quantidade) {
-    const itemExistente = carrinho.find(item => item.id === produto.id);
-    if (itemExistente) {
-        itemExistente.quantidade += quantidade;
-    } else {
-        carrinho.push({ ...produto, quantidade: quantidade });
-    }
-    salvarCarrinho();
-    atualizarCarrinho();
-}
-
-function alterarQuantidade(itemId, delta) {
-    const item = carrinho.find(i => i.id === itemId);
-    if (item) {
-        item.quantidade += delta;
-        if (item.quantidade <= 0) {
-            carrinho = carrinho.filter(i => i.id !== itemId);
+        // Função auxiliar para gerar produtos fictícios para uma categoria
+        function generateFictitiousProducts(category, count) {
+            const fictitious = [];
+            for (let i = 1; i <= count; i++) {
+                fictitious.push({
+                    id: nextId++,
+                    category: category,
+                    title: `${categoriesMap[category]} Fictício ${i}`,
+                    price: `R$ ${(200 + i * 50).toFixed(2).replace('.', ',')}`,
+                    description: `Descrição fictícia para o ${categoriesMap[category]} ${i}.`,
+                    image: `imagens/placeholder/${category}-${i}.png`, // Placeholder específico por categoria
+                    thumbnails: [`imagens/placeholder/${category}-${i}.png`]
+                });
+            }
+            return fictitious;
         }
-    }
-    salvarCarrinho();
-    atualizarCarrinho();
-}
 
-function limparCarrinho() {
-    if (confirm("Tem certeza que deseja esvaziar o carrinho?")) {
-        carrinho = [];
-        salvarCarrinho();
-        atualizarCarrinho();
-    }
-}
+        // Categorias restantes para gerar produtos fictícios
+        const categoriesToGenerate = [
+            "violao", "guitarra", "baixo", "cavaquinho", "ukulele",
+            "viola caipira", "banjo", "charango", "bandolim"
+        ];
 
-function atualizarCarrinho() {
-    const listaCarrinhoEl = document.getElementById('lista-carrinho');
-    listaCarrinhoEl.innerHTML = "";
-    
-    if (carrinho.length === 0) {
-        listaCarrinhoEl.innerHTML = '<li class="carrinho-vazio">Seu carrinho está vazio.</li>';
-    }
+        categoriesToGenerate.forEach(category => {
+            // Garante que cada categoria tenha pelo menos 8 produtos para preencher a primeira página
+            products.push(...generateFictitiousProducts(category, 8));
+        });
 
-    let total = 0;
-    carrinho.forEach(item => {
-        const precoNumerico = parseFloat(item.price.replace('R$', '').replace(/\./g, '').replace(',', '.'));
-        total += precoNumerico * item.quantidade;
+        // Variáveis de estado
+        let filteredCategory = localStorage.getItem("selectedCategory") || "all";
+        let currentPage = parseInt(localStorage.getItem("currentPage")) || 1;
+        const productsPerPage = 8;
+        let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+        let currentModalProduct = null;
 
-        const li = document.createElement('li');
-        li.className = 'carrinho-item';
-        li.innerHTML = `
-            <img src="${item.image}" alt="${item.title}">
-            <div class="carrinho-item-info">
-                <h4>${item.title}</h4>
-                <p>${item.price}</p>
-                <div class="quantidade-controles">
-                    <button onclick="alterarQuantidade(${item.id}, -1)">-</button>
-                    <span>${item.quantidade}</span>
-                    <button onclick="alterarQuantidade(${item.id}, 1)">+</button>
-                </div>
-            </div>
-            <button class="remover-item-btn" onclick="alterarQuantidade(${item.id}, -Infinity)"><i class="bi bi-trash"></i></button>
-        `;
-        listaCarrinhoEl.appendChild(li);
-    });
+        // Elementos DOM
+        const productListEl = document.getElementById("product-list");
+        const paginationEl = document.getElementById("pagination");
+        const modal = document.getElementById("modal");
+        const modalTitle = document.getElementById("modal-title");
+        const modalPrice = document.getElementById("modal-price");
+        const modalDescription = document.getElementById("modal-description");
+        const modalMainImg = document.getElementById("modal-main-img");
+        const modalThumbnails = document.getElementById("modal-thumbnails");
+        const cartCountEl = document.getElementById("cart-count");
+        const listaCarrinhoEl = document.getElementById("lista-carrinho");
+        const totalCarrinhoEl = document.getElementById("total-carrinho");
+        const clearCartBtn = document.getElementById("clear-cart-btn");
+        const carrinhoLateral = document.getElementById("carrinho"); // Obter o elemento do carrinho lateral
 
-    document.getElementById('total-carrinho').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
-}
+        // Funções
 
-function finalizarCompra() {
-    const formaPagamento = document.getElementById('payment-method').value;
-    if (carrinho.length === 0) {
-        alert("Seu carrinho está vazio!");
-        return;
-    }
-    if (!formaPagamento) {
-        alert("Por favor, selecione uma forma de pagamento.");
-        return;
-    }
-    alert("Obrigado pela sua compra! (Esta é uma demonstração)");
-    carrinho = [];
-    salvarCarrinho();
-    atualizarCarrinho();
-    toggleCarrinho();
-}
+        function updateURL() {
+            const params = new URLSearchParams();
+            if (filteredCategory && filteredCategory !== "all") {
+                params.set("categoria", filteredCategory);
+            }
+            if (currentPage > 1) {
+                params.set("pagina", currentPage);
+            }
+            window.history.replaceState({}, '', `${location.pathname}?${params.toString()}`);
+        }
 
-// --- 6. INICIALIZAÇÃO ---
+        function renderCategoryButtons() {
+            const container = document.getElementById("category-buttons");
+            container.innerHTML = "";
+            orderedCategories.forEach((cat) => {
+                const btn = document.createElement("button");
+                btn.className = "category-btn";
+                btn.textContent = categoriesMap[cat];
+                if (filteredCategory === cat) btn.classList.add("active");
+                btn.addEventListener("click", () => {
+                    filteredCategory = cat;
+                    currentPage = 1; // Sempre volta para a primeira página ao mudar de categoria
+                    localStorage.setItem("selectedCategory", filteredCategory);
+                    localStorage.setItem("currentPage", currentPage);
+                    update();
+                });
+                container.appendChild(btn);
+            });
+        }
 
-document.addEventListener('DOMContentLoaded', () => {
-    renderAll();
-    atualizarCarrinho();
-});
+        function getFilteredProducts() {
+            return filteredCategory === "all" ? products : products.filter((p) => p.category === filteredCategory);
+        }
 
-</script>
+        function renderProducts(page) {
+            productListEl.innerHTML = "";
+            const list = getFilteredProducts();
+            const paginatedProducts = list.slice((page - 1) * productsPerPage, page * productsPerPage);
+
+            if (paginatedProducts.length === 0 && page > 1) {
+                // Se a página atual não tem produtos (e não é a primeira página), volta para a última página válida
+                currentPage = Math.max(1, Math.ceil(list.length / productsPerPage));
+                localStorage.setItem("currentPage", currentPage);
+                renderProducts(currentPage);
+                return;
+            }
+
+            paginatedProducts.forEach((product) => {
+                const card = document.createElement("div");
+                card.className = "instrumento-card";
+                card.innerHTML = `
+                    <div class="card-image-container">
+                        <img src="${product.image}" alt="${product.title}">
+                    </div>
+                    <h4>${product.title}</h4>
+                    <p>${product.price}</p>
+                    <button class="ver-detalhes-btn" data-id="${product.id}">Ver detalhes</button>
+                `;
+                card.querySelector(".ver-detalhes-btn").addEventListener("click", () => openModal(product));
+                productListEl.appendChild(card);
+            });
+        }
+
+        function renderPagination() {
+            paginationEl.innerHTML = "";
+            const list = getFilteredProducts();
+            const pageCount = Math.ceil(list.length / productsPerPage);
+
+            for (let i = 1; i <= pageCount; i++) {
+                const pageBtn = document.createElement("span");
+                pageBtn.textContent = i;
+                if (i === currentPage) pageBtn.classList.add("active");
+                pageBtn.addEventListener("click", () => {
+                    currentPage = i;
+                    localStorage.setItem("currentPage", currentPage);
+                    update();
+                });
+                paginationEl.appendChild(pageBtn);
+            }
+        }
+
+        function openModal(produto) {
+            currentModalProduct = produto;
+            modal.classList.add("active");
+            modalTitle.textContent = produto.title;
+            modalPrice.textContent = produto.price;
+            modalDescription.textContent = produto.description;
+            modalMainImg.src = produto.image;
+
+            modalThumbnails.innerHTML = "";
+            if (produto.thumbnails && produto.thumbnails.length > 0) {
+                produto.thumbnails.forEach((thumb, index) => {
+                    const img = document.createElement("img");
+                    img.src = thumb;
+                    img.alt = `Thumbnail ${index + 1}`;
+                    if (index === 0) img.classList.add("active");
+                    img.addEventListener("click", () => {
+                        modalMainImg.src = thumb;
+                        Array.from(modalThumbnails.children).forEach(thumbnail => thumbnail.classList.remove('active'));
+                        img.classList.add("active");
+                    });
+                    modalThumbnails.appendChild(img);
+                });
+            } else {
+                // Se não houver thumbnails, mostra a imagem principal como thumbnail ativa
+                const img = document.createElement("img");
+                img.src = produto.image;
+                img.alt = "Thumbnail principal";
+                img.classList.add("active");
+                modalThumbnails.appendChild(img);
+            }
+            document.getElementById("quantity").value = 1;
+        }
+
+        document.getElementById("buy-btn").onclick = () => {
+            const qtd = parseInt(document.getElementById("quantity").value);
+            if (qtd >= 1 && currentModalProduct) {
+                adicionarAoCarrinho(currentModalProduct, qtd);
+            }
+            modal.classList.remove("active");
+        };
+
+        function adicionarAoCarrinho(produto, quantidade) {
+            const existente = carrinho.find(item => item.id === produto.id);
+            if (existente) {
+                existente.quantidade += quantidade;
+            } else {
+                carrinho.push({ ...produto,
+                    quantidade
+                });
+            }
+            salvarCarrinho();
+            atualizarCarrinhoUI();
+            alert(`${quantidade}x "${produto.title}" adicionado(s) ao carrinho!`);
+            // Abre o carrinho automaticamente após adicionar um item
+            carrinhoLateral.classList.add('active');
+        }
+
+        function salvarCarrinho() {
+            localStorage.setItem("carrinho", JSON.stringify(carrinho));
+        }
+
+        function atualizarCarrinhoUI() {
+            let totalItens = carrinho.reduce((acc, item) => acc + item.quantidade, 0);
+            cartCountEl.innerText = totalItens;
+            listaCarrinhoEl.innerHTML = '';
+            let total = 0;
+
+            if (carrinho.length === 0) {
+                listaCarrinhoEl.innerHTML = '<p style="text-align: center; color: #777;">Seu carrinho está vazio.</p>';
+            }
+
+            carrinho.forEach((item, index) => {
+                const precoNumerico = parseFloat(item.price.replace('R$', '').replace('.', '').replace(',', '.'));
+                total += precoNumerico * item.quantidade;
+
+                const li = document.createElement('li');
+                li.className = 'carrinho-item';
+                li.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}">
+                    <div class="carrinho-item-info">
+                        <h4>${item.title}</h4>
+                        <p>${item.price}</p>
+                        <div class="quantidade-controles">
+                            <button onclick="alterarQuantidade(${index}, -1)">-</button>
+                            <span>${item.quantidade}</span>
+                            <button onclick="alterarQuantidade(${index}, 1)">+</button>
+                        </div>
+                        <button class="remover-item-btn" onclick="removerDoCarrinho(${index})">Remover</button>
+                    </div>
+                `;
+                listaCarrinhoEl.appendChild(li);
+            });
+            totalCarrinhoEl.innerText = total.toFixed(2).replace('.', ',');
+        }
+
+        function alterarQuantidade(index, delta) {
+            carrinho[index].quantidade += delta;
+            if (carrinho[index].quantidade <= 0) {
+                carrinho.splice(index, 1);
+            }
+            salvarCarrinho();
+            atualizarCarrinhoUI();
+        }
+
+        function removerDoCarrinho(index) {
+            carrinho.splice(index, 1);
+            salvarCarrinho();
+            atualizarCarrinhoUI();
+        }
+
+        function esvaziarCarrinho() {
+            if (confirm("Tem certeza que deseja remover todos os itens do carrinho?")) {
+                carrinho = [];
+                salvarCarrinho();
+                atualizarCarrinhoUI();
+                alert("Carrinho esvaziado!");
+            }
+        }
+
+        clearCartBtn.addEventListener("click", esvaziarCarrinho);
+
+        // Função para mostrar/esconder o carrinho (exemplo, você pode linkar isso a um ícone de carrinho)
+        function toggleCart() {
+            carrinhoLateral.classList.toggle('active');
+        }
+
+        // Inicialização
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("categoria") && orderedCategories.includes(params.get("categoria"))) {
+            filteredCategory = params.get("categoria");
+            localStorage.setItem("selectedCategory", filteredCategory);
+        }
+        if (params.get("pagina")) {
+            currentPage = parseInt(params.get("pagina"));
+            localStorage.setItem("currentPage", currentPage);
+        }
+
+        function update() {
+            renderCategoryButtons();
+            renderProducts(currentPage);
+            renderPagination();
+            updateURL();
+        }
+
+        // Carrega o carrinho e atualiza a UI ao carregar a página
+        atualizarCarrinhoUI();
+        update();
+    </script>
 
 </body>
 </html>
