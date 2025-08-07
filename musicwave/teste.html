@@ -523,6 +523,7 @@
             font-size: 28px;
             margin-bottom: 10px;
             color: #333;
+            text-align: center;
         }
         body.dark-mode .modal-detalhes-info h3 {
             color: #f0f0f0;
@@ -531,8 +532,9 @@
 
         .modal-detalhes-info .modal-preco {
             font-size: 24px;
-            color: #f44336;
+            color: #ee971d;
             margin-bottom: 15px;
+            text-align: center;
         }
 
         .modal-detalhes-info .modal-descricao {
@@ -540,6 +542,7 @@
             line-height: 1.6;
             margin-bottom: 20px;
             color: #555;
+            text-align: justify;
         }
         body.dark-mode .modal-detalhes-info .modal-descricao {
             color: #ccc;
@@ -575,17 +578,17 @@
 
         /* Conteúdo principal da loja */
         .small-container-instrumentos {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+  max-width: 1080px;
+  margin: 0 auto 60px;
+  padding: 0 25px;
+}
 
-        .row-instrumentos- {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            justify-content: center; /* Center items if they don't fill a row */
-        }
+.row-instrumentos- {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
         /* Ensure 4 cards per row */
         @media (min-width: 992px) { /* Adjust breakpoint as needed for desired 4 columns */
             .row-instrumentos- {
@@ -609,21 +612,71 @@
         }
 
 
-        .instrumento-card {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-            max-width: 280px; /* Ensures a good width for 4 columns */
-            margin: 0 auto; /* Center individual cards */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; /* Push button to bottom */
-        }
+        .card-image-container {
+    width: 100%; /* Ocupa toda a largura do card */
+    height: 220px; /* ALTURA FIXA - Este é o segredo! Ajuste este valor se precisar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    overflow: hidden; /* Garante que nada saia do contêiner */
+}
+
+.instrumento-card {
+  flex-basis: 23%;
+  box-sizing: border-box;
+  padding: 15px;
+  background-color: #f9f1e984;
+  border-radius: 10px;
+  box-shadow: 0 0 20px 0px #372e271a;
+  text-align: center;
+  transition: transform 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+   max-width: 280px;
+   cursor: pointer;
+}
+
+.instrumento-card:hover {
+  transform: translateY(-10px);
+}
+
+.instrumento-card .card-image-container img {
+    max-width: 100%;
+    max-height: 100%; /* Garante que a imagem não ultrapasse o contêiner */
+    height: auto;
+    width: auto;
+    object-fit: contain; /* Faz a mágica: ajusta a imagem sem distorcer */
+    border-radius: 10px;
+}
+
+.instrumento-card h4 {
+  font-weight: 600;
+  color: #555;
+  margin: 0 0 8px;
+  font-size: 16px;
+  min-height: 48px;
+   min-height: 48px; /* Ótima prática para manter os títulos alinhados! */
+}
+
+.instrumento-card .rating {
+  margin-bottom: 8px;
+}
+
+.instrumento-card .rating .bi {
+  color: #ee971d;
+  font-size: 18px;
+  margin: 0 2px;
+}
+
+.instrumento-card p {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  color: #212121;
+}
         body.dark-mode .instrumento-card {
             background-color: #444;
             border-color: #666;
@@ -637,56 +690,27 @@
         body.dark-mode .instrumento-card:hover {
             box-shadow: 0 4px 10px rgba(255,255,255,0.2);
         }
-
-        .card-image-container {
-            height: 180px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .instrumento-card img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-
-        .instrumento-card h4 {
-            font-size: 18px;
-            margin-bottom: 8px;
-            color: #333;
-        }
+      
         body.dark-mode .instrumento-card h4 {
             color: #f0f0f0;
         }
 
-
-        .instrumento-card .rating i {
-            color: #f7bd6d;
-            margin-right: 2px;
-        }
-
-        .instrumento-card p {
-            font-size: 16px;
-            font-weight: bold;
-            color: #f44336;
-            margin-top: 10px;
-            margin-bottom: 10px; /* Spacing before button */
-        }
+      
         .instrumento-card .btn-ver-detalhes {
-            background-color: #f7bd6d;
-            color: #212121;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-top: auto; /* Push button to the bottom of the flex container */
+            background-color: transparent;
+  border: 2px solid #f7bd6d;
+  color: #f7bd6d;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-top: auto;
+  width: 100%;
         }
         .instrumento-card .btn-ver-detalhes:hover {
-            background-color: #e0a359;
+            background-color: #f7bd6d;
+  color: #212121;
         }
 
 
@@ -1100,13 +1124,34 @@
         const products = [
             // Violinos (8 items)
             { id: 1, category: "violino", title: "Violino Tarttan Série 100 Preto Brilho 4/4", price: 697.00, description: "Este violino Tarttan Série 100, importado da China, é um 4/4 com acabamento preto brilhante. Fabricado com madeira laminada, é ajustado por luthier e vem com estandarte de 4 micro afinadores. Inclui arco, breu e estojo preto.", image: "instrumentos/violin6.png", thumbnails: ["violinos/Violino Tarttan Série 100 Preto Brilho 4/4/violin1-removebg-preview.png", "violinos/Violino Tarttan Série 100 Preto Brilho 4/4/violin1-verso.png", "violinos/Violino Tarttan Série 100 Preto Brilho 4/4/violin1-case.png"] },
-            { id: 2, category: "violino", title: "Violino EAGLE VE441", price: 1200.00, description: "O Violino EAGLE VE441 é um instrumento de alta qualidade, ideal para estudantes e músicos que buscam um som encorpado e ressonante. Acompanha estojo, arco e breu.", image: "violinos/violin-eagle.png", thumbnails: ["violinos/Violino EAGLE VE441/violin-eagle.png", "violinos/Violino EAGLE VE441/violin-eagle-case.png"] },
-            { id: 3, category: "violino", title: "Violino Rolim Milor", price: 2500.00, description: "Violino Rolim Milor feito artesanalmente, com madeiras selecionadas, proporcionando um timbre único e projeção sonora excepcional. Ideal para orquestras e solistas.", image: "violinos/violin-rolim.png", thumbnails: ["violinos/Violino Rolim Milor/violin-rolim.png"] },
-            { id: 4, category: "violino", title: "Violino Fritz Dobbert FD220", price: 1850.00, description: "Violino Fritz Dobbert FD220 4/4 com acabamento impecável, som equilibrado e rica sonoridade. Ótima escolha para quem busca um instrumento durável e de bom desempenho.", image: "violinos/violin-fritz.png", thumbnails: ["violinos/Violino Fritz Dobbert FD220/violin-fritz.png"] },
-            { id: 5, category: "violino", title: "Violino Michael VM140", price: 890.00, description: "O Violino Michael VM140 é perfeito para iniciantes, oferecendo boa tocabilidade e um som claro. Kit completo com arco, estojo e breu para começar a tocar imediatamente.", image: "violinos/violin-michael.png", thumbnails: ["violinos/Violino Michael VM140/violin-michael.png"] },
-            { id: 6, category: "violino", title: "Violino Memphis V100", price: 720.00, description: "Violino Memphis V100 4/4, com excelente custo-benefício. Construção robusta e som agradável, adequado para quem está começando a aprender.", image: "violinos/violin-memphis.png", thumbnails: ["violinos/Violino Memphis V100/violin-memphis.png"] },
-            { id: 7, category: "violino", title: "Violino Vivace VN244", price: 950.00, description: "Violino Vivace VN244 4/4, com boa resposta e facilidade de emissão sonora. Ideal para estudo avançado, proporcionando um som rico e expressivo.", image: "violinos/violin-vivace.png", thumbnails: ["violinos/Violino Vivace VN244/violin-vivace.png"] },
-            { id: 8, category: "violino", title: "Violino Harmonics HL10", price: 650.00, description: "Violino Harmonics HL10, uma opção econômica para quem busca um primeiro violino. Leve e com sonoridade clara, facilita o aprendizado.", image: "violinos/violin-harmonics.png", thumbnails: ["violinos/Violino Harmonics HL10/violin-harmonics.png"] },
+
+            { id: 2, category: "violino", title: "Violino Acústico 4/4", price: 299.00, description: "Este violino acústico 4/4 da marca Mix, na cor marrom, possui corpo em MDF tanto na parte superior quanto na traseira. Suas dimensões são 70 x 30 x 70 cm e vem completo com arco, breu, cavalete e um luxuoso estojo.", image: "violinos/2 Violino Acústico 44 Arco Breu Cavalete Mdf Estojo Luxo/violino2.png", thumbnails: [ "violinos/2 Violino Acústico 44 Arco Breu Cavalete Mdf Estojo Luxo/violino2.png",
+      "violinos/2 Violino Acústico 44 Arco Breu Cavalete Mdf Estojo Luxo/violino2- pessoas.jpg",
+      "violinos/2 Violino Acústico 44 Arco Breu Cavalete Mdf Estojo Luxo/violino2- completo.png"] },
+
+            { id: 3, category: "violino", title: "Violino Alan 4/4 Al-1410 Completo", price: 391.00, description: "O Violino Alan AL-1410 é um modelo 4/4 completo na cor Sunburst. Com tampo em Spruce (revestido), traseira e lateral em Maple, cravelhas, queixeira e estandarte em Boxwood, e escala em Maple. Inclui 4 micro afinadores, filetes entalhados, estojo térmico de luxo e arco de crina sintética de 75 cm. Suas dimensões são 60 x 21 x 4 cm.", image: "violinos/3 Violino Alan 44 Al-1410 Completo/violino3.png", thumbnails: [ "violinos/3 Violino Alan 44 Al-1410 Completo/violino3.png",
+      "violinos/3 Violino Alan 44 Al-1410 Completo/violino3- case.png",
+      "violinos/3 Violino Alan 44 Al-1410 Completo/violino3- com case.png"] },
+
+            { id: 4, category: "violino", title: "Violino Dominante 9649 3/4", price: 439.00, description: "Este violino acústico Dominante 9649, tamanho 3/4, apresenta acabamento brilhante na cor natural. Não é para canhotos. O corpo é feito de Spruce e o diapasão de Ébano. Acompanha arco e estojo.", image: "violinos/4 Violino Dominante 9649 34 Natural Acabamento Brilhante/violino4.png", thumbnails: [ "violinos/4 Violino Dominante 9649 34 Natural Acabamento Brilhante/violino4.png",
+      "violinos/4 Violino Dominante 9649 34 Natural Acabamento Brilhante/violino4- dentro da case.png",
+      "violinos/4 Violino Dominante 9649 34 Natural Acabamento Brilhante/violino4- detalhes.jpg"] },
+
+            { id: 5, category: "violino", title: "Violino Tarttan Série 100 Natural 4/4 com Case", price: 697.00, description: "O Violino Tarttan Série 100 da marca Xenox é um modelo 4/4 natural, com acabamento em verniz. Possui tampo de Ácer e parte traseira em madeira compensada. Acompanha case.", image: "violinos/5 Violino Tarttan Série 100 Natural 44 com Case/violino5- com case.png", thumbnails: ["violinos/5 Violino Tarttan Série 100 Natural 44 com Case/violino5- com case.png",
+      "violinos/5 Violino Tarttan Série 100 Natural 44 com Case/violino5- interior.jpg",
+      "violinos/5 Violino Tarttan Série 100 Natural 44 com Case/violino5- parte inferior.png"] },
+
+            { id: 6, category: "violino", title: "Violino Eagle VE441 Classic Series 4/4", price: 1140.00, description: "O Violino Eagle VE441 Classic Series da marca TMZUAMOZ é um modelo 4/4 na cor natural. Possui tampo de Abeto. Suas dimensões são 80 x 30 x 20 cm.", image: "violinos/6 Violino Eagle VE441 Classic Series 44/violino6.png", thumbnails: ["violinos/6 Violino Eagle VE441 Classic Series 44/violino6.png",
+      "violinos/6 Violino Eagle VE441 Classic Series 44/violino6- dentro da case.png",
+      "violinos/6 Violino Eagle VE441 Classic Series 44/violino6- frente e verso.png"] },
+
+            { id: 7, category: "violino", title: "Violino Vogga VON144N 4/4", price: 439.00, description: "O Violino Vogga VON144N é um modelo 4/4 na cor Natural Fosco, de origem chinesa. Possui tampo em Spruce. Suas dimensões são 80 x 26 x 11 cm.", image: "violinos/7 VIOLINO VOGGA VON144N 44/violino7- completo.png", thumbnails: ["violinos/7 VIOLINO VOGGA VON144N 44/violino7- completo.png",
+      "violinos/7 VIOLINO VOGGA VON144N 44/violino7- frente.png",
+      "violinos/7 VIOLINO VOGGA VON144N 44/violino7- verso.png"] },
+
+            { id: 8, category: "violino", title: "Violino Vivace Strauss 4/4 Fosco", price: 1799.00, description: "O Violino Vivace Strauss é um modelo 4/4 com acabamento fosco. Possui tampo de Abeto e parte traseira de madeira de bordo. Acompanha case térmico.", image: "violinos/8 Violino Vivace Strauss 44 Fosco Com Case Térmico/violino8.png", thumbnails: ["violinos/8 Violino Vivace Strauss 44 Fosco Com Case Térmico/violino8.png",
+      "violinos/8 Violino Vivace Strauss 44 Fosco Com Case Térmico/violino8- frente.png",
+      "violinos/8 Violino Vivace Strauss 44 Fosco Com Case Térmico/violino8- verso.png"] },
 
             // Guitarras (8 items)
             { id: 11, category: "guitarra", title: "Guitarra Giannini G102 Elétrica Stratocaster Hh Branco", price: 757.00, description: "Guitarra Elétrica Giannini G102 Stratocaster HH na cor branca, ideal para diversos estilos musicais. Possui ótima tocabilidade e som potente.", image: "instrumentos/guitarra1.png", thumbnails: ["guitarras/Guitarra Giannini G102 Elétrica Stratocaster Hh Branco/guitar1-removebg-preview.png", "guitarras/Guitarra Giannini G102 Elétrica Stratocaster Hh Branco/guitar1-body.png", "guitarras/Guitarra Giannini G102 Elétrica Stratocaster Hh Branco/guitar1-headstock.png"] },
@@ -1119,14 +1164,99 @@
             { id: 18, category: "guitarra", title: "Guitarra Washburn X Series X10", price: 900.00, description: "Guitarra Washburn X Series X10, design moderno e versátil. Corpo em basswood, braço em maple, e dois humbuckers para som encorpado.", image: "guitarras/guitar-washburn.png", thumbnails: ["guitarras/Guitarra Washburn X Series X10/guitar-washburn.png"] },
 
             // Violoncelos (8 items)
-            { id: 21, category: "violoncelo", title: "Violoncelo Vogga 4/4", price: 2308.90, description: "Violoncelo Vogga 4/4 com ótimo acabamento e sonoridade equilibrada, ideal para estudantes e músicos intermediários. Acompanha arco e estojo.", image: "instrumentos/celo2.png", thumbnails: ["violoncelos/Violoncelo Vogga 4-4/celo2-removebg-preview.png", "violoncelos/Violoncelo Vogga 4-4/celo2-case.png"] },
-            { id: 22, category: "violoncelo", title: "Violoncelo Rolim RX440 4/4", price: 3800.00, description: "Violoncelo Rolim RX440 4/4, construído com madeiras selecionadas. Som rico e profundo, ideal para performances e estudos avançados.", image: "violoncelos/celo-rolim.png", thumbnails: ["violoncelos/Violoncelo Rolim RX440 4-4/celo-rolim.png"] },
-            { id: 23, category: "violoncelo", title: "Violoncelo Eagle CE200 4/4", price: 2900.00, description: "Violoncelo Eagle CE200 4/4, conhecido pela sua qualidade e boa projeção sonora. Excelente escolha para estudantes.", image: "violoncelos/celo-eagle.png", thumbnails: ["violoncelos/Violoncelo Eagle CE200 4-4/celo-eagle.png"] },
-            { id: 24, category: "violoncelo", title: "Violoncelo Michael VCL40", price: 2500.00, description: "Violoncelo Michael VCL40 4/4, ideal para iniciantes. Leve e fácil de tocar, com boa sonoridade.", image: "violoncelos/celo-michael.png", thumbnails: ["violoncelos/Violoncelo Michael VCL40/celo-michael.png"] },
-            { id: 25, category: "violoncelo", title: "Violoncelo Hofma HVC200 4/4", price: 3200.00, description: "Violoncelo Hofma HVC200 4/4, com acabamento refinado e timbre aveludado. Ótima opção para estudantes e orquestras.", image: "violoncelos/celo-hofma.png", thumbnails: ["violoncelos/Violoncelo Hofma HVC200 4-4/celo-hofma.png"] },
-            { id: 26, category: "violoncelo", title: "Violoncelo Stentor Student II 4/4", price: 3100.00, description: "Violoncelo Stentor Student II 4/4, muito recomendado por professores. Oferece boa resposta e projeção para o estudo contínuo.", image: "violoncelos/celo-stentor.png", thumbnails: ["violoncelos/Violoncelo Stentor Student II 4-4/celo-stentor.png"] },
-            { id: 27, category: "violoncelo", title: "Violoncelo G&R VCL-40 4/4", price: 2700.00, description: "Violoncelo G&R VCL-40 4/4, oferece excelente ressonância e timbre. Construção robusta para durabilidade e bom som.", image: "violoncelos/celo-gr.png", thumbnails: ["violoncelos/Violoncelo G&R VCL-40 4-4/celo-gr.png"] },
-            { id: 28, category: "violoncelo", title: "Violoncelo Scala SC-100 4/4", price: 2400.00, description: "Violoncelo Scala SC-100 4/4, com acabamento verniz e sonoridade clara. Ideal para quem busca um violoncelo de entrada com boa qualidade.", image: "violoncelos/celo-scala.png", thumbnails: ["violoncelos/Violoncelo Scala SC-100 4-4/celo-scala.png"] },
+            { id: 21,  category: "violoncelo",
+    title: "Violoncelo AL 1210 44 Alan Com Capa Arco Breu",
+    price: "R$1.500,00",
+    description: "Este violoncelo Alan AL 1210 4/4, na cor marrom avermelhada, mede 123 x 46 x 14 cm. Possui tampo laminado em Spruce, traseira e laterais em Linden, e acabamento em verniz sintético. Conta com cravelhas em Maple, estandarte em Boxwood, 4 micro afinadores metálicos e filetes entalhados. Acompanha arco de crina sintética de 72 cm, capa e breu.",
+    image: "violoncelos/1 Violoncelo AL 1210 44 Alan Com Capa Arco Breu/violoncelo1.png",
+    thumbnails: [
+      "violoncelos/1 Violoncelo AL 1210 44 Alan Com Capa Arco Breu/violoncelo1.png",
+      "violoncelos/1 Violoncelo AL 1210 44 Alan Com Capa Arco Breu/violoncelo1- verso.png",
+      "violoncelos/1 Violoncelo AL 1210 44 Alan Com Capa Arco Breu/violoncelo1- com case.png"
+    ]
+  },
+
+            { id: 22,  category: "violoncelo",
+    title: "Alan, Violoncelo Envelhecido AL 1210 44 E Alan Com Capa Arco Breu",
+    price: "R$1.836,10",
+    description: "O Violoncelo Envelhecido Alan AL 1210 4/4 E apresenta um acabamento marrom fosco envelhecido. Suas dimensões aproximadas são 133 x 51 x 33 cm, com tampo em Plywood. Acompanha capa, arco e breu.",
+    image: "violoncelos/2 Alan, Violoncelo Envelhecido AL 1210 44 E Alan Com Capa Arco Breu/violoncelo2.png",
+    thumbnails: [
+      "violoncelos/2 Alan, Violoncelo Envelhecido AL 1210 44 E Alan Com Capa Arco Breu/violoncelo2.png",
+      "violoncelos/2 Alan, Violoncelo Envelhecido AL 1210 44 E Alan Com Capa Arco Breu/violoncelo2- verso.png",
+      "violoncelos/2 Alan, Violoncelo Envelhecido AL 1210 44 E Alan Com Capa Arco Breu/violoncelo2- com case.png"
+    ]
+  },
+
+            { id: 23,  category: "violoncelo",
+    title: "VIOLONCELO VOGGA VOC144N 44",
+    price: "R$2.308,90",
+    description: "O Violoncelo Vogga VOC144N é um modelo 4/4 na cor Natural Fosco. Suas dimensões são 140 x 33 x 52 cm e possui tampo em Abeto.",
+    image: "violoncelos/3 VIOLONCELO VOGGA VOC144N 44/violoncelo3.png",
+    thumbnails: [
+      "violoncelos/3 VIOLONCELO VOGGA VOC144N 44/violoncelo3.png",
+      "violoncelos/3 VIOLONCELO VOGGA VOC144N 44/violoncelo3- verso.png",
+      "violoncelos/3 VIOLONCELO VOGGA VOC144N 44/violoncelo3- case.png"
+    ]
+  },
+
+            { id: 24,  category: "violoncelo",
+    title: "Violoncelo Vivace 44 Cmo44 Mozart Cello Violoncello",
+    price: "R$1.900,00",
+    description: "O Violoncelo Vivace CMO44 Mozart, tamanho 4/4, na cor natural, possui acabamento brilhante. Com dimensões de 14 x 24 x 68 cm, seu tampo é em Spruce Plywood, corpo em Maple Plywood, espelho e cravelhas em Hardwood, e braço em Maple. O estandarte é de Hardwood. Acompanha BAG, arco de Rosewood com crina animal e breu.",
+    image: "violoncelos//4 Violoncelo Vivace 44 Cmo44 Mozart Cello Violoncello/violoncelo4.png",
+    thumbnails: [
+      "violoncelos//4 Violoncelo Vivace 44 Cmo44 Mozart Cello Violoncello/violoncelo4.png",
+      "violoncelos//4 Violoncelo Vivace 44 Cmo44 Mozart Cello Violoncello/violoncelo4- cravelhas.png",
+      "violoncelos//4 Violoncelo Vivace 44 Cmo44 Mozart Cello Violoncello/violoncelo4- parte superior.png"
+    ]
+  },
+
+            { id: 25,  category: "violoncelo",
+    title: "Violoncelo Cello Dasons Acabamento Brilho",
+    price: "R$1.744,95",
+    description: "O Violoncelo Dasons CP105H está disponível nos tamanhos 3/4 e 4/4, com acabamento brilho. Possui corpo em Plywood, caixa das cravelhas e braço em Hardwood. Inclui arco, resina e afinadores finos, mas não acompanha estojo.",
+    image: "violoncelos/5 Violoncelo Cello Dasons Acabamento Brilho/violoncelo5.png",
+    thumbnails: [
+      "violoncelos/5 Violoncelo Cello Dasons Acabamento Brilho/violoncelo5.png",
+      "violoncelos/5 Violoncelo Cello Dasons Acabamento Brilho/violoncelo5- aaaa.png",
+    ]
+  },
+
+            { id: 26,  category: "violoncelo",
+    title: "Violoncelo Tarttan Série 100 Preto 4/4",
+    price: "R$2.297,00",
+    description: "O Violoncelo Tarttan Série 100 é um modelo 4/4 na cor preta. Possui corpo em Plywood, caixa das cravelhas e braço em Ébano. Inclui estojo, arco e afinadores finos, mas não vem com resina.",
+    image: "violoncelos/6 Violoncelo Tarttan Série 100 Preto 44/violoncelo6.png",
+    thumbnails: [
+      "violoncelos/6 Violoncelo Tarttan Série 100 Preto 44/violoncelo6.png",
+      "violoncelos/6 Violoncelo Tarttan Série 100 Preto 44/violoncelo6- cravelhas.png",
+      "violoncelos/6 Violoncelo Tarttan Série 100 Preto 44/violoncelo6- microafinadores.png",
+    ]
+  },
+            { id: 27, category: "violoncelo",
+    title: "Violoncelo Dasons Com Com Arco Capa E Breu",
+    price: "R$1.738,45",
+    description: "Este Violoncelo Dasons modelo CG001L possui corpo feito de Hardwood. Ele vem completo com arco, capa e breu.",
+    image: "violoncelos/7 Violoncelo Dasons Com Com Arco Capa E Breu/violoncelo7.png",
+    thumbnails: [
+      "violoncelos/7 Violoncelo Dasons Com Com Arco Capa E Breu/violoncelo7.png",
+      "violoncelos/7 Violoncelo Dasons Com Com Arco Capa E Breu/violoncelo7- verso.png",
+      "violoncelos/7 Violoncelo Dasons Com Com Arco Capa E Breu/violoncelo7- case.png"
+    ]
+  },
+
+            { id: 28,  category: "violoncelo",
+    title: "Violoncelo Michael VOM40 4/4 Tradicional",
+    price: "R$3.394,70",
+    description: "O Violoncelo Michael VOM40 é um modelo 4/4 completo com acabamento tradicional. É ideal para músicos avançados.",
+    image: "violoncelos/8 Violoncelo Michael VOM40 44 Tradicional/violoncelo.png",
+    thumbnails: [
+      "violoncelos/8 Violoncelo Michael VOM40 44 Tradicional/violoncelo.png",
+      "violoncelos/8 Violoncelo Michael VOM40 44 Tradicional/violoncelo8- cravelhas.png",
+      "violoncelos/8 Violoncelo Michael VOM40 44 Tradicional/violoncelo8- case.png"
+    ]
+  },
 
             // Bandolins (8 items)
             { id: 31, category: "bandolim", title: "Bandolim Marquês Bnd-100 Nb Acústico", price: 975.00, description: "Bandolim Marquês Bnd-100 NB Acústico, com ótimo timbre e acabamento. Ideal para choro e música regional. Acompanha capa protetora.", image: "instrumentos/bandolim3.png", thumbnails: ["bandolins/Bandolim Marquês Bnd-100 Nb Acústico/bandolim3-removebg-preview.png", "bandolins/Bandolim Marquês Bnd-100 Nb Acústico/bandolim3-back.png"] },
@@ -1139,14 +1269,89 @@
             { id: 38, category: "bandolim", title: "Bandolim Giannini GMBM1", price: 850.00, description: "Bandolim Giannini GMBM1, oferece um som claro e boa projeção. Construção robusta para durabilidade.", image: "bandolins/Bandolim Giannini GMBM1/bandolim-giannini.png", thumbnails: ["bandolins/Bandolim Giannini GMBM1/bandolim-giannini.png"] },
 
             // Violas (8 items)
-            { id: 41, category: "viola", title: "Viola De Arco Rolim Milor", price: 2687.90, description: "Viola de Arco Rolim Milor, feita com madeiras selecionadas. Timbre profundo e aveludado, ideal para músicos profissionais.", image: "instrumentos/viola4.png", thumbnails: ["violas/Viola De Arco Rolim Milor/viola4-removebg-preview.png"] },
-            { id: 42, category: "viola", title: "Viola de Arco Eagle VA144 4/4", price: 2100.00, description: "Viola de Arco Eagle VA144 4/4, com excelente ressonância e acabamento. Indicada para estudantes avançados.", image: "violas/viola-eagle.png", thumbnails: ["violas/Viola de Arco Eagle VA144 4-4/viola-eagle.png"] },
-            { id: 43, category: "viola", title: "Viola de Arco Michael VMA40 4/4", price: 1800.00, description: "Viola de Arco Michael VMA40 4/4, uma ótima opção para iniciantes. Leve e fácil de tocar, com boa sonoridade.", image: "violas/viola-michael.png", thumbnails: ["violas/Viola de Arco Michael VMA40 4-4/viola-michael.png"] },
-            { id: 44, category: "viola", title: "Viola de Arco Hofma HVL100 4/4", price: 2300.00, description: "Viola de Arco Hofma HVL100 4/4, com timbre quente e boa projeção. Instrumento confiável para estudos e apresentações.", image: "violas/Viola de Arco Hofma HVL100 4-4/viola-hofma.png", thumbnails: ["violas/Viola de Arco Hofma HVL100 4-4/viola-hofma.png"] },
-            { id: 45, category: "viola", title: "Viola de Arco Stentor Student I 4/4", price: 1950.00, description: "Viola de Arco Stentor Student I 4/4, recomendada por professores. Durável e com boa resposta sonora.", image: "violas/viola-stentor.png", thumbnails: ["violas/Viola de Arco Stentor Student I 4-4/viola-stentor.png"] },
-            { id: 46, category: "viola", title: "Viola de Arco Vivace VN244 4/4", price: 2050.00, description: "Viola de Arco Vivace VN244 4/4, com sonoridade rica e confortável ao tocar. Ideal para quem busca um instrumento de boa qualidade.", image: "violas/viola-vivace.png", thumbnails: ["violas/Viola de Arco Vivace VN244 4-4/viola-vivace.png"] },
-            { id: 47, category: "viola", title: "Viola de Arco G&R VCL-40 4/4", price: 1900.00, description: "Viola de Arco G&R VCL-40 4/4, oferece excelente ressonância e timbre. Construção robusta para durabilidade.", image: "violas/viola-gr.png", thumbnails: ["violas/Viola de Arco G&R VCL-40 4-4/viola-gr.png"] },
-            { id: 48, category: "viola", title: "Viola de Arco Shelby SV-100 4/4", price: 1750.00, description: "Viola de Arco Shelby SV-100 4/4, com boa projeção e facilidade ao tocar. Instrumento ideal para estudos e ensaios.", image: "violas/viola-shelby.png", thumbnails: ["violas/Viola de Arco Shelby SV-100 4-4/viola-shelby.png"] },
+            { id: 41, category: "viola", title: "Viola De Arco Rolim Milor", price: 2687.90, description: "A Viola de Arco Rolim Milor é um modelo acústico de 40 cm, para destros, com acabamento brilhante e 4 cordas. Inclui como acessórios: arco de crina genuína, breu e estojo.", image: "violas/1 Viola De Arco Rolim Milor/viola1- frente e verso.png", thumbnails: ["violas/1 Viola De Arco Rolim Milor/viola1- frente e verso.png",
+      "violas/1 Viola De Arco Rolim Milor/viola1-.png",
+      "violas/1 Viola De Arco Rolim Milor/viola1- case.png"] },
+
+            { id: 42, category: "viola", title: "Viola Clássica de Arco Alan AL 1310 4/4", price: 647.00, description: "Esta viola clássica de arco Alan, tamanho 4/4, na cor madeira, possui dimensões de 66 x 23 x 4,5 cm. Seu tampo é revestido em Spruce, enquanto a traseira e as laterais são em Maple. Conta com cravelhas, queixeira e estandarte em Boxwood, escala em Maple, e 4 micro afinadores metálicos. Os filetes são entalhados, e o instrumento vem com um luxuoso estojo térmico, arco de crina sintética de 75 cm, breu e cavalete.",  image: "violas/2 Viola Clássica de Arco AL 1310 44 Alan Com Case Arco Breu Cavalete/viola2.png",
+    thumbnails: [
+      "violas/2 Viola Clássica de Arco AL 1310 44 Alan Com Case Arco Breu Cavalete/viola2.png",
+      "violas/2 Viola Clássica de Arco AL 1310 44 Alan Com Case Arco Breu Cavalete/viola2- completa.png",
+      "violas/2 Viola Clássica de Arco AL 1310 44 Alan Com Case Arco Breu Cavalete/viola2- case.png"
+    ]
+  },
+
+            { id: 43, category: "viola",
+    title: "Viola de Arco Profissional Stradivarius",
+    price: "R$5.999,00",
+    description: "A Viola de Arco Profissional Stradivarius, da marca 'Viola Chinesa Harmonizada', é um modelo acústico para destros.",
+    image: "violas/3 Viola De Arco Profissional STRADIVARIUS/viola3- frente e verso.png",
+    thumbnails: [
+      "violas/3 Viola De Arco Profissional STRADIVARIUS/viola3- frente e verso.png",
+      "violas/3 Viola De Arco Profissional STRADIVARIUS/viola3- cavalete.jpg",
+      "violas/3 Viola De Arco Profissional STRADIVARIUS/viola3.png"
+    ]
+  },
+
+            { id: 44, category: "viola",
+    title: "Viola de Arco 4/4 VA150 Envernizado EAGLE",
+    price: "R$1.279,00",
+    description: "A Viola de Arco Eagle VA150 é um modelo 4/4 com dimensões de 13 x 31 x 86 cm. Possui tampo em Maple e parte traseira em Ébano e Maple, com acabamento envernizado.",
+    image: "violas/4 Viola de Arco 44 VA150 Envernizado EAGLE/viola4- frente.png",
+    thumbnails: [
+      "violas/4 Viola de Arco 44 VA150 Envernizado EAGLE/viola4- frente.png",
+      "violas/4 Viola de Arco 44 VA150 Envernizado EAGLE/viola4- verso.png",
+      "violas/4 Viola de Arco 44 VA150 Envernizado EAGLE/viola4- dentro da case.png"
+    ]
+  },
+
+            { id: 45, category: "viola",
+    title: "Viola Clássica Envelhecida Alan AL 1310 3/4 E",
+    price: "R$660,00",
+    description: "A Viola Clássica Envelhecida Alan AL 1310 3/4 E possui acabamento marrom fosco envelhecido. Com dimensões de 88 x 36 x 16 cm, seu tampo é feito de Plywood e as cordas são de aço inoxidável.",
+    image: "violas/5 Viola Clássica Envelhecida AL 1310 34 E Alan/viola5- completa.png",
+    thumbnails: [
+      "violas/5 Viola Clássica Envelhecida AL 1310 34 E Alan/viola5- completa.png",
+      "violas/5 Viola Clássica Envelhecida AL 1310 34 E Alan/viola5- verso.png",
+      "violas/5 Viola Clássica Envelhecida AL 1310 34 E Alan/viola5- inclinada.png"
+    ]
+  },
+
+            { id: 46, category: "viola",
+    title: "Viola Antoni Marsale Série YA320 40,5cm 16",
+    price: "R$2.297,00",
+    description: "A Viola Antoni Marsale série YA320, de 40,5 cm (16 polegadas), é feita de madeiras maciças (Acero e Abeto) e possui 4 cordas. É ajustada por luthier, vem com estandarte com micro afinador na corda Lá, e acompanha breu, estojo e arco.",
+    image: "violas/6 Viola Antoni Marsale série YA320/viola6- frente e verso.png",
+    thumbnails: [
+      "violas/6 Viola Antoni Marsale série YA320/viola6- frente e verso.png",
+      "violas/6 Viola Antoni Marsale série YA320/viola6- voluta e cravelhas.png",
+      "violas/6 Viola Antoni Marsale série YA320/viola6- dentro da case.png"
+    ]
+  },
+
+            { id: 47,  category: "viola",
+    title: "Viola Antoni Marsale Série YA400 Stradivari 42 cm 16,5 Gold",
+    price: "R$2.997,00",
+    description: "A Viola Antoni Marsale série YA400 Stradivari, de 42 cm (16,5 polegadas), é um instrumento indicado para violistas intermediários e avançados. Seu tampo é feito de Abeto, e o fundo e laterais em Acero de excelente seleção com marezzatura média. Os acessórios e o espelho são de Ébano. Acompanha case retangular e um lindo arco octogonal.",
+    image: "violas/7 Viola Antoni Marsale série YA400 Stradivari 42 cm/viola7- frente e verso.png",
+    thumbnails: [
+      "violas/7 Viola Antoni Marsale série YA400 Stradivari 42 cm/viola7- frente e verso.png",
+      "violas/7 Viola Antoni Marsale série YA400 Stradivari 42 cm/viola7- case.png",
+      "violas/7 Viola Antoni Marsale série YA400 Stradivari 42 cm/viola7- superior.png"
+    ]
+  },
+
+            { id: 48,  category: "viola",
+    title: "Viola de Arco Antoni Marsale Série YA110 40,5cm 16",
+    price: "R$1.397,00",
+    description: "A Viola de Arco Antoni Marsale Série YA110, de 40,5 cm (16 polegadas), na cor laranja-claro, é um modelo acústico Stradivari para destros. Possui 4 cordas e acabamento brilhante.",
+    image: "violas/8 Viola De Arco Antoni Marsale Série Ya110/viola8- frente e verso.png",
+    thumbnails: [
+      "violas/8 Viola De Arco Antoni Marsale Série Ya110/viola8- frente e verso.png",
+      "violas//8 Viola De Arco Antoni Marsale Série Ya110/viola8- voluta e cravelhas.png",
+      "violas/8 Viola De Arco Antoni Marsale Série Ya110/viola8- case.png"
+    ]
+  },
 
             // Banjos (8 items)
             { id: 51, category: "banjo", title: "Banjo Americano Waldman WBJ-500", price: 980.00, description: "Banjo americano Waldman WBJ-500, com 5 cordas e ressonador. Som clássico e vibrante, perfeito para country e bluegrass.", image: "instrumentos/banjo5.png", thumbnails: ["banjos/Banjo Americano Waldman WBJ-500/banjo5-removebg-preview.png"] },
