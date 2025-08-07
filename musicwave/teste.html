@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="shortcut icon" href="img/mw..png" type="image/x-icon">
     <title>Loja MusicWave</title>
@@ -12,12 +13,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps:wght@400;700&family=Pacifico&family=Playwrite+IT+Moderna:wght@100..400;display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Playwrite+IT+Moderna:wght@100..400&display=swap');
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Libre Baskerville';
-        }
+       
 
         body {
             font-family: 'Libre Baskerville';
@@ -59,73 +55,77 @@
         }
 
         /* Botão bubbles (CEP, Loja, Carrinho, Afinador) */
-        .bubbles a {
-            text-decoration: none;
-            color: inherit;
-        }
+       .bubbles a {
+  text-decoration: none;
+  color: inherit; /* Mantém a cor do texto */
+}
 
-        .bubbles {
-            --c1: #212121;
-            --c2: #f7bd6d;
-            --size-letter: 15px;
-            padding: 0.5em 1em;
-            font-size: var(--size-letter);
-            background-color: transparent;
-            border: calc(var(--size-letter) / 6) solid var(--c2);
-            border-radius: 0.4em;
-            cursor: pointer;
-            overflow: hidden;
-            position: relative;
-            transition: 300ms cubic-bezier(0.83, 0, 0.17, 1);
-            margin-right: 10px; /* Added spacing for buttons in header */
-        }
+.bubbles {
+  --c1: #212121; /* Recommendation: same background color */
+  --c2: #f7bd6d;
+  --size-letter: 15px;
+  padding: 0.5em 1em;
+  font-size: var(--size-letter);
 
-        .bubbles > .text {
-            font-weight: 700;
-            color: var(--c2);
-            position: relative;
-            z-index: 1;
-            transition: color 700ms cubic-bezier(0.83, 0, 0.17, 1);
-        }
+  background-color: transparent;
+  border: calc(var(--size-letter) / 6) solid var(--c2);
+  border-radius: 0.4em;
+  cursor: pointer;
 
-        .bubbles::before {
-            top: 0;
-            left: 0;
-        }
+  overflow: hidden;
+  position: relative;
+  transition: 300ms cubic-bezier(0.83, 0, 0.17, 1);
+}
 
-        .bubbles::after {
-            top: 100%;
-            left: 100%;
-        }
+.bubbles > .text {
+  font-weight: 700;
+  color: var(--c2);
+  position: relative;
+  z-index: 1;
+  transition: color 700ms cubic-bezier(0.83, 0, 0.17, 1);
+}
 
-        .bubbles::before,
-        .bubbles::after {
-            content: "";
-            width: 150%;
-            aspect-ratio: 1/1;
-            scale: 0;
-            transition: 1000ms cubic-bezier(0.76, 0, 0.24, 1);
-            background-color: var(--c2);
-            border-radius: 50%;
-            position: absolute;
-            translate: -50% -50%;
-        }
+.bubbles::before {
+  top: 0;
+  left: 0;
+}
 
-        .bubbles:hover {
-            & > span {
-                color: var(--c1);
-            }
-            &::before,
-            &::after {
-                scale: 1;
-            }
-        }
+.bubbles::after {
+  top: 100%;
+  left: 100%;
+}
 
-        .bubbles:active {
-            scale: 0.98;
-            filter: brightness(0.9);
-        }
+.bubbles::before,
+.bubbles::after {
+  content: "";
+  width: 150%;
+  aspect-ratio: 1/1;
+  scale: 0;
+  transition: 1000ms cubic-bezier(0.76, 0, 0.24, 1);
 
+  background-color: var(--c2);
+  border-radius: 50%;
+
+  position: absolute;
+  translate: -50% -50%;
+}
+
+.bubbles:hover {
+  & > span {
+    color: var(--c1);
+  }
+  &::before,
+  &::after {
+    scale: 1;
+  }
+}
+
+.bubbles:active {
+  scale: 0.98;
+  filter: brightness(0.9);
+}
+
+/* boato CEP */
         /* Dark Mode Toggle (if implemented, not essential for this specific request but good to keep from completao.odt context) */
         #dark-toggle-wrapper {
             display: flex;
@@ -815,24 +815,56 @@
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo-img">
-            <img src="img/logomw.png" alt="logo">
-        </div>
-        <input type="text" placeholder="Navegue..." />
-        <button class="bubbles">
-            <span class="text">Informe seu CEP</span>
-        </button>
-        <button class="bubbles" onclick="location.href='index2.html'">
-            <span class="text">Home</span>
-        </button>
-        <button class="bubbles" onclick="toggleCarrinho()">
-            <span class="text">Carrinho (<span id="cart-count">0</span>)</span>
-        </button>
-        <button id="btn-afinador" class="bubbles" onclick="abrirAfinador()">
-            <span class="text">Afinador</span>
-        </button>
-    </header>
+     <!-- cabeçalho -->
+  <header>
+    <div class="logo-img">
+      <img src="img/logomw.png" alt="logo">
+    </div>
+    <input type="text" placeholder="Navegue..." />
+  <button class="bubbles" onclick="pedirCep()">
+  <span class="text" id="cep-texto">Informe seu CEP</span>
+</button>
+      <button class="bubbles">
+  <span class="text"><a href="loja.html">Loja</a></span>
+</button>
+<button class="bubbles" onclick="toggleCarrinho()">
+    <span class="text">Carrinho (<span id="cart-count">0</span>)</span>
+</button>
+     
+      <button id="btn-afinador" class="bubbles" onclick="abrirAfinador()">
+  <span class="text">Afinador</span>
+</button>
+  </header>
+  <!-- cabeçalho -->
+
+     <!-- sidebar -->
+
+   <aside id="sidebar">
+    <a href="perfil.html"><i class="bi bi-person-circle" style="color: black; font-size: 30px"></i></a>
+    <a href="index2.html"><i class="bi bi-house-door" style="color: black;font-size: 30px"></i></a>
+    <a href="#notificacoes"><i class="bi bi-bell" style="color: black; font-size: 30px"></i></a>
+    <a href="#alvaro-coin"><i class="bi bi-coin" style="color: black; font-size: 30px"></i></a>
+    <a href="#jogos"><i class="bi bi-controller" style="color: black; font-size: 30px"></i></a>
+     <a id="dark-toggle-wrapper" title="Ativar/Desativar modo escuro">
+    <label class="container" id="dark-toggle">
+      <input type="checkbox" id="darkModeSwitch">
+      <svg viewBox="0 0 384 512" class="moon">
+        <path d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path>
+      </svg>
+      <svg viewBox="0 0 512 512" class="sun">
+        <path d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"></path>
+      </svg>
+    </label>
+  </a>
+  
+  </aside>
+
+   <!-- sidebar -->
+
+   <!-- catálogo de instrumentos -->
+   
+
+<!-- catálogo de instrumentos -->
 
     <main>
         <section class="store-section">
@@ -900,225 +932,290 @@
     </div>
 
 
-    <div id="afinadorLateral" class="painel-lateral" style="position: fixed; top: 0; right: 0; width: 380px; height: 100%; background-color: #fdfaf6; box-shadow: -5px 0 15px rgba(0,0,0,0.15); z-index: 10000; transform: translateX(100%); transition: transform 0.4s ease-in-out; display: flex; flex-direction: column; padding: 20px; box-sizing: border-box;">
-        <button onclick="fecharAfinador()" style="background: none; border: none; font-size: 30px; cursor: pointer; color: #888; align-self: flex-end;">✖</button>
-        <h2 style="text-align:center; color:#b45f06;">Afinador</h2>
-        <select id="instrumento" onchange="carregarCordas()" style="width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 5px; border: 1px solid #ddd;">
-            <option value="violino"> Violino</option>
-            <option value="viola"> Viola</option>
-            <option value="violoncelo">Violoncelo</option>
-            <option value="violao"> Violão</option>
-            <option value="guitarra"> Guitarra</option>
-            <option value="baixo">Baixo</option>
-            <option value="cavaquinho">Cavaquinho</option>
-            <option value="ukulele">Ukulele</option>
-            <option value="viola_caipira">Viola Caipira</option>
-            <option value="banjo"> Banjo</option>
-            <option value="charango">Charango</option>
-            <option value="bandolim">Bandolim</option>
-        </select>
-        <p id="descricao" style="margin-bottom: 15px; font-size: 14px; text-align: justify;"></p>
-        <img id="imgInstrumento" class="instrumento-img" src="" alt="Instrumento" style="max-width: 100%; height: auto; display:none; margin-bottom: 15px;" />
-        <div class="cordas" id="cordas" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px;"></div>
-        <button class="btn-todas" onclick="tocarTodasCordas()" style="background-color: #f7bd6d; color: #212121; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Tocar todas as cordas</button>
-    </div>
+   <!-- botao do darkmode -->
+
+<script>
+const switchEl = document.getElementById("darkModeSwitch");
+
+if (localStorage.getItem("darkMode") === "true") {
+  document.body.classList.add("dark-mode");
+  switchEl.checked = true;
+}
+
+switchEl.addEventListener("change", function () {
+  document.body.classList.toggle("dark-mode", this.checked);
+  localStorage.setItem("darkMode", this.checked);
+});
+</script>
+
+<!-- botao do darkmode -->
 
 
-    <script>
-        /* Afinador JS (from completao.odt) */
-        const afinacoes = {
-            violino: [
-                { nome: "E - 1ª Corda", freq: 659.25 },
-                { nome: "A - 2ª Corda", freq: 440 },
-                { nome: "D - 3ª Corda", freq: 293.66 },
-                { nome: "G - 4ª Corda", freq: 196 },
-            ],
-            viola: [
-                { nome: "A - 1ª Corda", freq: 880 },
-                { nome: "D - 2ª Corda", freq: 587.33 },
-                { nome: "G - 3ª Corda", freq: 392 },
-                { nome: "C - 4ª Corda", freq: 261.63 },
-            ],
-            violoncelo: [
-                { nome: "A - 1ª Corda", freq: 220 },
-                { nome: "D - 2ª Corda", freq: 146.83 },
-                { nome: "G - 3ª Corda", freq: 98 },
-                { nome: "C - 4ª Corda", freq: 65.41 },
-            ],
-            violao: [
-                { nome: "E - 6ª Corda", freq: 82.41 },
-                { nome: "A - 5ª Corda", freq: 110.00 },
-                { nome: "D - 4ª Corda", freq: 146.83 },
-                { nome: "G - 3ª Corda", freq: 196.00 },
-                { nome: "B - 2ª Corda", freq: 246.94 },
-                { nome: "E - 1ª Corda", freq: 329.63 },
-            ],
-            guitarra: [
-                { nome: "E - 6ª Corda", freq: 82.41 },
-                { nome: "A - 5ª Corda", freq: 110.00 },
-                { nome: "D - 4ª Corda", freq: 146.83 },
-                { nome: "G - 3ª Corda", freq: 196.00 },
-                { nome: "B - 2ª Corda", freq: 246.94 },
-                { nome: "E - 1ª Corda", freq: 329.63 },
-            ],
-            baixo: [
-                { nome: "E - 4ª Corda", freq: 41.20 },
-                { nome: "A - 3ª Corda", freq: 55.00 },
-                { nome: "D - 2ª Corda", freq: 73.42 },
-                { nome: "G - 1ª Corda", freq: 98.00 },
-            ],
-            cavaquinho: [
-                { nome: "G - 4ª Corda", freq: 392 },
-                { nome: "D - 3ª Corda", freq: 293.66 },
-                { nome: "B - 2ª Corda", freq: 246.94 },
-                { nome: "D - 1ª Corda", freq: 196 },
-            ],
-            ukulele: [
-                { nome: "G - 4ª Corda", freq: 392 },
-                { nome: "C - 3ª Corda", freq: 261.63 },
-                { nome: "E - 2ª Corda", freq: 329.63 },
-                { nome: "A - 1ª Corda", freq: 440 },
-            ],
-            viola_caipira: [
-                { nome: "E - 1ª Corda", freq: 329.63 },
-                { nome: "B - 2ª Corda", freq: 246.94 },
-                { nome: "G# - 3ª Corda", freq: 415.30 },
-                { nome: "E - 4ª Corda", freq: 329.63 },
-                { nome: "B - 5ª Corda", freq: 246.94 },
-            ],
-            banjo: [
-                { nome: "D - 4ª Corda", freq: 293.66 },
-                { nome: "B - 3ª Corda", freq: 246.94 },
-                { nome: "G - 2ª Corda", freq: 196 },
-                { nome: "D - 1ª Corda", freq: 146.83 },
-                { nome: "G - 5ª Corda", freq: 392 },
-            ],
-            charango: [
-                { nome: "G - 5ª Corda", freq: 196 },
-                { nome: "C - 4ª Corda", freq: 261.63 },
-                { nome: "E - 3ª Corda", freq: 329.63 },
-                { nome: "A - 2ª Corda", freq: 440 },
-                { nome: "E - 1ª Corda", freq: 659.25 },
-            ],
-            bandolim: [
-                { nome: "E - 1ª Corda", freq: 659.25 },
-                { nome: "A - 2ª Corda", freq: 440 },
-                { nome: "D - 3ª Corda", freq: 293.66 },
-                { nome: "G - 4ª Corda", freq: 196 },
-            ],
-        };
+<!-- inserir cep -->
 
-        const descricoes = {
-            violino: "Conhecido por sua expressividade e agilidade, o Violino, com suas 4 cordas afinadas em G-D-A-E, é um instrumento de cordas que pode evocar desde as mais delicadas melodias até passagens virtuosísticas.",
-            viola: "Com um timbre mais grave e encorpado que o violino, a Viola de Arco, possuindo 4 cordas afinadas uma quinta abaixo do violino (C-G-D-A), atua como uma ponte harmônica, adicionando profundidade e calor.",
-            violoncelo: "Dona de uma sonoridade rica e ressonante, que se assemelha à voz humana, o Violoncelo, com suas 4 cordas afinadas em C-G-D-A (uma oitava abaixo da viola), é capaz de tocar linhas melódicas e harmonias profundas com grande emoção.",
-            violao: "Essencial em diversos gêneros musicais, o Violão, geralmente com 6 cordas afinadas em E-A-D-G-B-E, é um instrumento versátil que oferece sonoridades ricas e acolhedoras.",
-            guitarra: "Seja elétrica ou acústica, a Guitarra, com suas 6 cordas (ou mais) e afinação padrão em E-A-D-G-B-E, é um ícone da música moderna, capaz de produzir desde riffs poderosos a melodias suaves.",
-            baixo: "Com suas 4 a 6 cordas e timbre profundo, o Baixo, tipicamente afinado em E-A-D-G, é a espinha dorsal de qualquer banda, fornecendo a base rítmica e harmônica.",
-            cavaquinho: "Essencial no samba e no choro, o Cavaquinho, com suas 4 cordas e afinação padrão em D-G-B-D, é um instrumento pequeno, mas com um som vibrante e ágil.",
-            ukulele: "Pequeno e alegre, o Ukulele, geralmente com 4 cordas afinadas em G-C-E-A, é perfeito para quem busca um som descontraído e fácil de aprender, ideal para canções leves.",
-            viola_caipira: "Parte da alma musical brasileira, a Viola Caipira se destaca por suas 10 cordas em cinco pares e seu timbre único, que evoca a tradição e a emoção do campo.",
-            banjo: "Com seu som ressonante e percussivo, o Banjo, frequentemente com 5 cordas e afinação aberta, é a alma do bluegrass e de outros gêneros folclóricos, criando melodias cativantes.",
-            charango: "Um instrumento de cordas anidno, o Charango, com suas 10 cordas agrupadas em cinco pares, encanta com seu som agudo e vibrante, ideal para melodias folclóricas.",
-            bandolim: "Com seu som brilhante e percussivo, o Bandolim, tipicamente com 8 cordas em quatro pares afinados em G-D-A-E, adiciona um toque especial a diversos estilos, do folk ao choro.",
-        };
+ <script>
+  const cepTexto = document.getElementById("cep-texto");
 
-        const imagens = {
-            violino: "instrumentos/violin6.png",
-            viola: "instrumentos/viola4.png",
-            violoncelo: "instrumentos/celo2.png",
-            violao: "instrumentos/violao_generico.png",
-            guitarra: "instrumentos/guitarra1.png",
-            baixo: "instrumentos/baixo_generico.png",
-            cavaquinho: "instrumentos/cavaquinho_generico.png",
-            ukulele: "instrumentos/ukulele8.png",
-            viola_caipira: "instrumentos/viola_caipira_generico.png",
-            banjo: "instrumentos/banjo5.png",
-            charango: "instrumentos/charango7.png",
-            bandolim: "instrumentos/bandolim3.png"
-        };
+  // Mostra o CEP salvo (caso exista)
+  window.addEventListener("DOMContentLoaded", () => {
+    const cepSalvo = localStorage.getItem("cepSalvo");
+    if (cepSalvo) {
+      cepTexto.textContent = "CEP: " + cepSalvo;
+    }
+  });
 
-        function playNote(freq, el = null) {
-            const AudioContext = window.AudioContext || window.webkitAudioContext;
-            const ctx = new AudioContext();
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
+  function pedirCep() {
+    const cepAtual = localStorage.getItem("cepSalvo") || "";
+    const novoCep = prompt(
+      "Digite seu CEP:\n\n(Para remover, deixe vazio ou digite 'remover')",
+      cepAtual
+    );
 
-            osc.type = "sine";
-            osc.frequency.value = freq;
+    if (novoCep === null) return; // cancelou
 
-            gain.gain.setValueAtTime(0.2, ctx.currentTime);
-            osc.connect(gain);
-            gain.connect(ctx.destination);
+    if (novoCep.trim() === "" || novoCep.toLowerCase() === "remover" || novoCep.toLowerCase() === "excluir") {
+      localStorage.removeItem("cepSalvo");
+      cepTexto.textContent = "Informe seu CEP";
+      alert("CEP removido.");
+      return;
+    }  
 
-            osc.start();
-            osc.stop(ctx.currentTime + 2);
+    const cepFormatado = novoCep.replace(/\D/g, ""); // remove tudo que não for número
 
-            if (el) {
-                el.classList.add("vibrar");
-                setTimeout(() => el.classList.remove("vibrar"), 300);
-            }
-        }
+    if (/^[0-9]{8}$/.test(cepFormatado)) {
+      const cepFinal = cepFormatado.replace(/(\d{5})(\d{3})/, "$1-$2"); // Formata para 12345-678
+      localStorage.setItem("cepSalvo", cepFinal);
+      cepTexto.textContent = "CEP: " + cepFinal;
+    } else {
+      alert("CEP inválido. Digite no formato 12345678 ou 12345-678.");
+    }
+  }
+</script>
 
-        function carregarCordas() {
-            const tipo = document.getElementById("instrumento").value;
-            const cordas = afinacoes[tipo];
-            const container = document.getElementById("cordas");
-            container.innerHTML = "";
-            if (cordas) {
-                cordas.forEach(corda => {
-                    const btn = document.createElement("button");
-                    btn.textContent = corda.nome;
-                    btn.onclick = () => playNote(corda.freq, btn);
-                    btn.style.cssText = `
-                        background-color: #eee;
-                        border: 1px solid #ddd;
-                        padding: 8px 12px;
-                        border-radius: 5px;
-                        cursor: pointer;
-                        font-size: 14px;
-                        transition: background-color 0.2s;
-                        flex: 1 1 auto;
-                        min-width: 100px;
-                        margin: 5px;
-                    `;
-                    btn.onmouseover = () => btn.style.backgroundColor = '#ddd';
-                    btn.onmouseout = () => btn.style.backgroundColor = '#eee';
-                    container.appendChild(btn);
-                });
-            }
-            document.getElementById("descricao").textContent = descricoes[tipo] || "";
-            const img = document.getElementById("imgInstrumento");
-            img.src = imagens[tipo] || "";
-            img.style.display = imagens[tipo] ? "block" : "none";
-        }
+<!-- inserir cep -->
 
-        function tocarTodasCordas() {
-            const tipo = document.getElementById("instrumento").value;
-            const cordas = afinacoes[tipo];
-            if (cordas) {
-                cordas.forEach((corda, i) => {
-                    setTimeout(() => playNote(corda.freq), i * 1000);
-                });
-            }
-        }
 
-        function abrirAfinador() {
-            document.getElementById("afinadorLateral").classList.add("ativo");
-            localStorage.setItem("afinadorAberto", "true");
-        }
 
-        function fecharAfinador() {
-            document.getElementById("afinadorLateral").classList.remove("ativo");
-            localStorage.setItem("afinadorAberto", "false");
-        }
+     <!-- afinador lateral -->
+<div id="afinadorLateral" class="painel-lateral">
+  <button onclick="fecharAfinador()">✖</button>
+  <h2 style="text-align:center; color:#b45f06;">Afinador</h2>
+  <select id="instrumento" onchange="carregarCordas()">
+    <option value="violino"> Violino</option>
+    <option value="viola"> Viola</option>
+    <option value="violoncelo">Violoncelo</option>
+    <option value="violao"> Violão</option>
+    <option value="guitarra"> Guitarra</option>
+    <option value="baixo">Baixo</option>
+    <option value="cavaquinho">Cavaquinho</option>
+    <option value="ukulele">Ukulele</option>
+    <option value="viola_caipira">Viola Caipira</option>
+    <option value="banjo"> Banjo</option>
+    <option value="charango">Charango</option>
+    <option value="bandolim">Bandolim</option>
+  </select>
+  <p id="descricao"></p>
+  <img id="imgInstrumento" class="instrumento-img" src="" alt="Instrumento" style="display:none;" />
+  <div class="cordas" id="cordas"></div>
+  <button class="btn-todas" onclick="tocarTodasCordas()">Tocar todas as cordas</button>
+</div>
 
-        window.addEventListener("DOMContentLoaded", () => {
-            carregarCordas();
-            if (localStorage.getItem("afinadorAberto") === "true") abrirAfinador();
-        });
 
-        /* --- LOJA JAVASCRIPT --- */
+<script>
+  const afinacoes = {
+    violino: [
+      { nome: "E - 1ª Corda", freq: 659.25 },
+      { nome: "A - 2ª Corda", freq: 440 },
+      { nome: "D - 3ª Corda", freq: 293.66 },
+      { nome: "G - 4ª Corda", freq: 196 },
+    ],
+    viola: [
+      { nome: "A - 1ª Corda", freq: 880 },
+      { nome: "D - 2ª Corda", freq: 587.33 },
+      { nome: "G - 3ª Corda", freq: 392 },
+      { nome: "C - 4ª Corda", freq: 261.63 },
+    ],
+    violoncelo: [
+      { nome: "A - 1ª Corda", freq: 220 },
+      { nome: "D - 2ª Corda", freq: 146.83 },
+      { nome: "G - 3ª Corda", freq: 98 },
+      { nome: "C - 4ª Corda", freq: 65.41 },
+    ],
+    violao: [
+      { nome: "E - 6ª Corda", freq: 82.41 },
+      { nome: "A - 5ª Corda", freq: 110.00 },
+      { nome: "D - 4ª Corda", freq: 146.83 },
+      { nome: "G - 3ª Corda", freq: 196.00 },
+      { nome: "B - 2ª Corda", freq: 246.94 },
+      { nome: "E - 1ª Corda", freq: 329.63 },
+    ],
+    guitarra: [
+      { nome: "E - 6ª Corda", freq: 82.41 },
+      { nome: "A - 5ª Corda", freq: 110.00 },
+      { nome: "D - 4ª Corda", freq: 146.83 },
+      { nome: "G - 3ª Corda", freq: 196.00 },
+      { nome: "B - 2ª Corda", freq: 246.94 },
+      { nome: "E - 1ª Corda", freq: 329.63 },
+    ],
+    baixo: [
+      { nome: "E - 4ª Corda", freq: 41.20 },
+      { nome: "A - 3ª Corda", freq: 55.00 },
+      { nome: "D - 2ª Corda", freq: 73.42 },
+      { nome: "G - 1ª Corda", freq: 98.00 },
+    ],
+     cavaquinho: [
+      { nome: "G - 4ª Corda", freq: 392 },
+      { nome: "D - 3ª Corda", freq: 293.66 },
+      { nome: "B - 2ª Corda", freq: 246.94 },
+      { nome: "D - 1ª Corda", freq: 196 },
+    ],
+    ukulele: [
+      { nome: "G - 4ª Corda", freq: 392 },
+      { nome: "C - 3ª Corda", freq: 261.63 },
+      { nome: "E - 2ª Corda", freq: 329.63 },
+      { nome: "A - 1ª Corda", freq: 440 },
+    ],
+    viola_caipira: [
+      { nome: "E - 1ª Corda", freq: 329.63 },
+      { nome: "B - 2ª Corda", freq: 246.94 },
+      { nome: "G# - 3ª Corda", freq: 415.30 },
+      { nome: "E - 4ª Corda", freq: 329.63 },
+      { nome: "B - 5ª Corda", freq: 246.94 },
+    ],
+    banjo: [
+      { nome: "D - 4ª Corda", freq: 293.66 },
+      { nome: "B - 3ª Corda", freq: 246.94 },
+      { nome: "G - 2ª Corda", freq: 196 },
+      { nome: "D - 1ª Corda", freq: 146.83 },
+      { nome: "G - 5ª Corda", freq: 392 },
+    ],
+    charango: [
+      { nome: "G - 5ª Corda", freq: 196 },
+      { nome: "C - 4ª Corda", freq: 261.63 },
+      { nome: "E - 3ª Corda", freq: 329.63 },
+      { nome: "A - 2ª Corda", freq: 440 },
+      { nome: "E - 1ª Corda", freq: 659.25 },
+    ],
+    bandolim: [
+      { nome: "E - 1ª Corda", freq: 659.25 },
+      { nome: "A - 2ª Corda", freq: 440 },
+      { nome: "D - 3ª Corda", freq: 293.66 },
+      { nome: "G - 4ª Corda", freq: 196 },
+    ],
+  };
+
+
+  const descricoes = {
+    violino: "Conhecido por sua expressividade e agilidade, o Violino, com suas 4 cordas afinadas em G-D-A-E, é um instrumento de cordas que pode evocar desde as mais delicadas melodias até passagens virtuosísticas.",
+    viola: "Com um timbre mais grave e encorpado que o violino, a Viola de Arco, possuindo 4 cordas afinadas uma quinta abaixo do violino (C-G-D-A), atua como uma ponte harmônica, adicionando profundidade e calor.",
+    violoncelo: "Dona de uma sonoridade rica e ressonante, que se assemelha à voz humana, o Violoncelo, com suas 4 cordas afinadas em C-G-D-A (uma oitava abaixo da viola), é capaz de tocar linhas melódicas e harmonias profundas com grande emoção.",
+     violao: "Essencial em diversos gêneros musicais, o Violão, geralmente com 6 cordas afinadas em E-A-D-G-B-E, é um instrumento versátil que oferece sonoridades ricas e acolhedoras.",
+    guitarra: " Seja elétrica ou acústica, a Guitarra, com suas 6 cordas (ou mais) e afinação padrão em E-A-D-G-B-E, é um ícone da música moderna, capaz de produzir desde riffs poderosos a melodias suaves.",
+    baixo: "Com suas 4 a 6 cordas e timbre profundo, o Baixo, tipicamente afinado em E-A-D-G, é a espinha dorsal de qualquer banda, fornecendo a base rítmica e harmônica.",
+    cavaquinho: "Essencial no samba e no choro, o Cavaquinho, com suas 4 cordas e afinação padrão em D-G-B-D, é um instrumento pequeno, mas com um som vibrante e ágil.",
+    ukulele: "Pequeno e alegre, o Ukulele, geralmente com 4 cordas afinadas em G-C-E-A, é perfeito para quem busca um som descontraído e fácil de aprender, ideal para canções leves.",
+    viola_caipira: "Parte da alma musical brasileira, a Viola Caipira se destaca por suas 10 cordas em cinco pares e seu timbre único, que evoca a tradição e a emoção do campo.",
+    banjo: "Com seu som ressonante e percussivo, o Banjo, frequentemente com 5 cordas e afinação aberta, é a alma do bluegrass e de outros gêneros folclóricos, criando melodias cativantes.",
+    charango: "Um instrumento de cordas andino, o Charango, com suas 10 cordas agrupadas em cinco pares, encanta com seu som agudo e vibrante, ideal para melodias folclóricas.",
+    bandolim: "Com seu som brilhante e percussivo, o Bandolim, tipicamente com 8 cordas em quatro pares afinados em G-D-A-E, adiciona um toque especial a diversos estilos, do folk ao choro.",
+  };
+
+
+  const imagens = {
+    violino: "instrumentos/violin6.png",
+    viola: "instrumentos/viola4.png",
+    violoncelo: "instrumentos/celo2.png",
+    violao: "",
+    guitarra: "instrumentos/guitarra1.png",
+    baixo: "",
+    cavaquinho: "",
+    ukulele: "instrumentos/ukulele8.png",
+    viola_caipira: "",
+    banjo: "instrumentos/banjo5.png",
+    charango: "instrumentos/charango7.png",
+    bandolim: "instrumentos/bandolim3.png"
+  };
+
+
+  function playNote(freq, el = null) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    const ctx = new AudioContext();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+
+    osc.type = "sine";
+    osc.frequency.value = freq;
+
+
+    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+
+    osc.start();
+    osc.stop(ctx.currentTime + 2);
+
+
+    if (el) {
+      el.classList.add("vibrar");
+      setTimeout(() => el.classList.remove("vibrar"), 300);
+    }
+  }
+
+
+  function carregarCordas() {
+    const tipo = document.getElementById("instrumento").value;
+    const cordas = afinacoes[tipo];
+    const container = document.getElementById("cordas");
+    container.innerHTML = "";
+    cordas.forEach(corda => {
+      const btn = document.createElement("button");
+      btn.textContent = corda.nome;
+      btn.onclick = () => playNote(corda.freq, btn);
+      container.appendChild(btn);
+    });
+    document.getElementById("descricao").textContent = descricoes[tipo] || "";
+    const img = document.getElementById("imgInstrumento");
+    img.src = imagens[tipo] || "";
+    img.style.display = imagens[tipo] ? "block" : "none";
+  }
+
+
+  function tocarTodasCordas() {
+    const tipo = document.getElementById("instrumento").value;
+    const cordas = afinacoes[tipo];
+    cordas.forEach((corda, i) => {
+      setTimeout(() => playNote(corda.freq), i * 1000);
+    });
+  }
+
+
+  function abrirAfinador() {
+    document.getElementById("afinadorLateral").classList.add("ativo");
+    localStorage.setItem("afinadorAberto", "true");
+  }
+
+
+  function fecharAfinador() {
+    document.getElementById("afinadorLateral").classList.remove("ativo");
+    localStorage.setItem("afinadorAberto", "false");
+  }
+
+
+  window.addEventListener("DOMContentLoaded", () => {
+    carregarCordas();
+    if (localStorage.getItem("afinadorAberto") === "true") abrirAfinador();
+  });
+</script>
+
+ <!-- afinador lateral -->
+
+
+
+
+<script>
+     /* --- LOJA JAVASCRIPT --- */
 
         /* Dados dos produtos - Ajustado para 8 produtos por categoria e adicionadas novas categorias */
         const products = [
@@ -1675,6 +1772,63 @@
             renderProducts("violino"); // Carrega violinos por padrão ao carregar a página
             renderCartItems(); // Carrega o carrinho ao iniciar
         });
-    </script>
+</script>
+
+
+       
+   
+
+     <footer>
+        <span class="footer-title">MusicWave</span>
+        <ul class="socials">
+            <li><a href="#"><i class="bi bi-whatsapp"></i></a></li>
+            <li><a href=""><i class="bi bi-envelope-fill"></i></a></li>
+            <li><a href="#"><i class="bi bi-linkedin"></i></a></li>
+            <li><a href="https://www.instagram.com/elliscarv/"><i class="bi bi-instagram"></i></a></li>
+        </ul>
+        <div class="info">
+            <ul>
+                <li class="footer-list_header">Oferece</li>
+                <li><a href="#">Produtos</a></li>
+                <li><a href="#">Serviços</a></li>
+                <li><a href="#">Categorias</a></li>
+                <li><a href="#">Contato</a></li>
+            </ul>
+
+
+            <ul>
+                <li class="footer-list_header">Documentos</li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="#">Políticas de Privacidade</a></li>
+                <li><a href="#">Termos de Serviço</a></li>
+                <li><a href="#">Cookies</a></li>
+            </ul>
+
+
+            <ul>
+                <li class="footer-list_header">Para você</li>
+                <li><a href="#">Manuais</a></li>
+                <li><a href="#">Tutoriais</a></li>
+                <li><a href="#">Dicas e Truques</a></li>
+                <li><a href="#">F&Q</a></li>
+            </ul>
+
+
+            <ul>
+                <li class="footer-list_header">Trabalhe conosco</li>
+                <li><a href="#">Afiliar</a></li>
+                <li><a href="#">Colaborações</a></li>
+                <li><a href="#">Patrocinadores</a></li>
+                <li><a href="#">Parcerias</a></li>
+            </ul>
+        </div>
+        <p>Copyright &copy; 2025 MusicWave. Todos os direitos reservados. </p>
+    </footer>
+
+
+</body>
+</html>
+   
+
 </body>
 </html>
