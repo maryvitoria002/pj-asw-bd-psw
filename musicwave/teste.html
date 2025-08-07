@@ -374,29 +374,7 @@
         }
 
         /* Modal de detalhes do produto */
-
-        #modal {
-           display: none;
-  position: fixed;
-  z-index: 1000;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  justify-content: center;
-  align-items: center;
-
-        }
-
-        #modal-content {
-  background: white;
-  padding: 2rem;
-  max-width: 500px;
-  width: 90%;
-  border-radius: 8px;
-  position: relative;
-}
-
-
-         .modal-pix-pagamento {
+        .modal-detalhes-produto, .modal-pix-pagamento {
             display: none;
             position: fixed;
             z-index: 10001;
@@ -414,20 +392,23 @@
             display: flex;
         }
 
-        #modal-conteudo {
-           background: white;
-  padding: 2rem;
-  max-width: 500px;
-  width: 90%;
-  border-radius: 8px;
-  position: relative;
+        .modal-conteudo {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 900px;
+            border-radius: 10px;
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
         }
         body.dark-mode .modal-conteudo {
             background-color: #333;
             border-color: #555;
         }
-
-        /* modal do pix */
 
         .modal-pix-conteudo {
             background-color: #fefefe;
@@ -470,12 +451,10 @@
             line-height: 1.4;
         }
         .pix-qr-code img {
-            max-width: 100%;
-            max-height: 100%;
+            width: 180%;
+            height: 180%;
             object-fit: contain;
         }
-
-          /* modal do pix */
 
 
         .modal-fechar {
@@ -864,39 +843,6 @@
             <button class="btn-limpar" onclick="clearCart()">Limpar Carrinho</button>
         </div>
     </div>
-
-    <div id="modal">
-  <div class="modal-content">
-    <span class="modal-close" id="modal-close">&times;</span>
-    <div class="modal-left">
-      <img src="" alt="Imagem principal" class="main-image" id="modal-main-image" />
-      <div class="modal-thumbnails" id="modal-thumbnails"></div>
-    </div>
-    <div class="modal-right">
-      <h3 id="modal-title"></h3>
-      <p class="price" id="modal-price"></p>
-      <p class="description" id="modal-description"></p>
-
-
-      <label for="quantity">Quantidade:</label>
-      <input type="number" id="quantity" min="1" value="1" />
-
-      <button class="buy-btn" id="buy-btn">Adicionar ao carrinho</button>
-
-
-      <label for="payment-method">Forma de pagamento:</label>
-      <select id="payment-method">
-        <option value="" disabled selected>Selecione</option>
-        <option value="cartao">Cartão de crédito</option>
-        <option value="boleto">Boleto bancário</option>
-        <option value="pix">PIX</option>
-      </select>
-
-
-      <button class="buy-btn" id="buy-btn">Comprar</button>
-    </div>
-  </div>
-</div>
 
     <div id="modalDetalhesProduto" class="modal-detalhes-produto">
         <div class="modal-conteudo">
@@ -1508,7 +1454,7 @@
 
             document.getElementById("pix-total-valor").textContent = formatPrice(total);
             // Simulação de QR Code (poderia ser gerado dinamicamente com uma API de pagamento)
-            document.getElementById("pix-qr-code-img").src = "https://www.qr-code-generator.com/images/guides/qr-code-example.png"; // Exemplo de QR Code genérico
+            document.getElementById("pix-qr-code-img").src = "img/qr_code.png"; // Exemplo de QR Code genérico
             document.getElementById("modalPixPagamento").classList.add("ativo");
             clearCart(); // Limpa o carrinho após "finalizar" a compra (simulado)
             toggleCarrinho(); // Fecha o carrinho lateral
