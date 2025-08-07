@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="shortcut icon" href="img/mw..png" type="image/x-icon">
+    <title>LOJA</title>
+</head>
+<body>
+
+    <header>
+        <div class="logo-img">
+            <img src="img/logomw.png" alt="logo">
+        </div>
+        <input type="text" placeholder="Navegue..." />
+        <button class="bubbles" onclick="pedirCep()">
+            <span class="text" id="cep-texto">Informe seu CEP</span>
+        </button>
+        <button class="bubbles">
+            <span class="text"><a href="loja.html">Loja</a></span>
+        </button>
+        <button class="bubbles" onclick="toggleCarrinho()">
+            <span class="text">Carrinho (<span id="cart-count">0</span>)</span>
+        </button>
+
+        <button id="btn-afinador" class="bubbles" onclick="abrirAfinador()">
+            <span class="text">Afinador</span>
+        </button>
+    </header>
+    <aside id="sidebar">
+        <a href="#perfil"><i class="bi bi-person-circle" style="color: black; font-size: 30px"></i></a>
+        <a href="index2.html"><i class="bi bi-house-door" style="color: black;font-size: 30px"></i></a>
+        <a href="#notificacoes"><i class="bi bi-bell" style="color: black; font-size: 30px"></i></a>
+        <a href="#alvaro-coin"><i class="bi bi-coin" style="color: black; font-size: 30px"></i></a>
+        <a href="#jogos"><i class="bi bi-controller" style="color: black; font-size: 30px"></i></a>
+        <a id="dark-toggle-wrapper" title="Ativar/Desativar modo escuro">
+            <label class="container" id="dark-toggle">
+                <input type="checkbox" id="darkModeSwitch">
+                <svg viewBox="0 0 384 512" class="moon">
+                    <path d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path>
+                </svg>
+                <svg viewBox="0 0 512 512" class="sun">
+                    <path d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"></path>
+                </svg>
+            </label>
+        </a>
+    </aside>
+    <main>
+        <section class="jogos-destacados">
+            <h2><i class="bi bi-music-note-beamed" style="font-size: 30px"></i> COMPRE AGORA SEU INSTRUMENTO!</h2>
+            <div class="small-container-instrumentos">
+
+                <div class="filter-pagination-container">
+                    <div class="filter-container">
+                        <label for="category-filter">Filtrar por Categoria:</label>
+                        <select id="category-filter"></select>
+                    </div>
+                </div>
+
+                <div class="row-instrumentos-" id="product-list">
+                    </div>
+            </div>
+            <div class="page-btn" id="pagination"></div>
+        </section>
+        <div id="modal">
+            <div class="modal-content">
+                <span class="modal-close" id="modal-close">&times;</span>
+                <div class="modal-left">
+                    <img src="" alt="Imagem principal" class="main-image" id="modal-main-image" />
+                    <div class="modal-thumbnails" id="modal-thumbnails"></div>
+                </div>
+                <div class="modal-right">
+                    <h3 id="modal-title"></h3>
+                    <p class="price" id="modal-price"></p>
+                    <p class="description" id="modal-description"></p>
+
+                    <label for="quantity">Quantidade:</label>
+                    <input type="number" id="quantity" min="1" value="1" />
+
+                    <button class="buy-btn" id="buy-btn">Adicionar ao carrinho</button>
+                    <button class="add-to-cart-btn" onclick="addItemToCartFromModal()">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+        </div>
+        <div id="carrinhoLateral" class="carrinho-lateral">
+            <div class="carrinho-header">
+                <h2>Seu Carrinho</h2>
+                <button class="carrinho-fechar" onclick="toggleCarrinho()">✖</button>
+            </div>
+            <ul class="carrinho-body" id="carrinho-items">
+                </ul>
+            <div class="carrinho-total">
+                <p>Total: <span id="carrinho-total-valor">R$0,00</span></p>
+            </div>
+            <div class="carrinho-acoes">
+                <button class="btn-finalizar" onclick="finalizarCompraPix()">Finalizar Compra com PIX</button>
+                <button class="btn-limpar" onclick="clearCart()">Limpar Carrinho</button>
+            </div>
+        </div>
+        <div id="modalPixPagamento" class="modal-pix-pagamento">
+            <div class="modal-pix-conteudo">
+                <span class="modal-fechar" onclick="fecharModalPix()">&times;</span>
+                <h3>Pagamento via PIX</h3>
+                <p>Escaneie o QR Code ou use a chave PIX abaixo para finalizar seu pedido.</p>
+                <div class="pix-qr-code">
+                    <img id="pix-qr-code-img" src="" alt="QR Code PIX">
+                </div>
+                <p>Total a pagar: <strong id="pix-total-valor">R$0,00</strong></p>
+                <p>Chave PIX (E-mail): <strong id="pix-key-value">lojamusicwave.pagamento@email.com</strong></p>
+                <p style="font-size: 0.9em; margin-top: 20px; color: #888;">Após o pagamento, seu pedido será automaticamente processado. Não é necessário enviar comprovante.</p>
+            </div>
+        </div>
+        </main>
+
+    <script>
+        // Dark Mode
+        const switchEl = document.getElementById("darkModeSwitch");
+
+        if (localStorage.getItem("darkMode") === "true") {
+            document.body.classList.add("dark-mode");
+            switchEl.checked = true;
+        }
+
+        switchEl.addEventListener("change", function () {
+            document.body.classList.toggle("dark-mode", this.checked);
+            localStorage.setItem("darkMode", this.checked);
+        });
+
+        // Inserir CEP
+        const cepTexto = document.getElementById("cep-texto");
+
+        window.addEventListener("DOMContentLoaded", () => {
+            const cepSalvo = localStorage.getItem("cepSalvo");
+            if (cepSalvo) {
+                cepTexto.textContent = "CEP: " + cepSalvo;
+            }
+        });
+
+        function pedirCep() {
+            const cepAtual = localStorage.getItem("cepSalvo") || "";
+            const novoCep = prompt(
+                "Digite seu CEP:\n\n(Para remover, deixe vazio ou digite 'remover')",
+                cepAtual
+            );
+
+            if (novoCep === null) return;
+
+            if (novoCep.trim() === "" || novoCep.toLowerCase() === "remover" || novoCep.toLowerCase() === "excluir") {
+                localStorage.removeItem("cepSalvo");
+                cepTexto.textContent = "Informe seu CEP";
+                alert("CEP removido.");
+                return;
+            }
+
+            const cepFormatado = novoCep.replace(/\D/g, "");
+
+            if (/^[0-9]{8}$/.test(cepFormatado)) {
+                const cepFinal = cepFormatado.replace(/(\d{5})(\d{3})/, "$1-$2");
+                localStorage.setItem("cepSalvo", cepFinal);
+                cepTexto.textContent = "CEP: " + cepFinal;
+            } else {
+                alert("CEP inválido. Digite no formato 12345678 ou 12345-678.");
+            }
+        }
+
+        // Afinador Lateral
+        const afinacoes = {
+            violino: [
+                { nome: "E - 1ª Corda", freq: 659.25 },
+                { nome: "A - 2ª Corda", freq: 440 },
+                { nome: "D - 3ª Corda", freq: 293.66 },
+                { nome: "G - 4ª Corda", freq: 196 },
+            ],
+            viola: [
+                { nome: "A - 1ª Corda", freq: 880 },
+                { nome: "D - 2ª Corda", freq: 587.33 },
+                { nome: "G - 3ª Corda", freq: 392 },
+                { nome: "C - 4ª Corda", freq: 261.63 },
+            ],
+            violoncelo: [
+                { nome: "A - 1ª Corda", freq: 220 },
+                { nome: "D - 2ª Corda", freq: 146.83 },
+                { nome: "G - 3ª Corda", freq: 98 },
+                { nome: "C - 4ª Corda", freq: 65.41 },
+            ],
+            violao: [
+                { nome: "E - 6ª Corda", freq: 82.41 },
+                { nome: "A - 5ª Corda", freq: 110.00 },
+                { nome: "D - 4ª Corda", freq: 146.83 },
+                { nome: "G - 3ª Corda", freq: 196.00 },
+                { nome: "B - 2ª Corda", freq: 246.94 },
+                { nome: "E - 1ª Corda", freq: 329.63 },
+            ],
+            guitarra: [
+                { nome: "E - 6ª Corda", freq: 82.41 },
+                { nome: "A - 5ª Corda", freq: 110.00 },
+                { nome: "D - 4ª Corda", freq: 146.83 },
+                { nome: "G - 3ª Corda", freq: 196.00 },
+                { nome: "B - 2ª Corda", freq: 246.94 },
+                { nome: "E - 1ª Corda", freq: 329.63 },
+            ],
+            baixo: [
+                { nome: "E - 4ª Corda", freq: 41.20 },
+                { nome: "A - 3ª Corda", freq: 55.00 },
+                { nome: "D - 2ª Corda", freq: 73.42 },
+                { nome: "G - 1ª Corda", freq: 98.00 },
+            ],
+            cavaquinho: [
+                { nome: "G - 4ª Corda", freq: 392 },
+                { nome: "D - 3ª Corda", freq: 293.66 },
+                { nome: "B - 2ª Corda", freq: 246.94 },
+                { nome: "D - 1ª Corda", freq: 196 },
+            ],
+            ukulele: [
+                { nome: "G - 4ª Corda", freq: 392 },
+                { nome: "C - 3ª Corda", freq: 261.63 },
+                { nome: "E - 2ª Corda", freq: 329.63 },
+                { nome: "A - 1ª Corda", freq: 440 },
+            ],
+            viola_caipira: [
+                { nome: "E - 1ª Corda", freq: 329.63 },
+                { nome: "B - 2ª Corda", freq: 246.94 },
+                { nome: "G# - 3ª Corda", freq: 415.30 },
+                { nome: "E - 4ª Corda", freq: 329.63 },
+                { nome: "B - 5ª Corda", freq: 246.94 },
+            ],
+            banjo: [
+                { nome: "D - 4ª Corda", freq: 293.66 },
+                { nome: "B - 3ª Corda", freq: 246.94 },
+                { nome: "G - 2ª Corda", freq: 196 },
+                { nome: "D - 1ª Corda", freq: 146.83 },
+                { nome: "G - 5ª Corda", freq: 392 },
+            ],
+            charango: [
+                { nome: "G - 5ª Corda", freq: 196 },
+                { nome: "C - 4ª Corda", freq: 261.63 },
+                { nome: "E - 3ª Corda", freq: 329.63 },
+                { nome: "A - 2ª Corda", freq: 440 },
+                { nome: "E - 1ª Corda", freq: 659.25 },
+            ],
+            bandolim: [
+                { nome: "E - 1ª Corda", freq: 659.25 },
+                { nome: "A - 2ª Corda", freq: 440 },
+                { nome: "D - 3ª Corda", freq: 293.66 },
+                { nome: "G - 4ª Corda", freq: 196 },
+            ],
+        };
+
+        const afinadorLateral = document.getElementById("afinadorLateral");
+        const instrumentoSelect = document.getElementById("instrumento");
+        const cordasDiv = document.getElementById("cordas");
+        const descricaoP = document.getElementById("descricao");
+        const imgInstrumento = document.getElementById("imgInstrumento");
+
+        let audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        let oscillator = null;
+
+        function abrirAfinador() {
+            afinadorLateral.classList.add("aberto");
+            carregarCordas(); // Carrega as cordas do instrumento padrão ao abrir
+        }
+
+        function fecharAfinador() {
+            afinadorLateral.classList.remove("aberto");
+            pararSom();
+        }
+
+        function tocarNota(frequencia) {
+            pararSom();
+            oscillator = audioContext.createOscillator();
+            oscillator.type = "sine";
+            oscillator.frequency.setValueAtTime(frequencia, audioContext.currentTime);
+            oscillator.connect(audioContext.destination);
+            oscillator.start();
+        }
+
+        function pararSom() {
+            if (oscillator) {
+                oscillator.stop();
+                oscillator.disconnect();
+                oscillator = null;
+            }
+        }
+
+        function carregarCordas() {
+            pararSom();
+            const instrumento = instrumentoSelect.value;
+            const cordas = afinacoes[instrumento];
+            cordasDiv.innerHTML = "";
+            descricaoP.textContent = "";
+            imgInstrumento.style.display = 'none'; // Esconde a imagem por padrão
+
+            if (cordas) {
+                // Adicione a imagem do instrumento se ela existir
+                const imgPath = `img/afinador/${instrumento}.png`; // Assumindo que as imagens estão em img/afinador/
+                imgInstrumento.src = imgPath;
+                imgInstrumento.alt = instrumento;
+                imgInstrumento.style.display = 'block';
+
+                cordas.forEach((corda) => {
+                    const button = document.createElement("button");
+                    button.textContent = corda.nome;
+                    button.classList.add("btn-corda"); // Adiciona uma classe para estilização
+                    button.onclick = () => tocarNota(corda.freq);
+                    cordasDiv.appendChild(button);
+                });
+            } else {
+                descricaoP.textContent = "Selecione um instrumento para ver as cordas.";
+            }
+        }
+
+        function tocarTodasCordas() {
+            const instrumento = instrumentoSelect.value;
+            const cordas = afinacoes[instrumento];
+            if (cordas) {
+                cordas.forEach((corda, index) => {
+                    setTimeout(() => tocarNota(corda.freq), index * 1000); // Toca cada nota com 1 segundo de intervalo
+                });
+            }
+        }
+
+        // Chame carregarCordas() na inicialização para popular as cordas do instrumento padrão
+        window.addEventListener("DOMContentLoaded", () => {
+            carregarCordas();
+        });
+
+        // Catálogo de Produtos e Carrinho
+        const products = [
+            // Violinos (8 items)
+            { id: 1, category: "violino", title: "Violino Tarttan Série 100 Preto Brilho 4/4", price: 697.00, description: "Este violino Tarttan Série 100, importado da China, é um 4/4 com acabamento preto brilhante. Fabricado com madeira laminada, é ajustado por luthier e vem com estandarte de 4 micro afinadores. Inclui arco, breu e estojo preto.", image: "instrumentos/violin6.png", thumbnails: ["violinos/Violino Tarttan Série 100 Preto Brilho 4/4/violin1-removebg-preview.png", "violinos/Violino Tarttan Série 100 Preto Brilho 4/4/violin1-verso.png", "violinos/Violino Tarttan Série 100 Preto Brilho 4/4/violin1-case.png"] },
+            { id: 2, category: "violino", title: "Violino EAGLE VE441", price: 1200.00, description: "O Violino EAGLE VE441 é um instrumento de alta qualidade, ideal para estudantes e músicos que buscam um som encorpado e ressonante. Acompanha estojo, arco e breu.", image: "violinos/violin-eagle.png", thumbnails: ["violinos/Violino EAGLE VE441/violin-eagle.png", "violinos/Violino EAGLE VE441/violin-eagle-case.png"] },
+            { id: 3, category: "violino", title: "Violino Rolim Milor", price: 2500.00, description: "Violino Rolim Milor feito artesanalmente, com madeiras selecionadas, proporcionando um timbre único e projeção sonora excepcional. Ideal para orquestras e solistas.", image: "violinos/violin-rolim.png", thumbnails: ["violinos/Violino Rolim Milor/violin-rolim.png"] },
+            { id: 4, category: "violino", title: "Violino Fritz Dobbert FD220", price: 1850.00, description: "Violino Fritz Dobbert FD220 4/4 com acabamento impecável, som equilibrado e rica sonoridade. Ótima escolha para quem busca um instrumento durável e de bom desempenho.", image: "violinos/violin-fritz.png", thumbnails: ["violinos/Violino Fritz Dobbert FD220/violin-fritz.png"] },
+            { id: 5, category: "violino", title: "Violino Michael VM140", price: 890.00, description: "O Violino Michael VM140 é perfeito para iniciantes, oferecendo boa tocabilidade e um som claro. Kit completo com arco, estojo e breu para começar a tocar imediatamente.", image: "violinos/violin-michael.png", thumbnails: ["violinos/Violino Michael VM140/violin-michael.png"] },
+            { id: 6, category: "violino", title: "Violino Memphis V100", price: 720.00, description: "Violino Memphis V100 4/4, com excelente custo-benefício. Construção robusta e som agradável, adequado para quem está começando a aprender.", image: "violinos/violin-memphis.png", thumbnails: ["violinos/Violino Memphis V100/violin-memphis.png"] },
+            { id: 7, category: "violino", title: "Violino Vivace VN244", price: 950.00, description: "Violino Vivace VN244 4/4, com boa resposta e facilidade de emissão sonora. Ideal para estudo avançado, proporcionando um som rico e expressivo.", image: "violinos/violin-vivace.png", thumbnails: ["violinos/Violino Vivace VN244/violin-vivace.png"] },
+            { id: 8, category: "violino", title: "Violino Harmonics HL10", price: 650.00, description: "Violino Harmonics HL10, uma opção econômica para quem busca um primeiro violino. Leve e com sonoridade clara, facilita o aprendizado.", image: "violinos/violin-harmonics.png", thumbnails: ["violinos/Violino Harmonics HL10/violin-harmonics.png"] },
+
+            // Guitarras (8 items)
+            { id: 11, category: "guitarra", title: "Guitarra Giannini G102 Elétrica Stratocaster Hh Branco", price: 757.00, description: "Guitarra Elétrica Giannini G102 Stratocaster HH na cor branca, ideal para diversos estilos musicais. Possui ótima tocabilidade e som potente.", image: "instrumentos/guitarra1.png", thumbnails: ["guitarras/Guitarra Giannini G102 Elétrica Stratocaster Hh Branco/guitar1-removebg-preview.png", "guitarras/Guitarra Giannini G102 Elétrica Stratocaster Hh Branco/guitar1-body.png", "guitarras/Guitarra Giannini G102 Elétrica Stratocaster Hh Branco/guitar1-headstock.png"] },
+            { id: 12, category: "guitarra", title: "Guitarra Les Paul Shelter Nashville", price: 1200.00, description: "Guitarra Les Paul Shelter Nashville, com timbre encorpado e sustain prolongado. Acabamento clássico, ideal para rock e blues.", image: "guitarras/guitar-lespaul.png", thumbnails: ["guitarras/Guitarra Les Paul Shelter Nashville/guitar-lespaul.png"] },
+            { id: 13, category: "guitarra", title: "Guitarra Strinberg Stratocaster STP100", price: 980.00, description: "Guitarra Strinberg Stratocaster STP100, versátil para diversos estilos musicais. Corpo em basswood, braço em maple e 3 single-coils.", image: "guitarras/guitar-strinberg.png", thumbnails: ["guitarras/Guitarra Strinberg Stratocaster STP100/guitar-strinberg.png"] },
+            { id: 14, category: "guitarra", title: "Guitarra Tagima Memphis MG30", price: 850.00, description: "Guitarra Tagima Memphis MG30, excelente para iniciantes. Corpo em basswood, braço em maple, ponte tremolo e 3 single-coils.", image: "guitarras/guitar-tagima.png", thumbnails: ["guitarras/Guitarra Tagima Memphis MG30/guitar-tagima.png"] },
+            { id: 15, category: "guitarra", title: "Guitarra Fender Squier Stratocaster", price: 1500.00, description: "Guitarra Fender Squier Stratocaster, um clássico acessível. Timbre autêntico, conforto e qualidade Fender para todos os guitarristas.", image: "guitarras/guitar-squier.png", thumbnails: ["guitarras/Guitarra Fender Squier Stratocaster/guitar-squier.png"] },
+            { id: 16, category: "guitarra", title: "Guitarra Ibanez Gio GRG170DX", price: 1650.00, description: "Guitarra Ibanez Gio GRG170DX, ideal para rock e metal. Design moderno, braço fino e captadores potentes para alto ganho.", image: "guitarras/guitar-ibanez.png", thumbnails: ["guitarras/Guitarra Ibanez Gio GRG170DX/guitar-ibanez.png"] },
+            { id: 17, category: "guitarra", title: "Guitarra Epiphone Les Paul Special VE", price: 1100.00, description: "Guitarra Epiphone Les Paul Special VE, visual vintage e som poderoso. Ótima opção para quem busca o clássico timbre Les Paul.", image: "guitarras/guitar-epiphone.png", thumbnails: ["guitarras/Guitarra Epiphone Les Paul Special VE/guitar-epiphone.png"] },
+            { id: 18, category: "guitarra", title: "Guitarra Washburn X Series X10", price: 900.00, description: "Guitarra Washburn X Series X10, design moderno e versátil. Corpo em basswood, braço em maple, e dois humbuckers para som encorpado.", image: "guitarras/Guitarra Washburn X Series X10/guitar-washburn.png", thumbnails: ["guitarras/Guitarra Washburn X Series X10/guitar-washburn.png"] },
+
+            // Violoncelos (8 items)
+            { id: 21, category: "violoncelo", title: "Violoncelo Vogga 4/4", price: 2308.90, description: "Violoncelo Vogga 4/4 com ótimo acabamento e sonoridade equilibrada, ideal para estudantes e músicos intermediários. Acompanha arco e estojo.", image: "instrumentos/celo2.png", thumbnails: ["violoncelos/Violoncelo Vogga 4-4/celo2-removebg-preview.png", "violoncelos/Violoncelo Vogga 4-4/celo2-case.png"] },
+            { id: 22, category: "violoncelo", title: "Violoncelo Rolim RX440 4/4", price: 3800.00, description: "Violoncelo Rolim RX440 4/4, construído com madeiras selecionadas. Som rico e profundo, ideal para performances e estudos avançados.", image: "violoncelos/celo-rolim.png", thumbnails: ["violoncelos/Violoncelo Rolim RX440 4-4/celo-rolim.png"] },
+            { id: 23, category: "violoncelo", title: "Violoncelo Eagle CE200 4/4", price: 2900.00, description: "Violoncelo Eagle CE200 4/4, conhecido pela sua qualidade e boa projeção sonora. Excelente escolha para estudantes.", image: "violoncelos/celo-eagle.png", thumbnails: ["violoncelos/Violoncelo Eagle CE200 4-4/celo-eagle.png"] },
+            { id: 24, category: "violoncelo", title: "Violoncelo Michael VCL40", price: 2500.00, description: "Violoncelo Michael VCL40 4/4, ideal para iniciantes. Leve e fácil de tocar, com boa sonoridade.", image: "violoncelos/celo-michael.png", thumbnails: ["violoncelos/Violoncelo Michael VCL40/celo-michael.png"] },
+            { id: 25, category: "violoncelo", title: "Violoncelo Hofma HVC200 4/4", price: 3200.00, description: "Violoncelo Hofma HVC200 4/4, com acabamento refinado e timbre aveludado. Ótima opção para estudantes e orquestras.", image: "violoncelos/celo-hofma.png", thumbnails: ["violoncelos/Violoncelo Hofma HVC200 4-4/celo-hofma.png"] },
+            { id: 26, category: "violoncelo", title: "Violoncelo Stentor Student II 4/4", price: 3100.00, description: "Violoncelo Stentor Student II 4/4, muito recomendado por professores. Oferece boa resposta e projeção para o estudo contínuo.", image: "violoncelos/celo-stentor.png", thumbnails: ["violoncelos/Violoncelo Stentor Student II 4-4/celo-stentor.png"] },
+            { id: 27, category: "violoncelo", title: "Violoncelo G&R VCL-40 4/4", price: 2700.00, description: "Violoncelo G&R VCL-40 4/4, oferece excelente ressonância e timbre. Construção robusta para durabilidade e bom som.", image: "violoncelos/celo-gr.png", thumbnails: ["violoncelos/Violoncelo G&R VCL-40 4-4/celo-gr.png"] },
+            { id: 28, category: "violoncelo", title: "Violoncelo Scala SC-100 4/4", price: 2400.00, description: "Violoncelo Scala SC-100 4/4, com acabamento verniz e sonoridade clara. Ideal para quem busca um violoncelo de entrada com boa qualidade.", image: "violoncelos/celo-scala.png", thumbnails: ["violoncelos/Violoncelo Scala SC-100 4-4/celo-scala.png"] },
+
+            // Bandolins (8 items)
+            { id: 31, category: "bandolim", title: "Bandolim Marquês Bnd-100 Nb Acústico", price: 975.00, description: "Bandolim Marquês Bnd-100 NB Acústico, com ótimo timbre e acabamento. Ideal para choro e música regional. Acompanha capa protetora.", image: "instrumentos/bandolim3.png", thumbnails: ["bandolins/Bandolim Marquês Bnd-100 Nb Acústico/bandolim3-removebg-preview.png", "bandolins/Bandolim Marquês Bnd-100 Nb Acústico/bandolim3-back.png"] },
+            { id: 32, category: "bandolim", title: "Bandolim Rozini RC08.A.F.I", price: 1300.00, description: "Bandolim Rozini RC08.A.F.I, qualidade superior para músicos exigentes. Timbre brilhante e sustain prolongado. Perfeito para samba e MPB.", image: "bandolins/bandolim-rozini.png", thumbnails: ["bandolins/Bandolim Rozini RC08.A.F.I/bandolim-rozini.png"] },
+            { id: 33, category: "bandolim", title: "Bandolim Giannini Acústico", price: 850.00, description: "Bandolim Giannini Acústico, ideal para iniciantes e estudantes. Boa sonoridade e acabamento, com excelente custo-benefício.", image: "bandolins/bandolim-giannini.png", thumbnails: ["bandolins/Bandolim Giannini Acústico/bandolim-giannini.png"] },
+            { id: 34, category: "bandolim", title: "Bandolim Michael BM600", price: 1100.00, description: "Bandolim Michael BM600, com corpo em spruce e laterais em mahogany. Som encorpado e ressonante. Ótimo para apresentações.", image: "bandolins/bandolim-michael.png", thumbnails: ["bandolins/Bandolim Michael BM600/bandolim-michael.png"] },
+            { id: 35, category: "bandolim", title: "Bandolim Walczak WZ-100", price: 1500.00, description: "Bandolim Walczak WZ-100, feito artesanalmente com madeiras nobres. Timbre excepcional e projeção sonora de alta qualidade.", image: "bandolins/bandolim-walczak.png", thumbnails: ["bandolins/Bandolim Walczak WZ-100/bandolim-walczak.png"] },
+            { id: 36, category: "bandolim", title: "Bandolim Eagle EAB600", price: 1050.00, description: "Bandolim Eagle EAB600, com design clássico e sonoridade rica. Ideal para músicos que buscam um instrumento versátil e de boa resposta.", image: "bandolins/bandolim-eagle.png", thumbnails: ["bandolins/Bandolim Eagle EAB600/bandolim-eagle.png"] },
+            { id: 37, category: "bandolim", title: "Bandolim PHX Acústico", price: 780.00, description: "Bandolim PHX Acústico, uma opção acessível para quem quer começar a tocar. Leve e com som agradável para estudo e prática.", image: "bandolins/bandolim-phx.png", thumbnails: ["bandolins/Bandolim PHX Acústico/bandolim-phx.png"] },
+            { id: 38, category: "bandolim", title: "Bandolim Takamine G400S", price: 1800.00, description: "Bandolim Takamine G400S, com tampo sólido e excelente construção. Timbre equilibrado e volume impressionante, perfeito para performances.", image: "bandolins/bandolim-takamine.png", thumbnails: ["bandolins/Bandolim Takamine G400S/bandolim-takamine.png"] },
+
+            // Baterias (8 items)
+            { id: 41, category: "bateria", title: "Bateria Acústica Michael Studio DMP803 Preta", price: 2190.00, description: "Bateria Acústica Michael Studio DMP803 na cor preta, completa com bumbo, tons, surdo, caixa, pratos e ferragens. Ideal para iniciantes e estudantes avançados.", image: "instrumentos/bateria1.png", thumbnails: ["baterias/Bateria Acústica Michael Studio DMP803 Preta/bateria1-removebg-preview.png", "baterias/Bateria Acústica Michael Studio DMP803 Preta/bateria1-full.png"] },
+            { id: 42, category: "bateria", title: "Bateria Eletrônica Roland TD-07KV", price: 5500.00, description: "Bateria Eletrônica Roland TD-07KV, compacta e potente. Com sons autênticos e recursos avançados para estudo e prática silenciosa.", image: "baterias/bateria-roland.png", thumbnails: ["baterias/Bateria Eletrônica Roland TD-07KV/bateria-roland.png"] },
+            { id: 43, category: "bateria", title: "Bateria Acústica Pearl Export EXX725S", price: 4200.00, description: "Bateria Acústica Pearl Export EXX725S, um clássico no mundo da bateria. Qualidade sonora e durabilidade para performances e estúdios.", image: "baterias/bateria-pearl.png", thumbnails: ["baterias/Bateria Acústica Pearl Export EXX725S/bateria-pearl.png"] },
+            { id: 44, category: "bateria", title: "Bateria Eletrônica Yamaha DTX402K", price: 3100.00, description: "Bateria Eletrônica Yamaha DTX402K, ideal para iniciantes com recursos de treino interativos. Sons de alta qualidade e pads responsivos.", image: "baterias/bateria-yamaha.png", thumbnails: ["baterias/Bateria Eletrônica Yamaha DTX402K/bateria-yamaha.png"] },
+            { id: 45, category: "bateria", title: "Bateria Acústica Odery Privilege", price: 6800.00, description: "Bateria Acústica Odery Privilege, com cascos em birch e acabamento premium. Som encorpado e presença marcante, para músicos profissionais.", image: "baterias/bateria-odery.png", thumbnails: ["baterias/Bateria Acústica Odery Privilege/bateria-odery.png"] },
+            { id: 46, category: "bateria", title: "Bateria Eletrônica Alesis Nitro Mesh Kit", price: 2800.00, description: "Bateria Eletrônica Alesis Nitro Mesh Kit, pads de mesh que proporcionam sensação de bateria acústica. Ideal para estudo e gravação.", image: "baterias/bateria-alesis.png", thumbnails: ["baterias/Bateria Eletrônica Alesis Nitro Mesh Kit/bateria-alesis.png"] },
+            { id: 47, category: "bateria", title: "Bateria Acústica Ludwig Accent Drive", price: 3500.00, description: "Bateria Acústica Ludwig Accent Drive, com sonoridade versátil para diversos estilos musicais. Hardware robusto e durável, ótima para shows.", image: "baterias/bateria-ludwig.png", thumbnails: ["baterias/Bateria Acústica Ludwig Accent Drive/bateria-ludwig.png"] },
+            { id: 48, category: "bateria", title: "Bateria Eletrônica Medeli DD512", price: 2500.00, description: "Bateria Eletrônica Medeli DD512, com grande variedade de sons e kits. Perfeita para estudo e desenvolvimento de técnicas, com preço acessível.", image: "baterias/bateria-medeli.png", thumbnails: ["baterias/Bateria Eletrônica Medeli DD512/bateria-medeli.png"] },
+
+            // Flautas (8 items)
+            { id: 51, category: "flauta", title: "Flauta Transversal Dolphin C Niquelada", price: 599.00, description: "Flauta Transversal Dolphin em Dó, niquelada, com sistema G (Sol) desalinhado e mecanismo de Mi. Ideal para iniciantes, com boa sonoridade e afinação.", image: "instrumentos/flauta1.png", thumbnails: ["flautas/Flauta Transversal Dolphin C Niquelada/flauta1-removebg-preview.png", "flautas/Flauta Transversal Dolphin C Niquelada/flauta1-case.png"] },
+            { id: 52, category: "flauta", title: "Flauta Transversal Yamaha YFL-212", price: 1800.00, description: "Flauta Transversal Yamaha YFL-212, uma das mais recomendadas para estudantes. Resposta fácil e timbre claro, com durabilidade Yamaha.", image: "flautas/flauta-yamaha.png", thumbnails: ["flautas/Flauta Transversal Yamaha YFL-212/flauta-yamaha.png"] },
+            { id: 53, category: "flauta", title: "Flauta Doce Soprano Germânica Yamaha YRS-23", price: 80.00, description: "Flauta Doce Soprano Germânica Yamaha YRS-23, excelente para educação musical e iniciantes. Fácil de soprar e com som doce e claro.", image: "flautas/flauta-doce.png", thumbnails: ["flautas/Flauta Doce Soprano Germânica Yamaha YRS-23/flauta-doce.png"] },
+            { id: 54, category: "flauta", title: "Flauta Transversal Michael WFL40", price: 750.00, description: "Flauta Transversal Michael WFL40, ideal para quem busca um instrumento de estudo com bom custo-benefício. Leve e com mecânica suave.", image: "flautas/flauta-michael.png", thumbnails: ["flautas/Flauta Transversal Michael WFL40/flauta-michael.png"] },
+            { id: 55, category: "flauta", title: "Flauta Transversal Eagle FL03E", price: 950.00, description: "Flauta Transversal Eagle FL03E, com ótimo acabamento e timbre. Resposta rápida e mecanismo de Mi facilitado, para estudantes intermediários.", image: "flautas/flauta-eagle.png", thumbnails: ["flautas/Flauta Transversal Eagle FL03E/flauta-eagle.png"] },
+            { id: 56, category: "flauta", title: "Flauta Transversal Júpiter JFL710", price: 2200.00, description: "Flauta Transversal Júpiter JFL710, com chaves abertas e pé em B. Qualidade profissional para músicos exigentes, timbre rico e flexível.", image: "flautas/flauta-jupiter.png", thumbnails: ["flautas/Flauta Transversal Júpiter JFL710/flauta-jupiter.png"] },
+            { id: 57, category: "flauta", title: "Flauta Transversal Spring STF300", price: 680.00, description: "Flauta Transversal Spring STF300, bom instrumento para iniciantes. Durável e com sonoridade clara, ideal para primeiras aulas.", image: "flautas/flauta-spring.png", thumbnails: ["flautas/Flauta Transversal Spring STF300/flauta-spring.png"] },
+            { id: 58, category: "flauta", title: "Flauta Transversal Condor CTF-200", price: 820.00, description: "Flauta Transversal Condor CTF-200, com ótima relação custo-benefício. Oferece boa resposta e facilidade de execução para estudantes.", image: "flautas/flauta-condor.png", thumbnails: ["flautas/Flauta Transversal Condor CTF-200/flauta-condor.png"] },
+
+            // Pianos Digitais (8 items)
+            { id: 61, category: "piano digital", title: "Piano Digital Yamaha P-45 Preto", price: 3500.00, description: "Piano Digital Yamaha P-45, compacto e com excelente sonoridade. 88 teclas com ação de martelo, ideal para estudantes e uso doméstico.", image: "instrumentos/piano1.png", thumbnails: ["pianos-digitais/Piano Digital Yamaha P-45 Preto/piano1-removebg-preview.png", "pianos-digitais/Piano Digital Yamaha P-45 Preto/piano1-keys.png"] },
+            { id: 62, category: "piano digital", title: "Piano Digital Casio CDP-S160", price: 2900.00, description: "Piano Digital Casio CDP-S160, fino e portátil, com 88 teclas e ação de martelo. Ótima qualidade de som e conectividade para estudo.", image: "pianos-digitais/piano-casio.png", thumbnails: ["pianos-digitais/Piano Digital Casio CDP-S160/piano-casio.png"] },
+            { id: 63, category: "piano digital", title: "Piano Digital Roland FP-30X", price: 5800.00, description: "Piano Digital Roland FP-30X, som premium e teclado responsivo. Ideal para performances ao vivo e prática diária, com conectividade Bluetooth.", image: "pianos-digitais/piano-roland.png", thumbnails: ["pianos-digitais/Piano Digital Roland FP-30X/piano-roland.png"] },
+            { id: 64, category: "piano digital", title: "Piano Digital Korg B2N", price: 3200.00, description: "Piano Digital Korg B2N, com teclado leve e sons autênticos de piano. Ótima escolha para quem busca portabilidade e qualidade de som.", image: "pianos-digitais/piano-korg.png", thumbnails: ["pianos-digitais/Piano Digital Korg B2N/piano-korg.png"] },
+            { id: 65, category: "piano digital", title: "Piano Digital Kawai KDP120", price: 7500.00, description: "Piano Digital Kawai KDP120, com teclado de ação de martelo e sons de piano de cauda realistas. Experiência de toque autêntica para pianistas.", image: "pianos-digitais/piano-kawai.png", thumbnails: ["pianos-digitais/Piano Digital Kawai KDP120/piano-kawai.png"] },
+            { id: 66, category: "piano digital", title: "Piano Digital Studiologic Numa Compact 2", price: 4500.00, description: "Piano Digital Studiologic Numa Compact 2, leve e versátil. Teclado semi-pesado, sons de alta qualidade e funções de controlador MIDI.", image: "pianos-digitais/piano-studiologic.png", thumbnails: ["pianos-digitais/Piano Digital Studiologic Numa Compact 2/piano-studiologic.png"] },
+            { id: 67, category: "piano digital", title: "Piano Digital Kurzweil KA-90", price: 3800.00, description: "Piano Digital Kurzweil KA-90, com 88 teclas de ação de martelo e 20 sons de fábrica. Ideal para estudo e performance, com recursos de gravação.", image: "pianos-digitais/piano-kurzweil.png", thumbnails: ["pianos-digitais/Piano Digital Kurzweil KA-90/piano-kurzweil.png"] },
+            { id: 68, category: "piano digital", title: "Piano Digital Artesia PA-88H+", price: 2700.00, description: "Piano Digital Artesia PA-88H+, com teclado de ação de martelo e sonoridade expressiva. Ótima opção para iniciantes e estudantes avançados.", image: "pianos-digitais/piano-artesia.png", thumbnails: ["pianos-digitais/Piano Digital Artesia PA-88H+/piano-artesia.png"] },
+
+            // Violões (8 items)
+            { id: 71, category: "violao", title: "Violão Eletroacústico Aço Michael VM921DTC Natural", price: 890.00, description: "Violão Eletroacústico Aço Michael VM921DTC, com cutaway e afinador embutido. Timbre equilibrado e boa projeção sonora. Ideal para palco e estúdio.", image: "instrumentos/violao1.png", thumbnails: ["violoes/Violão Eletroacústico Aço Michael VM921DTC Natural/violao1-removebg-preview.png", "violoes/Violão Eletroacústico Aço Michael VM921DTC Natural/violao1-side.png"] },
+            { id: 72, category: "violao", title: "Violão Eletroacústico Nylon Yamaha C40", price: 950.00, description: "Violão Eletroacústico Nylon Yamaha C40, excelente para iniciantes e estudantes. Confortável de tocar, com timbre suave e claro, ideal para música clássica.", image: "violoes/violao-yamaha.png", thumbnails: ["violoes/Violão Eletroacústico Nylon Yamaha C40/violao-yamaha.png"] },
+            { id: 73, category: "violao", title: "Violão Aço Folk Tagima Kansas Mahogany", price: 780.00, description: "Violão Aço Folk Tagima Kansas Mahogany, com corpo em mahogany para um som encorpado e quente. Ideal para folk, pop e rock.", image: "violoes/violao-tagima.png", thumbnails: ["violoes/Violão Aço Folk Tagima Kansas Mahogany/violao-tagima.png"] },
+            { id: 74, category: "violao", title: "Violão Eletroacústico Aço Folk Fender CD-60CE", price: 1300.00, description: "Violão Eletroacústico Aço Folk Fender CD-60CE, com pré-amplificador Fishman e cutaway. Timbre encorpado e tocabilidade confortável, para todos os estilos.", image: "violoes/violao-fender.png", thumbnails: ["violoes/Violão Eletroacústico Aço Folk Fender CD-60CE/violao-fender.png"] },
+            { id: 75, category: "violao", title: "Violão Clássico Acústico Giannini GWNCX", price: 650.00, description: "Violão Clássico Acústico Giannini GWNCX, ideal para estudantes de violão clássico. Confortável, com sonoridade suave e clara para o aprendizado.", image: "violoes/violao-giannini.png", thumbnails: ["violoes/Violão Clássico Acústico Giannini GWNCX/violao-giannini.png"] },
+            { id: 76, category: "violao", title: "Violão Eletroacústico Aço Takamine GD11MCENS", price: 1600.00, description: "Violão Eletroacústico Aço Takamine GD11MCENS, com pré-amplificador TP-4T e afinador. Timbre equilibrado e ressonante, ideal para performances.", image: "violoes/violao-takamine.png", thumbnails: ["violoes/Violão Eletroacústico Aço Takamine GD11MCENS/violao-takamine.png"] },
+            { id: 77, category: "violao", title: "Violão Eletroacústico Aço Vogga VCK350", price: 720.00, description: "Violão Eletroacústico Aço Vogga VCK350, com cordas de aço e cutaway. Bom para iniciantes e para quem busca um violão versátil para diversos estilos.", image: "violoes/violao-vogga.png", thumbnails: ["violoes/Violão Eletroacústico Aço Vogga VCK350/violao-vogga.png"] },
+            { id: 78, category: "violao", title: "Violão Eletroacústico Nylon Strinberg SL200C", price: 1100.00, description: "Violão Eletroacústico Nylon Strinberg SL200C, com sonoridade encorpada e confortável de tocar. Ótimo para samba, choro e música brasileira.", image: "violoes/violao-strinberg.png", thumbnails: ["violoes/Violão Eletroacústico Nylon Strinberg SL200C/violao-strinberg.png"] },
+
+            // Baixos (8 items)
+            { id: 81, category: "baixo", title: "Contrabaixo Tagima TG-540 4 Cordas Preto", price: 990.00, description: "Contrabaixo Tagima TG-540 4 cordas na cor preta, ideal para iniciantes e estudantes. Versátil para diversos estilos musicais, com som potente.", image: "instrumentos/baixo1.png", thumbnails: ["baixos/Contrabaixo Tagima TG-540 4 Cordas Preto/baixo1-removebg-preview.png", "baixos/Contrabaixo Tagima TG-540 4 Cordas Preto/baixo1-body.png", "baixos/Contrabaixo Tagima TG-540 4 Cordas Preto/baixo1-head.png"] },
+            { id: 82, category: "baixo", title: "Contrabaixo Fender Squier Jazz Bass Affinity Series", price: 1800.00, description: "Contrabaixo Fender Squier Jazz Bass Affinity Series, um clássico da Fender acessível. Timbre encorpado e versátil, ideal para diversos gêneros.", image: "baixos/baixo-squier-jazz.png", thumbnails: ["baixos/Contrabaixo Fender Squier Jazz Bass Affinity Series/baixo-squier-jazz.png"] },
+            { id: 83, category: "baixo", title: "Contrabaixo Ibanez GSR200 4 Cordas", price: 1500.00, description: "Contrabaixo Ibanez GSR200 4 cordas, com design moderno e braço fino para maior conforto. Ideal para rock, metal e funk, com captadores potentes.", image: "baixos/baixo-ibanez.png", thumbnails: ["baixos/Contrabaixo Ibanez GSR200 4 Cordas/baixo-ibanez.png"] },
+            { id: 84, category: "baixo", title: "Contrabaixo Yamaha TRBX174", price: 1300.00, description: "Contrabaixo Yamaha TRBX174, leve e ergonômico. Timbre versátil e construção robusta, ideal para estudo e performances.", image: "baixos/baixo-yamaha.png", thumbnails: ["baixos/Contrabaixo Yamaha TRBX174/baixo-yamaha.png"] },
+            { id: 85, category: "baixo", title: "Contrabaixo Cort Action Bass Plus", price: 1100.00, description: "Contrabaixo Cort Action Bass Plus, com som potente e controles versáteis. Ótimo para iniciantes e músicos que buscam um baixo confiável.", image: "baixos/baixo-cort.png", thumbnails: ["baixos/Contrabaixo Cort Action Bass Plus/baixo-cort.png"] },
+            { id: 86, category: "baixo", title: "Contrabaixo Michael BM607 5 Cordas", price: 1650.00, description: "Contrabaixo Michael BM607 5 cordas, ideal para quem busca graves mais profundos. Timbre equilibrado e boa tocabilidade para diversos estilos.", image: "baixos/baixo-michael.png", thumbnails: ["baixos/Contrabaixo Michael BM607 5 Cordas/baixo-michael.png"] },
+            { id: 87, category: "baixo", title: "Contrabaixo Strinberg BP-450", price: 1200.00, description: "Contrabaixo Strinberg BP-450, com corpo em basswood e braço em maple. Boa sonoridade e acabamento, ideal para iniciantes e intermediários.", image: "baixos/baixo-strinberg.png", thumbnails: ["baixos/Contrabaixo Strinberg BP-450/baixo-strinberg.png"] },
+            { id: 88, category: "baixo", title: "Contrabaixo Condor JB-45", price: 1050.00, description: "Contrabaixo Condor JB-45, estilo Jazz Bass, com timbre clássico e versátil. Bom para estudo e apresentações, com excelente custo-benefício.", image: "baixos/baixo-condor.png", thumbnails: ["baixos/Contrabaixo Condor JB-45/baixo-condor.png"] }
+        ];
+
+        const productList = document.getElementById("product-list");
+        const paginationElement = document.getElementById("pagination");
+        const categoryFilter = document.getElementById("category-filter");
+        const productsPerPage = 8;
+        let currentPage = 1;
+        let filteredProducts = products;
+
+        const modal = document.getElementById("modal");
+        const modalClose = document.getElementById("modal-close");
+        const modalMainImage = document.getElementById("modal-main-image");
+        const modalThumbnails = document.getElementById("modal-thumbnails");
+        const modalTitle = document.getElementById("modal-title");
+        const modalPrice = document.getElementById("modal-price");
+        const modalDescription = document.getElementById("modal-description");
+        const quantityInput = document.getElementById("quantity");
+        const buyBtn = document.getElementById("buy-btn");
+
+        let currentProduct = null;
+
+        // Carrinho de Compras
+        const carrinhoLateral = document.getElementById("carrinhoLateral");
+        const carrinhoItems = document.getElementById("carrinho-items");
+        const carrinhoTotalValor = document.getElementById("carrinho-total-valor");
+        let cart = [];
+
+        // Modal PIX
+        const modalPixPagamento = document.getElementById("modalPixPagamento");
+        const pixQrCodeImg = document.getElementById("pix-qr-code-img");
+        const pixTotalValor = document.getElementById("pix-total-valor");
+        const pixKeyValue = document.getElementById("pix-key-value");
+
+        // Funções do Carrinho
+        function loadCart() {
+            const savedCart = localStorage.getItem("cart");
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                renderCart();
+                updateCartCount();
+            }
+        }
+
+        function saveCart() {
+            localStorage.setItem("cart", JSON.stringify(cart));
+        }
+
+        function renderCart() {
+            carrinhoItems.innerHTML = "";
+            if (cart.length === 0) {
+                carrinhoItems.innerHTML = "<li style='text-align: center; color: #888;'>Seu carrinho está vazio.</li>";
+            } else {
+                cart.forEach((item, index) => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `
+                        <div class="cart-item-details">
+                            <img src="${item.image}" alt="${item.title}" class="cart-item-image">
+                            <span>${item.title} (x${item.quantity}) - R$${(item.price * item.quantity).toFixed(2).replace('.', ',')}</span>
+                        </div>
+                        <button class="remove-item-btn" onclick="removeItemFromCart(${index})">Remover</button>
+                    `;
+                    carrinhoItems.appendChild(li);
+                });
+            }
+            updateCartTotal();
+        }
+
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById("cart-count").textContent = totalItems;
+        }
+
+        function updateCartTotal() {
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            carrinhoTotalValor.textContent = `R$${total.toFixed(2).replace('.', ',')}`;
+        }
+
+        function addItemToCart(product, quantity) {
+            const existingItem = cart.find(item => item.id === product.id);
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({ ...product, quantity });
+            }
+            saveCart();
+            renderCart();
+            updateCartCount();
+            alert(`${quantity} ${product.title}(s) adicionado(s) ao carrinho!`);
+        }
+
+        function removeItemFromCart(index) {
+            cart.splice(index, 1);
+            saveCart();
+            renderCart();
+            updateCartCount();
+        }
+
+        function clearCart() {
+            if (confirm("Tem certeza que deseja limpar o carrinho?")) {
+                cart = [];
+                saveCart();
+                renderCart();
+                updateCartCount();
+                alert("Carrinho limpo!");
+            }
+        }
+
+        function toggleCarrinho() {
+            carrinhoLateral.classList.toggle("aberto");
+        }
+
+        // Funções do PIX
+        function finalizarCompraPix() {
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            if (total === 0) {
+                alert("Seu carrinho está vazio. Adicione itens para finalizar a compra.");
+                return;
+            }
+
+            // Gerar um QR Code (URL de exemplo, substitua por uma API real)
+            const pixData = `Total: R$${total.toFixed(2).replace('.', ',')}, Chave: lojamusicwave.pagamento@email.com`;
+            // Use uma API real de QR Code aqui. Ex: `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(pixData)}`
+            pixQrCodeImg.src = `https://via.placeholder.com/150?text=QR+Code+PIX`; // Placeholder
+
+            pixTotalValor.textContent = `R$${total.toFixed(2).replace('.', ',')}`;
+            modalPixPagamento.style.display = "block";
+        }
+
+        function fecharModalPix() {
+            modalPixPagamento.style.display = "none";
+            // Opcional: Limpar o carrinho após fechar o modal do PIX, se o pagamento for considerado 'completo'
+            // clearCart();
+        }
+
+        // Funções de Exibição de Produtos
+        function renderProductCard(product) {
+            const productCard = document.createElement("div");
+            productCard.classList.add("col-4"); // Use sua classe para os cards
+            productCard.innerHTML = `
+                <a href="#" class="product-link" data-id="${product.id}">
+                    <img src="${product.image}" alt="${product.title}">
+                    <h4>${product.title}</h4>
+                    <p>R$${product.price.toFixed(2).replace('.', ',')}</p>
+                </a>
+                <button class="add-to-cart-btn-card" data-id="${product.id}">Adicionar ao Carrinho</button>
+            `;
+            // Adiciona evento de clique para abrir o modal de detalhes
+            productCard.querySelector(".product-link").addEventListener("click", (event) => {
+                event.preventDefault(); // Impede a navegação da âncora
+                openModal(product.id);
+            });
+            // Adiciona evento de clique para adicionar ao carrinho direto do card
+            productCard.querySelector(".add-to-cart-btn-card").addEventListener("click", () => {
+                addItemToCart(product, 1);
+            });
+            return productCard;
+        }
+
+        function displayProducts(productsToDisplay, page) {
+            productList.innerHTML = "";
+            const start = (page - 1) * productsPerPage;
+            const end = start + productsPerPage;
+            const paginatedProducts = productsToDisplay.slice(start, end);
+
+            if (paginatedProducts.length === 0) {
+                productList.innerHTML = "<p style='text-align: center; width: 100%;'>Nenhum produto encontrado para esta categoria.</p>";
+            } else {
+                paginatedProducts.forEach(product => {
+                    productList.appendChild(renderProductCard(product));
+                });
+            }
+            setupPagination(productsToDisplay.length, page);
+        }
+
+        function setupPagination(totalProducts, currentPage) {
+            const totalPages = Math.ceil(totalProducts / productsPerPage);
+            paginationElement.innerHTML = "";
+
+            if (totalPages > 1) {
+                for (let i = 1; i <= totalPages; i++) {
+                    const btn = document.createElement("span");
+                    btn.textContent = i;
+                    btn.classList.add("btn");
+                    if (i === currentPage) {
+                        btn.classList.add("active");
+                    }
+                    btn.addEventListener("click", () => {
+                        currentPage = i;
+                        displayProducts(filteredProducts, currentPage);
+                        window.scrollTo({ top: 0, behavior: 'smooth' }); // Volta ao topo da página
+                    });
+                    paginationElement.appendChild(btn);
+                }
+            }
+        }
+
+        function getUniqueCategories() {
+            const categories = [...new Set(products.map(product => product.category))];
+            return ["Todas", ...categories.sort()]; // Adiciona "Todas" e ordena
+        }
+
+        function populateCategoryFilter() {
+            const categories = getUniqueCategories();
+            categoryFilter.innerHTML = "";
+            categories.forEach(category => {
+                const option = document.createElement("option");
+                option.value = category;
+                option.textContent = category.charAt(0).toUpperCase() + category.slice(1); // Capitaliza a primeira letra
+                categoryFilter.appendChild(option);
+            });
+            categoryFilter.addEventListener("change", filterProducts);
+        }
+
+        function filterProducts() {
+            const selectedCategory = categoryFilter.value;
+            if (selectedCategory === "Todas") {
+                filteredProducts = products;
+            } else {
+                filteredProducts = products.filter(product => product.category === selectedCategory);
+            }
+            currentPage = 1; // Reseta para a primeira página ao filtrar
+            displayProducts(filteredProducts, currentPage);
+        }
+
+        // Funções do Modal de Detalhes do Produto
+        function openModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                currentProduct = product; // Salva o produto atual para uso no botão do carrinho do modal
+                modalMainImage.src = product.image;
+                modalTitle.textContent = product.title;
+                modalPrice.textContent = `R$${product.price.toFixed(2).replace('.', ',')}`;
+                modalDescription.textContent = product.description;
+                quantityInput.value = 1; // Reseta a quantidade para 1
+
+                modalThumbnails.innerHTML = "";
+                if (product.thumbnails && product.thumbnails.length > 0) {
+                    product.thumbnails.forEach(thumbnail => {
+                        const img = document.createElement("img");
+                        img.src = thumbnail;
+                        img.alt = product.title + " thumbnail";
+                        img.classList.add("modal-thumbnail-image");
+                        img.addEventListener("click", () => {
+                            modalMainImage.src = thumbnail;
+                        });
+                        modalThumbnails.appendChild(img);
+                    });
+                }
+                modal.style.display = "block";
+            }
+        }
+
+        modalClose.addEventListener("click", () => {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener("click", (event) => {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+            if (event.target === modalPixPagamento) {
+                fecharModalPix();
+            }
+        });
+
+        // Adicionar ao carrinho a partir do modal
+        buyBtn.addEventListener("click", () => {
+            if (currentProduct) {
+                const quantity = parseInt(quantityInput.value);
+                if (quantity > 0) {
+                    addItemToCart(currentProduct, quantity);
+                    modal.style.display = "none"; // Fecha o modal após adicionar ao carrinho
+                } else {
+                    alert("Por favor, insira uma quantidade válida.");
+                }
+            }
+        });
+
+        // Função para o botão "Adicionar ao Carrinho" dentro do modal (se usar ambos os botões)
+        function addItemToCartFromModal() {
+            if (currentProduct) {
+                const quantity = parseInt(quantityInput.value);
+                if (quantity > 0) {
+                    addItemToCart(currentProduct, quantity);
+                    modal.style.display = "none";
+                } else {
+                    alert("Por favor, insira uma quantidade válida.");
+                }
+            }
+        }
+
+        // Inicialização
+        document.addEventListener("DOMContentLoaded", () => {
+            populateCategoryFilter();
+            filterProducts(); // Inicia mostrando todos os produtos na primeira página
+            loadCart();
+        });
+    </script>
+    </body>
+</html>
