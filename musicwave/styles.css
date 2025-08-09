@@ -43,7 +43,7 @@ body {
 header input[type="text"] {
   flex: 1;
   max-width: 400px;
-   margin-left: 5px;   /* tira margem esquerda */
+   margin-left: 5px;   
   margin-right: 100px;
   padding: 0.5rem;
   border-radius: 15px;
@@ -408,32 +408,6 @@ body.dark-mode .modal-right .price {
 
 
 
-
-
-
-/* filtragem e paginação */
-
-.categoria-filtros {
-  text-align: center;
-  margin: 30px auto 30px;
-}
-.category-btn {
-  background-color: transparent;
-  border: 2px solid #f7bd6d;
-  color: #f7bd6d;
-  font-weight: 700;
-  padding: 8px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  margin: 5px;
-}
-.category-btn:hover {
-  background-color: #f7bd6d;
-  color: #212121;
-}
-
-/* filtragem e paginação */
 
 
 
@@ -889,6 +863,9 @@ body.dark-mode .carrinho-info h4 {
             background-color: #f7bd6d;
   color: #212121;
         }
+
+
+        /* sidebar */
         
 
 aside {
@@ -924,6 +901,8 @@ aside {
       display: flex;
       flex-direction: column;
     }
+
+        /* sidebar */
 
     /* slideshow bebezinho */
 
@@ -1069,6 +1048,8 @@ aside {
   50% { transform: rotate(-2deg); }
   75% { transform: rotate(2deg); }
 }
+
+/* Painel lateral */
 
 
      .jogos-destacados {
