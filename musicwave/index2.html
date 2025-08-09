@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="styles.css">
    <link rel="shortcut icon" href="img/mw..png" type="image/x-icon">
   <title>HOME</title>
-
 </head>
 <body>
 
@@ -350,94 +349,6 @@
 
        <!-- carrinho -->
 
-
-<script>
-    // --- Variáveis para a Busca na Barra de Navegação ---
-    // Lista de categorias para o filtro de busca.
-    const allCategories = ["violino", "guitarra", "violoncelo", "violao"];
-
-    // Sugestões para o autocompletar da barra de busca.
-    const searchSuggestionsList = [
-        ...allCategories,
-        "violino acústico", "guitarra elétrica", "violoncelo envelhecido",
-        "violão folk", "violão nylon"
-    ].map(s => s.toLowerCase());
-
-    // --- Funções da Barra de Navegação e Busca ---
-
-    /**
-     * @function showSuggestions
-     * Exibe as sugestões de busca com base na entrada do usuário.
-     * @param {string} query O texto digitado na barra de busca.
-     */
-    function showSuggestions(query) {
-        const searchInput = document.querySelector('header input[type="text"]');
-        const searchSuggestions = document.getElementById('search-suggestions');
-        
-        if (!searchInput || !searchSuggestions) return;
-        
-        searchSuggestions.innerHTML = '';
-        if (!query) {
-            hideSuggestions();
-            return;
-        }
-
-        const lowerQuery = query.toLowerCase();
-        const filteredSuggestions = searchSuggestionsList.filter(s => s.includes(lowerQuery));
-
-        if (filteredSuggestions.length > 0) {
-            filteredSuggestions.forEach(s => {
-                const suggestionItem = document.createElement('div');
-                suggestionItem.classList.add('suggestion-item');
-                suggestionItem.textContent = s.charAt(0).toUpperCase() + s.slice(1);
-                suggestionItem.addEventListener('click', () => {
-                    const categoryParam = allCategories.includes(s) ? `?categoria=${encodeURIComponent(s)}` : `?pesquisa=${encodeURIComponent(s)}`;
-                    window.location.href = `teste.html${categoryParam}`; 
-                });
-                searchSuggestions.appendChild(suggestionItem);
-            });
-            searchSuggestions.style.display = 'block';
-        } else {
-            hideSuggestions();
-        }
-    }
-
-    /**
-     * @function hideSuggestions
-     * Esconde a caixa de sugestões de busca.
-     */
-    function hideSuggestions() {
-        const searchSuggestions = document.getElementById('search-suggestions');
-        if (searchSuggestions) searchSuggestions.style.display = 'none';
-    }
-
-    // --- Event Listeners Globais para a Barra de Navegação ---
-    document.addEventListener('DOMContentLoaded', () => {
-        const searchInput = document.querySelector('header input[type="text"]');
-        const searchSuggestions = document.getElementById('search-suggestions');
-        
-        if (searchInput) {
-            searchInput.addEventListener('input', () => {
-                showSuggestions(searchInput.value.trim());
-            });
-
-            searchInput.addEventListener('keypress', (event) => {
-                if (event.key === 'Enter') {
-                    event.preventDefault();
-                    const query = searchInput.value.trim().toLowerCase();
-                    const categoryParam = allCategories.includes(query) ? `?categoria=${encodeURIComponent(query)}` : `?pesquisa=${encodeURIComponent(query)}`;
-                    window.location.href = `teste.html${categoryParam}`; 
-                }
-            });
-
-            document.addEventListener('click', (event) => {
-                if (searchInput && searchSuggestions && !searchInput.contains(event.target) && !searchSuggestions.contains(event.target)) {
-                    hideSuggestions();
-                }
-            });
-        }
-    });
-</script>
 
 <script src="script.js"></script>
 

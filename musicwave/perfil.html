@@ -61,29 +61,32 @@
  <!-- formuláriozinho -->
 
   <main>
-<section class="user-profile">
+  <section class="user-profile">
     <h2>Faça seu cadastro na Musicwave!</h2>
     <form id="cadastro-form" enctype="multipart/form-data">
-    <div class="profile-box">
-      <div class="avatar-container">
-        <img src="img/aaaaa.jpg" alt="" class="avatar" id="preview-avatar">
-        <label for="foto-perfil" class="foto-label">Adicionar Foto</label>
-        <input type="file" id="foto-perfil" accept="image/*">
-        <button type="button" id="remover-foto" class="btn-remover" style="display: none;">Remover Foto</button>
-      </div>
+      <div class="profile-box">
+        
+        <div class="avatar-container">
+          <img src="img/aaaaa.jpg" alt="" class="avatar" id="preview-avatar">
+          <label for="foto-perfil" class="foto-label">Adicionar Foto</label>
+          <input type="file" id="foto-perfil" accept="image/*">
+          <button type="button" id="remover-foto" class="btn-remover" style="display: none;">Remover Foto</button>
+        </div>
 
-      <div class="profile-info">
-        <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo..." required><br>
-        <input type="email" id="email" name="email" placeholder="Digite seu e-mail..." required><br>
-        <input type="password" id="senha" name="senha" placeholder="Digite sua senha..." required><br>
-        <input type="text" id="cep" name="cep" placeholder="Digite seu CEP..." required><br>
+        <div class="profile-info">
+          <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo..." required><br>
+          <input type="email" id="email" name="email" placeholder="Digite seu e-mail..." required><br>
+          <input type="password" id="senha" name="senha" placeholder="Digite sua senha..." required><br>
+          <input type="text" id="cep" name="cep" placeholder="Digite seu CEP..." required><br>
 
-        <button type="submit" class="btn-laranja">Cadastrar</button>
-        <button type="button" class="btn-laranja" id="logout" style="display: none;">Logout</button>
+          <button type="submit" class="btn-laranja">Cadastrar</button>
+          <button type="button" class="btn-laranja" id="logout" style="display: none;">Logout</button>
+        </div>
+
       </div>
-    </div>
-  </form>
+    </form>
   </section>
+</main>
 
    <!-- formuláriozinho -->
 
@@ -223,6 +226,10 @@
         }
     });
 </script>
+
+<script src="script.js"></script>
+
+
   <footer>
         <span class="footer-title">MusicWave</span>
         <ul class="socials">

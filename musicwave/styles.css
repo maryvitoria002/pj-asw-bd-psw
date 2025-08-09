@@ -98,6 +98,43 @@ body {
     background-color: #faefdfd6;
     color: #d4780e; /* Cor laranja no hover, combinando com seu tema */
 }
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    user-select: none;
+}
+
+.page-btn {
+    padding: 8px 12px;
+    border: 1px solid #f7bd6d;
+    border-radius: 5px;
+    background-color: #fdfaf5;
+    color: #f3a63b;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    font-weight: bold;
+}
+
+.page-btn:hover:not(.active):not(.disabled) {
+    background-color: #f3a63b;
+    color: #fff;
+    border-color: #f3a63b;
+}
+
+.page-btn.active {
+    background-color: #f3a63b;
+    color: #fff;
+    border-color: #f3a63b;
+    cursor: default;
+}
+
+.page-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
 
     /* barra de navegação nenemzinho */
 
