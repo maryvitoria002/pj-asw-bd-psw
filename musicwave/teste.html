@@ -21,7 +21,7 @@
   <span class="text" id="cep-texto">Informe seu CEP</span>
 </button>
       <button class="bubbles">
-  <span class="text"><a href="loja.html">Loja</a></span>
+  <span class="text"><a href="teste.html">Loja</a></span>
 </button>
 <button class="bubbles" onclick="toggleCarrinho()">
     <span class="text">Carrinho (<span id="cart-count">0</span>)</span>
@@ -231,16 +231,22 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
         const allCategories = [...new Set(products.map(p => p.category))];
         const searchSuggestionsList = [
             ...allCategories,
-            "violino acústico",
+            "bandolim",
+            "banjo",
+            "baixo",
+            "charango",
             "guitarra elétrica",
-            "violoncelo envelhecido",
-            "violão folk",
+            "ukulele",   
+            "viola caipira",
+             "violão",
             "violão nylon",
+            "violino acústico",
             "violino",
-            "guitarra",
             "violoncelo",
-            "violão"
+             "violoncelo vogga",
+           
         ].map(s => s.toLowerCase());
+        
 
         // --- Funções do Carrinho ---
 
