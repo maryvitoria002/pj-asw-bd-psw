@@ -16,12 +16,13 @@
     <div class="logo-img">
       <img src="img/logomw.png" alt="logo">
     </div>
-    <input type="text" id="search-input" placeholder="Navegue..." />
+    <div class="search-container"> <input type="text" id="search-input" placeholder="Navegue..." autocomplete="off" />
+        <div id="search-suggestions" class="search-suggestions"></div> </div>
   <button class="bubbles" onclick="pedirCep()">
   <span class="text" id="cep-texto">Informe seu CEP</span>
 </button>
             <button class="bubbles">
-               <span class="text"><a href="loja.html">Loja</a></span>
+               <span class="text"><a href="teste.html">Loja</a></span>
             </button>
 
 <button class="bubbles" onclick="toggleCarrinho()">
@@ -1062,26 +1063,93 @@ update();
 
    <!-- carrinho -->
 
-    <script>
+<script>
+    // --- Variáveis para a Busca na Barra de Navegação ---
+    // Lista de categorias para o filtro de busca.
+    const allCategories = ["violino", "guitarra", "violoncelo", "violao"];
+
+    // Sugestões para o autocompletar da barra de busca.
+    const searchSuggestionsList = [
+        ...allCategories,
+        "violino acústico", "guitarra elétrica", "violoncelo envelhecido",
+        "violão folk", "violão nylon"
+    ].map(s => s.toLowerCase());
+
+    // --- Funções da Barra de Navegação e Busca ---
+
+    /**
+     * @function showSuggestions
+     * Exibe as sugestões de busca com base na entrada do usuário.
+     * @param {string} query O texto digitado na barra de busca.
+     */
+    function showSuggestions(query) {
+        const searchInput = document.querySelector('header input[type="text"]');
+        const searchSuggestions = document.getElementById('search-suggestions');
+        
+        if (!searchInput || !searchSuggestions) return;
+        
+        searchSuggestions.innerHTML = '';
+        if (!query) {
+            hideSuggestions();
+            return;
+        }
+
+        const lowerQuery = query.toLowerCase();
+        const filteredSuggestions = searchSuggestionsList.filter(s => s.includes(lowerQuery));
+
+        if (filteredSuggestions.length > 0) {
+            filteredSuggestions.forEach(s => {
+                const suggestionItem = document.createElement('div');
+                suggestionItem.classList.add('suggestion-item');
+                suggestionItem.textContent = s.charAt(0).toUpperCase() + s.slice(1);
+                suggestionItem.addEventListener('click', () => {
+                    const categoryParam = allCategories.includes(s) ? `?categoria=${encodeURIComponent(s)}` : `?pesquisa=${encodeURIComponent(s)}`;
+                    window.location.href = `teste.html${categoryParam}`; 
+                });
+                searchSuggestions.appendChild(suggestionItem);
+            });
+            searchSuggestions.style.display = 'block';
+        } else {
+            hideSuggestions();
+        }
+    }
+
+    /**
+     * @function hideSuggestions
+     * Esconde a caixa de sugestões de busca.
+     */
+    function hideSuggestions() {
+        const searchSuggestions = document.getElementById('search-suggestions');
+        if (searchSuggestions) searchSuggestions.style.display = 'none';
+    }
+
+    // --- Event Listeners Globais para a Barra de Navegação ---
     document.addEventListener('DOMContentLoaded', () => {
-        const searchInput = document.getElementById('search-input');
+        const searchInput = document.querySelector('header input[type="text"]');
+        const searchSuggestions = document.getElementById('search-suggestions');
+        
         if (searchInput) {
-            searchInput.addEventListener('keypress', function(event) {
+            searchInput.addEventListener('input', () => {
+                showSuggestions(searchInput.value.trim());
+            });
+
+            searchInput.addEventListener('keypress', (event) => {
                 if (event.key === 'Enter') {
-                    const query = searchInput.value.trim();
-                    if (query) {
-                        window.location.href = `kkk.html?pesquisa=${encodeURIComponent(query)}`;
-                    } else {
-                        // Se a busca estiver vazia, redireciona para o catálogo sem filtro
-                        window.location.href = `kkk.html`;
-                    }
+                    event.preventDefault();
+                    const query = searchInput.value.trim().toLowerCase();
+                    const categoryParam = allCategories.includes(query) ? `?categoria=${encodeURIComponent(query)}` : `?pesquisa=${encodeURIComponent(query)}`;
+                    window.location.href = `teste.html${categoryParam}`; 
+                }
+            });
+
+            document.addEventListener('click', (event) => {
+                if (searchInput && searchSuggestions && !searchInput.contains(event.target) && !searchSuggestions.contains(event.target)) {
+                    hideSuggestions();
                 }
             });
         }
     });
-
-    </script>
-
+</script>
   <footer>
         <span class="footer-title">MusicWave</span>
         <ul class="socials">
