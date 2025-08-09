@@ -57,6 +57,61 @@ const cepTexto = document.getElementById("cep-texto");
 
 
 
+// slideshow paizão
+
+const slides = document.querySelectorAll(".slide");
+  const dots = document.querySelectorAll(".dot");
+  const wrapper = document.querySelector(".slideshow-wrapper");
+
+  const bgColors = [
+  "#f0e3dc",
+  "#ffd7c1",
+  "linear-gradient(to right, #374253, #1b2d4a)",
+  "#fa98b1",
+  "linear-gradient(to right, #e4a777, #f1eae2)"
+];
+
+
+  let index = 0;
+  let intervalId;
+
+  function showSlide(i) {
+    slides[index].classList.remove("active");
+    dots[index].classList.remove("active");
+    index = i;
+    slides[index].classList.add("active");
+    dots[index].classList.add("active");
+  wrapper.style.background = bgColors[index];
+
+  }
+
+  function nextSlide() {
+    showSlide((index + 1) % slides.length);
+  }
+
+  function startAutoSlide() {
+    intervalId = setInterval(nextSlide, 3000);
+  }
+
+  function resetAutoSlide() {
+    clearInterval(intervalId);
+    startAutoSlide();
+  }
+
+  dots.forEach(dot => {
+    dot.addEventListener("click", () => {
+      showSlide(parseInt(dot.dataset.index));
+      resetAutoSlide();
+    });
+  });
+
+  startAutoSlide();
+
+// slideshow paizão
+
+
+
+
 
 // seção do afinador lateral bb
 
@@ -247,6 +302,85 @@ const afinacoes = {
   })
 
 // seção do afinador lateral bb
+
+
+
+
+// scriptzinho do formulário de login (mas que iremos remover posteriormente)
+
+ const fotoInput = document.getElementById('foto-perfil');
+  const avatarPreview = document.getElementById('preview-avatar');
+  const removerBtn = document.getElementById('remover-foto');
+  const form = document.getElementById('cadastro-form');
+  const logoutBtn = document.getElementById('logout');
+  const nomeInput = document.getElementById('nome');
+  const emailInput = document.getElementById('email');
+  const senhaInput = document.getElementById('senha');
+  const cepInput = document.getElementById('cep');
+
+  // Carregar dados do localStorage
+  window.onload = () => {
+    const dados = JSON.parse(localStorage.getItem('usuario'));
+    if (dados) {
+      nomeInput.value = dados.nome;
+      emailInput.value = dados.email;
+      senhaInput.value = dados.senha;
+      cepInput.value = dados.cep;
+      if (dados.foto) {
+        avatarPreview.src = dados.foto;
+        removerBtn.style.display = 'inline-block';
+      }
+      logoutBtn.style.display = 'inline-block';
+    }
+  }
+
+  // Preview de imagem
+  fotoInput.addEventListener('change', () => {
+    const file = fotoInput.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        avatarPreview.src = e.target.result;
+        removerBtn.style.display = 'inline-block';
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // Remover imagem
+  removerBtn.addEventListener('click', () => {
+    avatarPreview.src = 'https://via.placeholder.com/100';
+    fotoInput.value = '';
+    removerBtn.style.display = 'none';
+  });
+
+  // Envio do formulário
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const foto = avatarPreview.src;
+    const usuario = {
+      nome: nomeInput.value,
+      email: emailInput.value,
+      senha: senhaInput.value,
+      cep: cepInput.value,
+      foto: foto
+    };
+    localStorage.setItem('usuario', JSON.stringify(usuario));
+    alert("Cadastro salvo localmente!");
+    logoutBtn.style.display = 'inline-block';
+  });
+
+  // Logout
+  logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem('usuario');
+    form.reset();
+    avatarPreview.src = 'https://via.placeholder.com/100';
+    removerBtn.style.display = 'none';
+    logoutBtn.style.display = 'none';
+  });
+
+
+// scriptzinho do formulário de login (mas que iremos remover posteriormente)
 
 
 
@@ -833,4 +967,3 @@ function getQueryParams() {
 
         // catálogo dos instrumentos + carrinho + modal de produtos e modal do pix + filtragem por categoria papaizinho
 
-        
