@@ -169,10 +169,12 @@
 
 <script>
     // catálogo dos instrumentos + carrinho + modal de produtos e modal do pix + filtragem por categoria papaizinho
- // Dados dos produtos - ESTES DEVEM ESTAR IDÊNTICOS AOS SEUS PRODUTOS ATUAIS
-        const products = [
-              // baixo (Este comentário está OK)
-            { id: 39,
+
+
+    const products = [
+
+              // baixo 
+            { id: 1,
                 category: "baixo",
                 title: "Contrabaixo Elétrico Waldman ",
                 price: 2754.90,
@@ -183,7 +185,7 @@
                    "catálogo/baixos/1 Contrabaixo Elétrico Waldman/baixo1- detalhes.png",
                    "catálogo/baixos/1 Contrabaixo Elétrico Waldman/baixo1- afinadores.png"] },
 
-            { id: 40,
+            { id: 2,
                 category: "baixo",
                 title: "Baixo 5 Cordas Ativo Yamaha Trbx305 White",
                 price: 3295.82,
@@ -194,7 +196,7 @@
             "catálogo/baixos/2 Baixo 5 Cordas Ativo Yamaha Trbx305 White/baixo2- detalhes.png",
             "catálogo/baixos/2 Baixo 5 Cordas Ativo Yamaha Trbx305 White/baixo2- afinadores.png", ] },
 
-            { id: 41,
+            { id: 3,
                 category: "baixo",
                 title: "Baixo Tagima Tw65 Woodstock Precision Vintage White",
                 price: 1467.00,
@@ -204,7 +206,7 @@
                 "catálogo/baixos/3 Baixo Tagima Tw65 Woodstock Precision Vintage White/baixo3 - verso.png",
                 "catálogo/baixos/3 Baixo Tagima Tw65 Woodstock Precision Vintage White/baixo3- detalhes.png"] },
 
-            { id: 42,
+            { id: 4,
                 category: "baixo",
                 title: "Contrabaixo Waldman Gjj-105 Bk Preto 5 Cordas",
                 price: 2399.90,
@@ -214,7 +216,7 @@
                 "catálogo/baixos/4 Contrabaixo Waldman Gjj-105 Bk Preto 5 Cordas/baixo4- verso.png",
                 "catálogo/baixos/4 Contrabaixo Waldman Gjj-105 Bk Preto 5 Cordas/baixo4- detalhes.png"] },
 
-            { id: 43,
+            { id: 5,
                 category: "baixo",
                 title: "Kit Contra Baixo 5 Cordas Giannini Gb205a Ativo + Acessórios",
                 price: 2049.00,
@@ -225,7 +227,7 @@
                 "catálogo/baixos/5 Kit Contra Baixo 5 Cordas Giannini Gb205a Ativo + Acessórios/baixo5- completo.png"
             ] },
 
-            { id: 44,
+            { id: 6,
                 category: "baixo",
                 title: "Contra Baixo Strinberg Sab66 Ativo 6 Cordas",
                 price: 2899.00,
@@ -237,7 +239,7 @@
                         "catálogo/baixos/6 Contra Baixo Strinberg Sab66 Ativo 6 Cordas/baixo6- afinadores.png"
                 ] },
 
-            {id: 45,
+            {id: 7,
     category: "baixo",
     title: "Contra Baixo Tagima Custom Millenium Top 4 Cordas Ativo",
     price: 2299.00,
@@ -251,7 +253,7 @@
   },
 
   {
-    id: 46,
+    id: 8,
     category: "baixo",
     title: "Kit De Baixo Fender Squier Affinity Precison Bass",
     price: 4565.94,
@@ -264,11 +266,59 @@
     ]
   },
 
-     // Bandolins (8 items)
-            { id: 47, category: "bandolim", title: "Bandolim Giannini Elétrico Natural", price: 1200.00, description: "Bandolim elétrico Giannini com corpo em mogno e tampo em spruce, acabamento natural brilhante. Ideal para choro e música regional.", image: "catálogo/bandolins/bandolim1.png", thumbnails: ["catálogo/bandolins/bandolim1.png", "catálogo/bandolins/bandolim1-verso.png", "catálogo/bandolins/bandolim1-case.png"] },
-            { id: 48, category: "bandolim", title: "Bandolim Rozini Clássico 8 Cordas", price: 980.00, description: "Bandolim Rozini clássico de 8 cordas, tampo sólido em spruce e fundo em maple, som encorpado.", image: "catálogo/bandolins/bandolim2.png", thumbnails: ["catálogo/bandolins/bandolim2.png"] },
-            { id: 49, category: "bandolim", title: "Bandolim Michael BM100 Elétrico", price: 1100.00, description: "Bandolim Michael BM100 com captação elétrica, acabamento natural fosco, excelente para apresentações.", image: "catálogo/bandolins/bandolim3.png", thumbnails: ["catálogo/bandolins/bandolim3.png"] },
-            { id: 50, category: "bandolim", title: "Bandolim Di Giorgio Serie Especial", price: 1350.00, description: "Bandolim Di Giorgio série especial, tampo em cedro, fundo em jacarandá, acabamento de luxo.", image: "catálogo/bandolins/bandolim4.png", thumbnails: ["catálogo/bandolins/bandolim4.png"] },
+//  baixo
+
+
+
+     // bandolim (8 itens)
+            { id: 9, 
+                category: "bandolim", 
+                title: "Bandolim Marquês Bnd100 Estudante Natural Sombra Acústico ", 
+                price: 767.67, 
+                description: "Este bandolim Marquês BND-100Nbac é um modelo estudante acústico, com 8 cordas e acabamento fosco em cor marrom-claro (natural sombra). Possui braço e corpo em Mogno, com formato de corpo A-Style.", 
+                image: "catálogo/bandolins/1 Bandolim Marquês Bnd100 Estudante Natural Sombra Acústico/bandolim1.png", 
+                thumbnails: ["catálogo/bandolins/1 Bandolim Marquês Bnd100 Estudante Natural Sombra Acústico/bandolim1.png", 
+                "catálogo/bandolins/1 Bandolim Marquês Bnd100 Estudante Natural Sombra Acústico/bandolim1- verso.png", 
+                "catálogo/bandolins/1 Bandolim Marquês Bnd100 Estudante Natural Sombra Acústico/bandolim1- detalhes.png",
+                "catálogo/bandolins/1 Bandolim Marquês Bnd100 Estudante Natural Sombra Acústico/bandolim1- afinadores.png"
+            ] },
+
+            { id: 10, 
+                category: "bandolim", 
+                title: "Bandolim Marquês Bnd-100 Ns Acústico", 
+                price: 925.00, 
+                description: "O Bandolim Marquês BND-100 NS é um modelo acústico de 8 cordas. Possui braço em Cedro.", 
+                image: "catálogo/bandolins/2 Bandolim Marquês Bnd-100 Ns Acústico/bandolim2.png", 
+                thumbnails: ["catálogo/bandolins/2 Bandolim Marquês Bnd-100 Ns Acústico/bandolim2.png",
+                    "catálogo/bandolins/2 Bandolim Marquês Bnd-100 Ns Acústico/bandolim2- detalhes.png",
+                    "catálogo/bandolins/2 Bandolim Marquês Bnd-100 Ns Acústico/bandolim2- afinadores.png"
+                ] },
+
+
+            { id: 11, 
+                category: "bandolim", 
+                title: "Bandolim Marquês Bnd-100 Nb Acústico", 
+                price: 975.00, 
+                description: "Este bandolim Marquês BND-100 NB é um modelo acústico para destros, com 8 cordas e acabamento fosco. Possui braço em Cedro e formato de corpo A-Style.", 
+                image: "catálogo/bandolins/3 Bandolim Marquês Bnd-100 Nb Acústico/bandolim3.png", 
+                thumbnails: ["catálogo/bandolins/3 Bandolim Marquês Bnd-100 Nb Acústico/bandolim3.png",
+                    "catálogo/bandolins/3 Bandolim Marquês Bnd-100 Nb Acústico/bandolim3- verso.png",
+                    "catálogo/bandolins/3 Bandolim Marquês Bnd-100 Nb Acústico/bandolim3- afinadores.png"
+                ] },
+
+
+            { id: 12, 
+                category: "bandolim", 
+                title: "Bandolim Marques Bnd-100 Estudante Natural Sombra Acústico", 
+                price: 749.90, 
+                description: "O Bandolim Marquês BND-100Nbac é um modelo estudante acústico, com 8 cordas e cor natural (sombra). Possui braço em Cedro.", 
+                image: "catálogo/bandolins/4 Bandolim Marques Bnd-100 Estudante Natural Sombra Acústico/bandolim4.png", 
+                thumbnails: ["catálogo/bandolins/4 Bandolim Marques Bnd-100 Estudante Natural Sombra Acústico/bandolim4.png",
+                    "catálogo/bandolins/4 Bandolim Marques Bnd-100 Estudante Natural Sombra Acústico/bandolim4- verso.png",
+                    "catálogo/bandolins/4 Bandolim Marques Bnd-100 Estudante Natural Sombra Acústico/bandolim4- detalhes.png"
+                ] },
+
+
             { id: 51, category: "bandolim", title: "Bandolim Tagima Acústico BM50", price: 870.00, description: "Bandolim Tagima BM50, corpo em mogno, braço em maple, som equilibrado para ritmos brasileiros.", image: "catálogo/bandolins/bandolim5.png", thumbnails: ["catálogo/bandolins/bandolim5.png"] },
             { id: 52, category: "bandolim", title: "Bandolim Eagle BM44", price: 990.00, description: "Bandolim Eagle BM44, 8 cordas, tampo sólido e excelente projeção sonora.", image: "catálogo/bandolins/bandolim6.png", thumbnails: ["catálogo/bandolins/bandolim6.png"] },
             { id: 53, category: "bandolim", title: "Bandolim Crafter BM-300", price: 1490.00, description: "Bandolim Crafter BM-300, acabamento sunburst, braço confortável e som cristalino.", image: "catálogo/bandolins/bandolim7.png", thumbnails: ["catálogo/bandolins/bandolim7.png"] },
