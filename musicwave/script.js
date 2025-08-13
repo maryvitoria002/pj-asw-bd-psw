@@ -60,10 +60,11 @@ const cepTexto = document.getElementById("cep-texto");
 // slideshow paizão
 
 const slides = document.querySelectorAll(".slide");
-  const dots = document.querySelectorAll(".dot");
-  const wrapper = document.querySelector(".slideshow-wrapper");
+const wrapper = document.querySelector(".slideshow-wrapper");
+const prevBtn = document.querySelector(".prev");
+const nextBtn = document.querySelector(".next");
 
-  const bgColors = [
+const bgColors = [
   "#f0e3dc",
   "#ffd7c1",
   "linear-gradient(to right, #374253, #1b2d4a)",
@@ -71,41 +72,55 @@ const slides = document.querySelectorAll(".slide");
   "linear-gradient(to right, #e4a777, #f1eae2)"
 ];
 
+let index = 0;
+let intervalId;
 
-  let index = 0;
-  let intervalId;
-
-  function showSlide(i) {
-    slides[index].classList.remove("active");
-    dots[index].classList.remove("active");
-    index = i;
-    slides[index].classList.add("active");
-    dots[index].classList.add("active");
+function showSlide(i) {
+  slides[index].classList.remove("active");
+  index = (i + slides.length) % slides.length;
+  slides[index].classList.add("active");
   wrapper.style.background = bgColors[index];
+}
 
-  }
+function nextSlide() {
+  showSlide(index + 1);
+}
 
-  function nextSlide() {
-    showSlide((index + 1) % slides.length);
-  }
+function prevSlide() {
+  showSlide(index - 1);
+}
 
-  function startAutoSlide() {
-    intervalId = setInterval(nextSlide, 3000);
-  }
+function startAutoSlide() {
+  intervalId = setInterval(nextSlide, 6000);
+}
 
-  function resetAutoSlide() {
-    clearInterval(intervalId);
-    startAutoSlide();
-  }
-
-  dots.forEach(dot => {
-    dot.addEventListener("click", () => {
-      showSlide(parseInt(dot.dataset.index));
-      resetAutoSlide();
-    });
-  });
-
+function resetAutoSlide() {
+  clearInterval(intervalId);
   startAutoSlide();
+}
+
+prevBtn.addEventListener("click", () => {
+  prevSlide();
+  resetAutoSlide();
+});
+
+nextBtn.addEventListener("click", () => {
+  nextSlide();
+  resetAutoSlide();
+});
+
+// Navegação por teclado
+window.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowLeft") {
+    prevSlide();
+    resetAutoSlide();
+  } else if (e.key === "ArrowRight") {
+    nextSlide();
+    resetAutoSlide();
+  }
+});
+
+startAutoSlide();
 
 // slideshow paizão
 
