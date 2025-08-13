@@ -182,13 +182,6 @@ const afinacoes = {
       { nome: "D - 1ª Corda", freq: 146.83 },
       { nome: "G - 5ª Corda", freq: 392 },
     ],
-    charango: [
-      { nome: "G - 5ª Corda", freq: 196 },
-      { nome: "C - 4ª Corda", freq: 261.63 },
-      { nome: "E - 3ª Corda", freq: 329.63 },
-      { nome: "A - 2ª Corda", freq: 440 },
-      { nome: "E - 1ª Corda", freq: 659.25 },
-    ],
     bandolim: [
       { nome: "E - 1ª Corda", freq: 659.25 },
       { nome: "A - 2ª Corda", freq: 440 },
@@ -209,7 +202,6 @@ const afinacoes = {
     ukulele: "Pequeno e alegre, o Ukulele, geralmente com 4 cordas afinadas em G-C-E-A, é perfeito para quem busca um som descontraído e fácil de aprender, ideal para canções leves.",
     viola_caipira: "Parte da alma musical brasileira, a Viola Caipira se destaca por suas 10 cordas em cinco pares e seu timbre único, que evoca a tradição e a emoção do campo.",
     banjo: "Com seu som ressonante e percussivo, o Banjo, frequentemente com 5 cordas e afinação aberta, é a alma do bluegrass e de outros gêneros folclóricos, criando melodias cativantes.",
-    charango: "Um instrumento de cordas andino, o Charango, com suas 10 cordas agrupadas em cinco pares, encanta com seu som agudo e vibrante, ideal para melodias folclóricas.",
     bandolim: "Com seu som brilhante e percussivo, o Bandolim, tipicamente com 8 cordas em quatro pares afinados em G-D-A-E, adiciona um toque especial a diversos estilos, do folk ao choro.",
   };
 
@@ -218,14 +210,13 @@ const afinacoes = {
     violino: "instrumentos/violin6.png",
     viola: "instrumentos/viola4.png",
     violoncelo: "instrumentos/celo2.png",
-    violao: "",
+    violao: "catálogo/violões/1 Violão clássico Phx camerata concertista i cedro natural/violao1.png",
     guitarra: "instrumentos/guitarra1.png",
-    baixo: "",
-    cavaquinho: "",
+    baixo: "catálogo/baixos/4 Contrabaixo Waldman Gjj-105 Bk Preto 5 Cordas/baixo4.png",
+    cavaquinho: "catálogo/cavaquinhos/2 Cavaco Rozini Rc10.el.fi Elétrico Fosco Caixa Larga/cavaquinho2.png",
     ukulele: "instrumentos/ukulele8.png",
-    viola_caipira: "",
+    viola_caipira: "catálogo/violas_caipiras/2 Viola Caipira Giannini Acústica Iniciante Vs14 Cinturada/viola2.png",
     banjo: "instrumentos/banjo5.png",
-    charango: "instrumentos/charango7.png",
     bandolim: "instrumentos/bandolim3.png"
   };
 

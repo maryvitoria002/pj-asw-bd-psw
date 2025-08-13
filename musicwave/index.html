@@ -44,7 +44,7 @@
 
   <aside id="sidebar">
         <a href="perfil.html"><i class="bi bi-person-circle" style="color: black; font-size: 30px"></i></a>
-        <a href="index2.html"><i class="bi bi-house-door" style="color: black;font-size: 30px"></i></a>
+        <a href="index.html"><i class="bi bi-house-door" style="color: black;font-size: 30px"></i></a>
         <a href="#notificacoes"><i class="bi bi-bell" style="color: black; font-size: 30px"></i></a>
         <a href="#alvaro-coin"><i class="bi bi-coin" style="color: black; font-size: 30px"></i></a>
         <a href="#jogos"><i class="bi bi-controller" style="color: black; font-size: 30px"></i></a>
@@ -288,18 +288,17 @@
   <button onclick="fecharAfinador()">✖</button>
   <h2 style="text-align:center; color:#b45f06;">Afinador</h2>
   <select id="instrumento" onchange="carregarCordas()">
-    <option value="violino"> Violino</option>
-    <option value="viola"> Viola</option>
-    <option value="violoncelo">Violoncelo</option>
-    <option value="violao"> Violão</option>
-    <option value="guitarra"> Guitarra</option>
     <option value="baixo">Baixo</option>
-    <option value="cavaquinho">Cavaquinho</option>
-    <option value="ukulele">Ukulele</option>
-    <option value="viola_caipira">Viola Caipira</option>
-    <option value="banjo"> Banjo</option>
-    <option value="charango">Charango</option>
-    <option value="bandolim">Bandolim</option>
+     <option value="bandolim">Bandolim</option>
+      <option value="banjo"> Banjo</option>
+       <option value="cavaquinho">Cavaquinho</option>
+        <option value="guitarra"> Guitarra</option> 
+            <option value="ukulele">Ukulele</option>
+              <option value="viola"> Viola</option>
+                <option value="viola_caipira">Viola Caipira</option>
+                     <option value="violino"> Violino</option>  
+                        <option value="violao"> Violão</option>
+                          <option value="violoncelo">Violoncelo</option>
   </select>
   <p id="descricao"></p>
   <img id="imgInstrumento" class="instrumento-img" src="" alt="Instrumento" style="display:none;" />
@@ -333,7 +332,7 @@
 <script>
     // --- Variáveis para a Busca na Barra de Navegação ---
     // Lista de categorias para o filtro de busca.
-    const allCategories = ["violino", "guitarra", "violoncelo", "violao"];
+    const allCategories = ["violino", "guitarra", "violoncelo", "violao", "banjo", "baixo", "cavaquinho", "ukulele", "viola caipira", "viola de arco", "bandolim"];
 
     // Sugestões para o autocompletar da barra de busca.
     const searchSuggestionsList = [
@@ -341,7 +340,6 @@
         "baixo",
             "bandolim",
             "banjo",
-            "charango",
             "guitarra elétrica",
             "ukulele",   
             "viola caipira",
@@ -384,7 +382,7 @@
                 suggestionItem.textContent = s.charAt(0).toUpperCase() + s.slice(1);
                 suggestionItem.addEventListener('click', () => {
                     const categoryParam = allCategories.includes(s) ? `?categoria=${encodeURIComponent(s)}` : `?pesquisa=${encodeURIComponent(s)}`;
-                    window.location.href = `teste.html${categoryParam}`; 
+                    window.location.href = `loja.html${categoryParam}`; 
                 });
                 searchSuggestions.appendChild(suggestionItem);
             });
@@ -418,7 +416,7 @@
                     event.preventDefault();
                     const query = searchInput.value.trim().toLowerCase();
                     const categoryParam = allCategories.includes(query) ? `?categoria=${encodeURIComponent(query)}` : `?pesquisa=${encodeURIComponent(query)}`;
-                    window.location.href = `teste.html${categoryParam}`; 
+                    window.location.href = `loja.html${categoryParam}`; 
                 }
             });
 
