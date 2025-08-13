@@ -1030,7 +1030,7 @@ body.dark-mode .carrinho-info h4 {
   z-index: 1;
 }
 
-/* Setas sempre visíveis */
+/* setas sempre visíveis */
 .prev, .next {
   display: flex;
   align-items: center;

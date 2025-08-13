@@ -109,7 +109,7 @@ nextBtn.addEventListener("click", () => {
   resetAutoSlide();
 });
 
-// Navegação por teclado
+// navegação por teclado
 window.addEventListener("keydown", (e) => {
   if (e.key === "ArrowLeft") {
     prevSlide();
