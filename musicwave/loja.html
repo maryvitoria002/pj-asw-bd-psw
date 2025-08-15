@@ -1212,17 +1212,15 @@
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
         let currentPage = 1;
         const productsPerPage = 8;
-        let currentCategory = 'all'; // Pode ser 'all' ou uma categoria específica
-        let currentSearchQuery = ''; // Armazena o termo de busca textual
+        let currentCategory = 'all'; 
+        let currentSearchQuery = ''; 
 
-        // Elementos da busca
+        // elementos da busca
         const searchInput = document.getElementById('search-input');
         const searchSuggestions = document.getElementById('search-suggestions');
-        const productListDiv = document.getElementById('product-list'); // Renomeado para clareza
+        const productListDiv = document.getElementById('product-list'); 
 
-        // Sugestões pré-definidas (Categorias + alguns termos chave de produtos)
-        // Certifique-se de que 'products' esteja definido e populado antes desta parte do código
-        // Exemplo: const products = [ { id: 1, title: 'Violino Acústico', category: 'violino', ... }, ... ];
+        
         const allCategories = [...new Set(products.map(p => p.category))];
         const searchSuggestionsList = [
             ...allCategories,
@@ -1241,39 +1239,39 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
         ].map(s => s.toLowerCase());
         
 
-        // --- Funções do Carrinho ---
+        //funções do carrinho
 
-        // Atualiza a contagem total de itens no ícone do carrinho
+        // atualiza a contagem total de itens no ícone do carrinho
         function updateCartCount() {
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
             document.getElementById("cart-count").textContent = totalItems;
         }
 
-        // Formata o preço para o padrão brasileiro (R$X.XX)
+        // formata o preço para o padrão brasileiro (R$X.XX)
         function formatPrice(price) {
             return `R$${price.toFixed(2).replace('.', ',')}`;
         }
 
-        // Calcula e atualiza o valor total do carrinho e do modal de PIX
+        // calcula e atualiza o valor total do carrinho e do modal de pix
         function calculateCartTotal() {
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             document.getElementById("carrinho-total-valor").textContent = formatPrice(total);
-            // Atualiza o valor também no modal de PIX, se estiver visível
+            // atualiza o valor também no modal de pix, se estiver visível
             if (document.getElementById("pix-total-valor")) {
                 document.getElementById("pix-total-valor").textContent = formatPrice(total);
             }
             return total;
         }
 
-        // Salva o estado atual do carrinho no Local Storage do navegador
+        // salva o estado atual do carrinho no Local Storage do navegador
         function saveCart() {
             localStorage.setItem('cart', JSON.stringify(cart));
         }
 
-        // Renderiza (desenha) todos os itens no carrinho lateral
+        // renderiza (desenha) todos os itens no carrinho lateral
         function renderCartItems() {
             const carrinhoItemsList = document.getElementById("carrinho-items");
-            carrinhoItemsList.innerHTML = ""; // Limpa itens existentes
+            carrinhoItemsList.innerHTML = ""; // limpa itens existentes
 
             if (cart.length === 0) {
                 carrinhoItemsList.innerHTML = '<li style="text-align: center; color: #888; padding: 20px;">Seu carrinho está vazio.</li>';
@@ -1301,7 +1299,7 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
             calculateCartTotal();
         }
 
-        // Adiciona um item ao carrinho ou incrementa sua quantidade se já existir
+        // adiciona um item ao carrinho ou incrementa sua quantidade se já existir
         function addItemToCart(productId, quantity = 1) {
             const product = products.find(p => p.id === productId);
             if (!product) return;
@@ -1314,122 +1312,116 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
                 cart.push({ ...product, quantity });
             }
             saveCart();
-            renderCartItems(); // Re-renderiza para atualizar a lista no carrinho lateral
+            renderCartItems(); // renderiza para atualizar a lista no carrinho lateral
             alert(`${product.title} adicionado ao carrinho!`);
         }
 
-        // Adiciona o produto selecionado no modal de detalhes ao carrinho
+        // adiciona o produto selecionado no modal de detalhes ao carrinho
         function addItemToCartFromModal() {
-            // Certifique-se de que 'selectedProduct' está definido globalmente ou que o ID é recuperado corretamente
-            // Assume que 'selectedProduct' é a variável global que armazena o produto do modal.
+           
             if (selectedProduct) {
                 addItemToCart(selectedProduct.id, 1);
                 fecharModalDetalhes();
             }
         }
 
-        // Atualiza a quantidade de um item específico no carrinho
+        // atualiza a quantidade de um item específico no carrinho
         function updateQuantity(productId, change) {
             const item = cart.find(i => i.id === productId);
             if (item) {
                 item.quantity += change;
                 if (item.quantity <= 0) {
-                    // Se a quantidade chegar a zero ou menos, remove o item
+                    // se a quantidade chegar a zero ou menos, remove o item
                     removeItemFromCart(productId);
                 } else {
                     saveCart();
-                    renderCartItems(); // Re-renderiza para mostrar a nova quantidade e total
+                    renderCartItems(); // enderiza para mostrar a nova quantidade e total
                 }
             }
         }
 
-        // Remove um item completamente do carrinho
+        // remove um item completamente do carrinho
         function removeItemFromCart(productId) {
             cart = cart.filter(item => item.id !== productId);
             saveCart();
             renderCartItems(); // Re-renderiza para remover o item da lista
         }
 
-        // Limpa todos os itens do carrinho
+        // limpa todos os itens do carrinho
         function clearCart() {
             if (confirm("Tem certeza que deseja limpar o carrinho?")) {
                 cart = [];
-                saveCart(); // Salva o carrinho vazio
-                renderCartItems(); // Re-renderiza para mostrar o carrinho vazio
+                saveCart(); //sSalva o carrinho vazio
+                renderCartItems(); //renderiza para mostrar o carrinho vazio
                 alert("Carrinho limpo!");
             }
         }
 
-        // Abre ou fecha o carrinho lateral
+        // abre ou fecha o carrinho lateral
         function toggleCarrinho() {
             const carrinhoLateral = document.getElementById('carrinhoLateral');
             if (carrinhoLateral) {
                 carrinhoLateral.classList.toggle('ativo');
-                // Se o carrinho estiver ativo, re-renderiza os itens
+                // se o carrinho estiver ativo, renderiza os itens
                 if (carrinhoLateral.classList.contains('ativo')) {
                     renderCartItems();
                 }
             }
         }
-        // --- Funções de Finalização de Compra (PIX) ---
+        // funções de finalização de compra (pix) 
 function calculateCartTotal() {
-    // Soma o preço de cada item multiplicado pela sua quantidade.
+    // soma o preço de cada item multiplicado pela sua quantidade.
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-    // Atualiza o valor no carrinho lateral, se o elemento existir.
+    // atualiza o valor no carrinho lateral, se o elemento existir.
     const carrinhoTotalElement = document.getElementById("carrinho-total-valor");
     if (carrinhoTotalElement) {
         carrinhoTotalElement.textContent = formatPrice(total);
     }
     
-    // Retorna o valor total para ser usado em outras funções.
-    // O valor do modal do PIX será atualizado separadamente.
+    // retorna o valor total para ser usado em outras funções.
+    // o valor do modal do pix será atualizado separadamente.
     return total;
 }
 
-/**
- * @function finalizarCompraPix
- * Inicia o processo de pagamento via PIX, exibindo o modal com QR Code e valor.
- * Também esvazia o carrinho, simulando a conclusão da compra.
- */
+
 function finalizarCompraPix() {
-    // Calcula o valor total do carrinho e armazena na variável 'total'.
+    // calcula o valor total do carrinho e armazena na variável 'total'.
     const total = calculateCartTotal();
     if (total === 0) {
         alert("Seu carrinho está vazio. Adicione itens antes de finalizar a compra.");
         return;
     }
 
-    // Atualiza o valor no modal do PIX explicitamente ANTES de limpar o carrinho.
+    // atualiza o valor no modal do pix explicitamente ANTES de limpar o carrinho.
     document.getElementById("pix-total-valor").textContent = formatPrice(total);
 
-    // Usa uma imagem genérica de QR Code, conforme solicitado.
+    // usa uma imagem genérica de QR Code, conforme solicitado.
     document.getElementById("pix-qr-code-img").src = "img/qr_code.png"; 
     
-    // Exibe o modal adicionando a classe 'ativo'.
+    // exibe o modal adicionando a classe 'ativo'.
     document.getElementById("modalPixPagamento").classList.add("ativo");
     
-    // Limpa o carrinho após "finalizar" a compra (simulado).
+    //lLimpa o carrinho após "finalizar" a compra (simulado).
     clearCart(); 
 
-    // Fecha o carrinho lateral, se a função 'toggleCarrinho' estiver definida.
+    // fecha o carrinho lateral, se a função 'toggleCarrinho' estiver definida.
     if (typeof toggleCarrinho === 'function') {
         toggleCarrinho(); 
     }
 }
 
 /**
- * @function fecharModalPix
- * Fecha o modal de pagamento PIX removendo a classe 'ativo'.
+ * 
  */
 function fecharModalPix() {
     document.getElementById("modalPixPagamento").classList.remove("ativo");
 }
 
 /**
- * @function getQueryParams
- * Função utilitária para obter os parâmetros da URL.
- * Adicionada conforme seu código de referência.
+ * 
+ * função utilitária para obter os parâmetros da URL.
+ * adicionada conforme seu código de referência.
  */
 function getQueryParams() {
     const params = {};
@@ -1442,9 +1434,9 @@ function getQueryParams() {
 
 
 /**
- * @function getQueryParams
- * Função utilitária para obter os parâmetros da URL.
- * Adicionada conforme seu código de referência.
+ *
+ * função utilitária para obter os parâmetros da url.
+ * adicionada conforme seu código de referência.
  */
 function getQueryParams() {
     const params = {};
@@ -1456,9 +1448,9 @@ function getQueryParams() {
 }
 
 
-        // --- Funções de Utilitário e Inicialização ---
+        //  funções de utilitário e inicialização
 
-        // Pega os parâmetros da URL (usado para filtros de categoria/pesquisa)
+        // pega os parâmetros da url (usado para filtros de categoria/pesquisa)
         function getQueryParams() {
             const params = {};
             window.location.search.substring(1).split("&").forEach(param => {
@@ -1468,9 +1460,9 @@ function getQueryParams() {
             return params;
         }
 
-        // Renderiza os produtos na página principal (filtrados e paginados)
+        // renderiza os produtos na página principal (filtrados e paginados)
         function renderProducts() {
-            productListDiv.innerHTML = ''; // Limpa o conteúdo existente
+            productListDiv.innerHTML = ''; // limpa o conteúdo existente
 
             let filteredProducts = products;
 
@@ -1543,16 +1535,16 @@ function getQueryParams() {
             }
         }
 
-        // Filtra os produtos com base na categoria ou busca
+        // filtra os produtos com base na categoria ou busca
         function filterProducts() {
             currentPage = 1;
             renderProducts();
         }
 
-        // Configura o filtro de categorias
+        // configura o filtro de categorias
         function setupCategoryFilter() {
             const categoryFilter = document.getElementById('category-filter');
-            // Certifique-se de que 'products' esteja definido
+            
             const categories = ['all', ...new Set(products.map(p => p.category))];
 
             if (categoryFilter) {
@@ -1576,7 +1568,7 @@ function getQueryParams() {
             }
         }
 
-        // Configura a paginação
+        // configura a paginação
         function setupPagination() {
             document.getElementById('prev-page-btn').addEventListener('click', () => {
                 if (currentPage > 1) {
@@ -1606,11 +1598,11 @@ function getQueryParams() {
             });
         }
 
-        let selectedProduct = null; // Variável para armazenar o produto selecionado para o modal de detalhes
+        let selectedProduct = null; // variável para armazenar o produto selecionado para o modal de detalhes
 
-        // Exibe o modal de detalhes do produto
+        // exibe o modal de detalhes do produto
         function showProductDetails(productId) {
-            // Certifique-se de que 'products' está definido
+         
             selectedProduct = products.find(p => p.id === productId);
             if (!selectedProduct) return;
 
@@ -1619,7 +1611,7 @@ function getQueryParams() {
             document.getElementById('modal-preco').textContent = formatPrice(selectedProduct.price);
             document.getElementById('modal-descricao').textContent = selectedProduct.description;
             document.getElementById('modal-imagem-principal').src = selectedProduct.image;
-            modal.dataset.productId = selectedProduct.id; // Armazena o ID no dataset do modal
+            modal.dataset.productId = selectedProduct.id; // armazena o id no dataset do modal
 
             const thumbnailsContainer = document.getElementById('modal-thumbnails');
             thumbnailsContainer.innerHTML = '';
@@ -1633,7 +1625,7 @@ function getQueryParams() {
                     thumbnailsContainer.appendChild(img);
                 });
             } else {
-                // Se não houver miniaturas, usa a imagem principal como miniatura
+                
                 const img = document.createElement('img');
                 img.src = selectedProduct.image;
                 img.alt = selectedProduct.title;
@@ -1642,16 +1634,16 @@ function getQueryParams() {
                 thumbnailsContainer.appendChild(img);
             }
 
-            modal.style.display = 'flex'; // Exibe o modal
+            modal.style.display = 'flex'; // exibe o modal
         }
 
-        // Fecha o modal de detalhes do produto
+        // fecha o modal de detalhes do produto
         function fecharModalDetalhes() {
             document.getElementById('modalDetalhesProduto').style.display = 'none';
-            selectedProduct = null; // Limpa o produto selecionado
+            selectedProduct = null; // limpa o produto selecionado
         }
 
-        // Exibe as sugestões de busca
+        // exibe as sugestões de busca
         function showSuggestions(query) {
             if (!searchInput || !searchSuggestions) return;
             searchSuggestions.innerHTML = '';
@@ -1681,12 +1673,12 @@ function getQueryParams() {
             }
         }
 
-        // Esconde as sugestões de busca
+        // esconde as sugestões de busca
         function hideSuggestions() {
             if (searchSuggestions) searchSuggestions.style.display = 'none';
         }
 
-        // Aplica o filtro de busca ou categoria
+        // aplica o filtro de busca ou categoria
         function applySearchFilter(query) {
             const normalizedQuery = query.toLowerCase();
             const isCategory = allCategories.includes(normalizedQuery);
@@ -1699,11 +1691,11 @@ function getQueryParams() {
                 currentSearchQuery = query;
             }
             currentPage = 1;
-            setupCategoryFilter(); // Atualiza o seletor de categoria
+            setupCategoryFilter(); // atualiza o seletor de categoria
             renderProducts();
         }
 
-        // Event Listeners para a barra de busca
+        // event Listeners para a barra de busca
         if (searchInput) {
             searchInput.addEventListener('input', () => {
                 showSuggestions(searchInput.value.trim());
@@ -1724,10 +1716,10 @@ function getQueryParams() {
             });
         }
 
-        // Inicialização quando o DOM estiver completamente carregado
+        // inicialização quando o DOM estiver completamente carregado
         document.addEventListener('DOMContentLoaded', () => {
             updateCartCount();
-            calculateCartTotal(); // Calcula o total inicial do carrinho
+            calculateCartTotal(); // calcula o total inicial do carrinho
 
             const params = getQueryParams();
             if (params.categoria) {
