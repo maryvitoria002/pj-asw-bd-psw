@@ -61,7 +61,7 @@
   <main>
   <section class="user-profile">
     <h2>Faça seu cadastro na Musicwave!</h2>
-    <form id="cadastro-form" enctype="multipart/form-data">
+    <form id="cadastro-form" enctype="multipart/form-data" >
       <div class="profile-box">
         
         <div class="avatar-container">
