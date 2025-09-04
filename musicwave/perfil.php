@@ -7,22 +7,20 @@
   <link rel="stylesheet" href="styles.css">
    <link rel="shortcut icon" href="img/mw..png" type="image/x-icon">
   <title>HOME</title>
+
 </head>
 <body>
 
-<!-- cabeçalho -->
-
+  <!-- cabeçalho -->
   <header>
     <div class="logo-img">
       <img src="img/logomw.png" alt="logo">
     </div>
-     <div class="search-container"> <input type="text" id="search-input" placeholder="Navegue..." autocomplete="off" />
+    <div class="search-container"> <input type="text" id="search-input" placeholder="Navegue..." autocomplete="off" />
         <div id="search-suggestions" class="search-suggestions"></div> </div>
   <button class="bubbles" onclick="pedirCep()">
   <span class="text" id="cep-texto">Informe seu CEP</span>
 </button>
-
-
             <button class="bubbles">
                <span class="text"><a href="loja.html">Loja</a></span>
             </button>
@@ -35,16 +33,13 @@
   <span class="text">Afinador</span>
 </button>
   </header>
-
-
   <!-- cabeçalho -->
 
-
-  <!-- sidebar -->
+   <!-- sidebar -->
 
   <aside id="sidebar">
-        <a href="perfil.html"><i class="bi bi-person-circle" style="color: black; font-size: 30px"></i></a>
-        <a href="index.html"><i class="bi bi-house-door" style="color: black;font-size: 30px"></i></a>
+        <a href="perfil.php"><i class="bi bi-person-circle" style="color: black; font-size: 30px"></i></a>
+        <a href="index.php"><i class="bi bi-house-door" style="color: black;font-size: 30px"></i></a>
         <a href="#notificacoes"><i class="bi bi-bell" style="color: black; font-size: 30px"></i></a>
         <a id="dark-toggle-wrapper" title="Ativar/Desativar modo escuro">
             <label class="container" id="dark-toggle">
@@ -59,224 +54,42 @@
         </a>
     </aside>
 
-   <!-- sidebar -->
+ <!-- sidebar -->
+
+ <!-- formuláriozinho -->
 
   <main>
-
-    <!-- slideshow -->
-
-    <div class="slideshow-wrapper">
-  <div class="slideshow-container">
-    <img src="img/1.png" class="slide active" />
-    <img src="img/2.png" class="slide" />
-    <img src="img/3.png" class="slide" />
-    <img src="img/4.png" class="slide" />
-    <img src="img/5.png" class="slide" />
-
-    <!-- Setas de navegação -->
-    <a class="prev">&#10094;</a>
-    <a class="next">&#10095;</a>
-  </div>
-</div>
-   
-  <!-- slideshow -->
-
-
-    <!-- jogos em destaque -->
-
-     <section class="jogos-destacados"><br>
-      <h2>Aqui terá cards promocionais...</h2> <br><br>
-      <div class="cards">
-        <div class="card">
-          <img src="img/peter.png" alt="">
-        </div>
-        <div class="card">
-          <img src="img/peter.png" alt="">
-        </div>
-        <div class="card">
-          <img src="img/peter.png" alt="">
-        </div>
-        <div class="card">
-          <img src="img/peter.png" alt="">
-        </div>
-      </div>
-    </section>
-
-     <!-- jogos em destaque -->
-
-
-    <!-- instrumentos em destaque --> 
-
-    <section class="jogos-destacados">
-  <h2><i class="bi bi-music-note-beamed" style="font-size: 30px"></i> INSTRUMENTOS EM DESTAQUE</h2>
-  <div class="small-container-instrumentos">
-    <div class="row-instrumentoss"> 
-
-        <div class="instrumento-card-home">
-            <div class="card-image-container-home">
-                <img src="instrumentos_em_destaque/guitarra1.png" alt="Guitarra elétrica Strinberg STS Series STS100 Stratocaster Metallic Blue">
-            </div>
-            <h4>Guitarra elétrica Strinberg STS Series STS100 Stratocaster Metallic Blue</h4>
-            <div class="rating">
-                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-            </div>
-            <p>R$757,00</p>
-        </div>
-
-        <div class="instrumento-card-home">
-            <div class="card-image-container-home">
-                <img src="instrumentos_em_destaque/ukulele2.png" alt="Ukulele Concert Bahardan">
-            </div>
-            <h4>Ukulele Concert Bahardan</h4>
-            <div class="rating">
-                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-            </div>
-            <p>R$2.308,90</p>
-        </div>
-
-        <div class="instrumento-card-home">
-            <div class="card-image-container-home">
-                <img src="instrumentos_em_destaque/bandolim3.png" alt="Bandolim Marquês Bnd-100 Nb Acústico">
-            </div>
-            <h4>Bandolim Marquês Bnd-100 Nb Acústico</h4>
-            <div class="rating">
-                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-            </div>
-            <p>R$975,00</p>
-        </div>
-
-        <div class="instrumento-card-home">
-            <div class="card-image-container-home">
-                <img src="instrumentos_em_destaque/viola4.png" alt="Viola De Arco Rolim Milor">
-            </div>
-            <h4>Viola De Arco Rolim Milor</h4>
-            <div class="rating">
-                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-            </div>
-            <p>R$2.687,90</p>
-        </div>
-
-        <div class="instrumento-card-home">
-            <div class="card-image-container-home">
-                <img src="instrumentos_em_destaque/banjo5.png" alt="Banjo Americano Wb50 - Strinberg">
-            </div>
-            <h4>Banjo Americano Wb50 - Strinberg</h4>
-            <div class="rating">
-                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-            </div>
-            <p>R$1.756,87</p>
-        </div>
-
-       <div class="instrumento-card-home">
-            <div class="card-image-container-home">
-                <img src="instrumentos_em_destaque/violin6.png" alt="Violino Tarttan Série 100 Preto Brilho 4/4">
-            </div>
-            <h4>Violino Tarttan Série 100 Preto Brilho 4/4</h4>
-            <div class="rating">
-                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-            </div>
-            <p>R$697,00</p>
-        </div>
+  <section class="user-profile">
+    <h2>Faça seu cadastro na Musicwave!</h2>
+    <form id="cadastro-form" enctype="multipart/form-data">
+      <div class="profile-box">
         
-
-    </div>
-</div>
-</section>
-
-
-<!-- instrumentos em destaque -->        
-
-
-<!-- seção de apresentar o afinador -->
-
-<div class="afinador">
-  <div class="small-container">
-    <div class="row">
-      <div class="col-2">
-        <img src="img/mw_afinador.png" class="afinador-img" alt="Afinador MusicWave">
-      </div>
-      <div class="col-2">
-        <p>Ferramenta exclusiva da MusicWave</p>
-        <h1>Afinador On-line</h1>
-        <p>Descubra a harmonia perfeita com o afinador online exclusivo da MusicWave! Ele é a ferramenta ideal para garantir que cada instrumento do nosso catálogo — seja um violão, ukulele, baixo ou cavaquinho — soe impecável. Afine seu instrumento de forma rápida e precisa, e mergulhe na música sem preocupações.</p> <br><br>
-       
-        <a href="#" class="btn-laranja" onclick="abrirAfinador()">Afine seu instrumento agora &#8594;</a>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- seção de apresentar o afinador -->
-
-
-<!-- feedbacks -->
- <section class="opinioes">
-  <div class="feedbacks">
-     <h2><i class="bi bi-chat-dots" style="font-size: 30px"></i> DEIXE SEU FEEDBACK AO MERGULHAR NA MUSICWAVE!</h2><br>
-     <section class="feedback-section">
-  <form class="feedback-form">
-    <label for="comentario">Conte-nos o que achou do nosso E-commerce:</label>
-    <textarea id="comentario" name="comentario" rows="4" placeholder="Compartilhe sua experiência..."></textarea>
-    <button type="submit">Enviar</button>
-  </form>
-</section>
-
-    <div class="small-container">
-      <div class="row">
-        <div class="col-3">
-          <i class="bi bi-quote"></i>
-          <p>A MusicWave transformou minha experiência musical! O afinador é incrível e os jogos são super divertidos!</p>
-          <div class="rating">
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-          </div>
-          <img src="img/panqueca.png" alt="sasa">
-          <h3>Sabrina Santana</h3>
+        <div class="avatar-container">
+          <img src="img/aaaaa.jpg" alt="" class="avatar" id="preview-avatar">
+          <label for="foto-perfil" class="foto-label">Adicionar Foto</label>
+          <input type="file" id="foto-perfil" accept="image/*">
+          <button type="button" id="remover-foto" class="btn-remover" style="display: none;">Remover Foto</button>
         </div>
 
-        <div class="col-3">
-          <i class="bi bi-quote"></i>
-          <p>Adoro a variedade de instrumentos disponíveis. O site é fácil de navegar e sempre encontro o que preciso.</p>
-          <div class="rating">
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-          </div>
-          <img src="img/panqueca.png" alt="andson">
-          <h3>Vinícius Pires</h3>
+        <div class="profile-info">
+          <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo..." required><br>
+          <input type="email" id="email" name="email" placeholder="Digite seu e-mail..." required><br>
+          <input type="password" id="senha" name="senha" placeholder="Digite sua senha..." required><br>
+          <input type="text" id="cep" name="cep" placeholder="Digite seu CEP..." required><br>
+
+          <button type="submit" class="btn-laranja">Cadastrar</button>
+          <button type="button" class="btn-laranja" id="logout" style="display: none;">Logout</button>
         </div>
 
-        <div class="col-3">
-          <i class="bi bi-quote"></i>
-          <p>Os jogos são uma ótima maneira de aprender música enquanto me divirto. Recomendo para todos!</p>
-          <div class="rating">
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-          </div>
-          <img src="img/panqueca.png" alt="unnu">
-          <h3>Unnu Lívio Panquecudo</h3>
-        </div>
       </div>
-    </div>
-  </div>
-</section>
-<br>
-<!-- feedbacks -->
+    </form>
+  </section>
+</main>
+
+   <!-- formuláriozinho -->
 
 
-  </main>
 
-
- 
      <!-- afinador lateral -->
 <div id="afinadorLateral" class="painel-lateral">
   <button onclick="fecharAfinador()">✖</button>
@@ -300,8 +113,11 @@
   <button class="btn-todas" onclick="tocarTodasCordas()">Tocar todas as cordas</button>
 </div>
 
+  <!-- afinador lateral -->
 
-    <!-- carrinho -->
+
+
+  <!-- carrinho -->
 
     <div id="carrinhoLateral" class="carrinho-lateral">
         <div class="carrinho-header">
@@ -322,11 +138,10 @@
        <!-- carrinho -->
 
 
-       
-<script>
+<script> 
     // --- Variáveis para a Busca na Barra de Navegação ---
     // Lista de categorias para o filtro de busca.
-    const allCategories = ["violino", "guitarra", "violoncelo", "violao", "banjo", "baixo", "cavaquinho", "ukulele", "viola caipira", "viola de arco", "bandolim"];
+  const allCategories = ["violino", "guitarra", "violoncelo", "violao", "banjo", "baixo", "cavaquinho", "ukulele", "viola caipira", "viola de arco", "bandolim"];
 
     // Sugestões para o autocompletar da barra de busca.
     const searchSuggestionsList = [
@@ -376,13 +191,13 @@
                 suggestionItem.textContent = s.charAt(0).toUpperCase() + s.slice(1);
                 suggestionItem.addEventListener('click', () => {
                     const categoryParam = allCategories.includes(s) ? `?categoria=${encodeURIComponent(s)}` : `?pesquisa=${encodeURIComponent(s)}`;
-                    window.location.href = `loja.html${categoryParam}`; 
+                    window.location.href = `loja.php${categoryParam}`; 
                 });
                 searchSuggestions.appendChild(suggestionItem);
             });
             searchSuggestions.style.display = 'block';
         } else {
-            hideSuggestions();
+            hideSuggestions(); 
         }
     }
 
@@ -410,7 +225,7 @@
                     event.preventDefault();
                     const query = searchInput.value.trim().toLowerCase();
                     const categoryParam = allCategories.includes(query) ? `?categoria=${encodeURIComponent(query)}` : `?pesquisa=${encodeURIComponent(query)}`;
-                    window.location.href = `loja.html${categoryParam}`; 
+                    window.location.href = `loja.php${categoryParam}`; 
                 }
             });
 
@@ -422,7 +237,6 @@
         }
     });
 </script>
-
 
 <script src="script.js"></script>
 

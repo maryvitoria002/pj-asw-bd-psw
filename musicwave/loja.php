@@ -21,7 +21,7 @@
   <span class="text" id="cep-texto">Informe seu CEP</span>
 </button>
       <button class="bubbles">
-  <span class="text"><a href="loja.html">Loja</a></span>
+  <span class="text"><a href="loja.php">Loja</a></span>
 </button>
 <button class="bubbles" onclick="toggleCarrinho()">
     <span class="text">Carrinho (<span id="cart-count">0</span>)</span>
@@ -36,8 +36,8 @@
      <!-- sidebar -->
 
    <aside id="sidebar">
-        <a href="perfil.html"><i class="bi bi-person-circle" style="color: black; font-size: 30px"></i></a>
-        <a href="index.html"><i class="bi bi-house-door" style="color: black;font-size: 30px"></i></a>
+        <a href="perfil.php"><i class="bi bi-person-circle" style="color: black; font-size: 30px"></i></a>
+        <a href="index.php"><i class="bi bi-house-door" style="color: black;font-size: 30px"></i></a>
         <a href="#notificacoes"><i class="bi bi-bell" style="color: black; font-size: 30px"></i></a>
         <a id="dark-toggle-wrapper" title="Ativar/Desativar modo escuro">
             <label class="container" id="dark-toggle">
