@@ -1,4 +1,59 @@
 <?php
+/*
+====================================================================
+🖼️ CONTROLADOR DE UPLOAD DE IMAGENS
+====================================================================
+
+🎯 PROPÓSITO:
+Gerencia upload, otimização e exclusão de imagens para produtos.
+Sistema seguro com validação de tipos e tamanhos.
+
+🔧 FUNCIONALIDADES:
+
+📤 UPLOAD:
+✅ uploadImage() - Linha ~30
+   - Valida tipo de arquivo (JPG, PNG, GIF)
+   - Limita tamanho (máx 5MB)
+   - Gera nome único
+   - Move para diretório seguro
+
+🎨 OTIMIZAÇÃO:
+✅ optimizeImage() - Linha ~100
+   - Redimensiona se necessário (max 800x600)
+   - Comprime mantendo qualidade
+   - Preserva transparência (PNG)
+
+🗑️ EXCLUSÃO:
+✅ deleteImage() - Linha ~180
+   - Remove arquivo do servidor
+   - Validação de caminho
+
+📁 ESTRUTURA DE ARQUIVOS:
+- Diretório: musicwave/uploads/produtos/
+- Nomenclatura: produto_[ID_ÚNICO].[extensão]
+- Proteção: .htaccess para segurança
+
+🔒 VALIDAÇÕES:
+- Tipos permitidos: image/jpeg, image/png, image/gif
+- Tamanho máximo: 5MB
+- Verificação de diretório gravável
+- Proteção contra uploads maliciosos
+
+📡 RETORNO JSON:
+{
+  "sucesso": boolean,
+  "mensagem": string,
+  "url": string (caminho relativo),
+  "filename": string
+}
+
+🎯 COMO USAR:
+1. POST com acao='upload' e arquivo 'imagem'
+2. Sistema valida e processa
+3. Retorna URL para uso no frontend
+====================================================================
+*/
+
 session_start();
 header('Content-Type: application/json');
 

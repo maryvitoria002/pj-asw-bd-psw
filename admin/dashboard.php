@@ -1,4 +1,45 @@
 <?php
+/*
+====================================================================
+📋 DASHBOARD ADMINISTRATIVO - INTERFACE PRINCIPAL
+====================================================================
+
+🎯 PROPÓSITO:
+Interface completa para administração do sistema MusicWave.
+Permite gerenciar produtos, usuários e visualizar estatísticas.
+
+🔧 FUNCIONALIDADES PRINCIPAIS:
+✅ Dashboard com estatísticas gerais
+✅ CRUD completo de Produtos (Criar, Ler, Editar, Deletar)
+✅ CRUD completo de Usuários (Criar, Ler, Editar, Deletar)
+✅ Upload de imagens para produtos
+✅ Interface responsiva com Bootstrap 5
+✅ Modais para formulários
+✅ Sistema de alertas visuais
+
+📦 SEÇÕES DISPONÍVEIS:
+- Dashboard: Visão geral e estatísticas
+- Produtos: Gerenciamento do catálogo
+- Usuários: Gerenciamento de clientes
+
+🎨 DESIGN:
+- Paleta de cores dourada (#f7bd6d, #fdfaf5)
+- Sidebar responsiva
+- Modais para formulários
+- Tabelas com paginação
+
+🔒 SEGURANÇA:
+- Verificação de sessão admin
+- Proteção contra acesso não autorizado
+
+📁 ARQUIVOS RELACIONADOS:
+- admin-script.js: Lógica JavaScript
+- admin-styles.css: Estilos personalizados
+- AdminController.php: Backend CRUD
+- ImageUploadController.php: Upload de imagens
+====================================================================
+*/
+
 session_start();
 
 // Verificar se está logado como admin

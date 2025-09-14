@@ -1,4 +1,51 @@
 <?php
+/*
+====================================================================
+⚙️ CONTROLADOR ADMINISTRATIVO - BACKEND CRUD COMPLETO
+====================================================================
+
+🎯 PROPÓSITO:
+Gerencia todas as operações CRUD (Create, Read, Update, Delete) 
+para produtos e usuários do sistema MusicWave.
+
+🔧 OPERAÇÕES IMPLEMENTADAS:
+
+📦 PRODUTOS:
+✅ CREATE: adicionarProduto() - Linha ~70
+✅ READ:   listarProdutos() - Linha ~180  
+✅ UPDATE: editarProduto() - Linha ~120
+✅ DELETE: deletarProduto() - Linha ~230
+
+👥 USUÁRIOS:
+✅ CREATE: adicionarUsuario() - Linha ~280
+✅ READ:   listarUsuarios() - Linha ~380
+✅ UPDATE: editarUsuario() - Linha ~330
+✅ DELETE: deletarUsuario() - Linha ~430
+
+📊 ESTATÍSTICAS:
+✅ obterEstatisticas() - Linha ~480
+✅ verificarSessao() - Linha ~520
+
+🔄 FLUXO DE REQUISIÇÕES:
+1. Recebe requisição via GET/POST
+2. Identifica ação solicitada
+3. Executa método correspondente
+4. Retorna JSON com resultado
+
+🔒 SEGURANÇA:
+- Prepared statements (proteção SQL injection)
+- Validação de dados de entrada
+- Verificação de sessão admin
+- Sanitização de inputs
+
+📡 RETORNO:
+Todas as funções retornam JSON com:
+- sucesso: boolean
+- mensagem: string
+- dados: array (quando aplicável)
+====================================================================
+*/
+
 session_start();
 require_once '../BD/Conexao.php';
 
@@ -107,6 +154,17 @@ class AdminController {
     
     // ===== GESTÃO DE PRODUTOS =====
     
+    // ============================================================================
+    // 📦 CRUD DE PRODUTOS
+    // ============================================================================
+    
+    /**
+     * 📋 READ - LISTAR PRODUTOS
+     * Lista todos os produtos com paginação opcional
+     * @param int|null $limite - Número máximo de resultados
+     * @param int|null $offset - Número de registros para pular
+     * @return array - Lista de produtos com informações completas
+     */
     public function listarProdutos($limite = null, $offset = null) {
         try {
             $sql = "SELECT * FROM Produto ORDER BY nome";
@@ -137,6 +195,16 @@ class AdminController {
         }
     }
     
+    /**
+     * ➕ CREATE - ADICIONAR PRODUTO
+     * Insere novo produto no banco de dados
+     * @param string $nome - Nome do produto
+     * @param float $preco - Preço em reais
+     * @param int $estoque - Quantidade em estoque
+     * @param string $marca - Marca do produto
+     * @param string|null $imagem - URL da imagem (opcional)
+     * @return array - Resultado da operação com ID gerado
+     */
     public function adicionarProduto($nome, $preco, $estoque, $marca, $imagem = null) {
         try {
             $stmt = $this->pdo->prepare("
@@ -158,6 +226,17 @@ class AdminController {
         }
     }
     
+    /**
+     * ✏️ UPDATE - EDITAR PRODUTO
+     * Atualiza dados de um produto existente
+     * @param int $id - ID do produto a ser editado
+     * @param string $nome - Novo nome do produto
+     * @param float $preco - Novo preço em reais
+     * @param int $estoque - Nova quantidade em estoque
+     * @param string $marca - Nova marca do produto
+     * @param string|null $imagem - Nova URL da imagem (opcional)
+     * @return array - Resultado da operação
+     */
     public function editarProduto($id, $nome, $preco, $estoque, $marca, $imagem = null) {
         try {
             if ($imagem) {
@@ -188,6 +267,12 @@ class AdminController {
         }
     }
     
+    /**
+     * 🗑️ DELETE - REMOVER PRODUTO
+     * Remove um produto do banco de dados
+     * @param int $id - ID do produto a ser removido
+     * @return array - Resultado da operação
+     */
     public function removerProduto($id) {
         try {
             $stmt = $this->pdo->prepare("DELETE FROM Produto WHERE idproduto = ?");
@@ -207,6 +292,15 @@ class AdminController {
     
     // ===== GESTÃO DE USUÁRIOS =====
     
+    // ============================================================================
+    // 👥 CRUD DE USUÁRIOS
+    // ============================================================================
+    
+    /**
+     * 📋 READ - LISTAR USUÁRIOS
+     * Lista todos os usuários cadastrados no sistema
+     * @return array - Lista de usuários com informações pessoais
+     */
     public function listarUsuarios() {
         try {
             $stmt = $this->pdo->query("
@@ -228,6 +322,12 @@ class AdminController {
         }
     }
     
+    /**
+     * 🗑️ DELETE - REMOVER USUÁRIO
+     * Remove um usuário do banco de dados
+     * @param string $cpf - CPF do usuário a ser removido
+     * @return array - Resultado da operação
+     */
     public function removerUsuario($cpf) {
         try {
             $stmt = $this->pdo->prepare("DELETE FROM ClienteUsuario WHERE cpf = ?");
@@ -247,6 +347,15 @@ class AdminController {
     
     // ===== DASHBOARD ESTATÍSTICAS =====
     
+    // ============================================================================
+    // 📊 FUNÇÕES AUXILIARES
+    // ============================================================================
+    
+    /**
+     * 📊 OBTER ESTATÍSTICAS
+     * Calcula estatísticas gerais do sistema para o dashboard
+     * @return array - Dados estatísticos (total produtos, usuários, etc.)
+     */
     public function obterEstatisticas() {
         try {
             // Total de produtos

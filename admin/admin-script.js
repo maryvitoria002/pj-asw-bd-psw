@@ -1,3 +1,56 @@
+/*
+====================================================================
+🎮 LÓGICA JAVASCRIPT DO DASHBOARD ADMINISTRATIVO
+====================================================================
+
+🎯 PROPÓSITO:
+Gerencia toda a interação do usuário com o dashboard admin.
+Controla navegação, formulários, CRUD e comunicação com o backend.
+
+🔧 FUNCIONALIDADES PRINCIPAIS:
+
+📱 NAVEGAÇÃO E INTERFACE:
+✅ Controle de seções (dashboard, produtos, usuários)
+✅ Sidebar responsiva
+✅ Modais para formulários
+✅ Sistema de alertas visuais
+
+📦 CRUD DE PRODUTOS:
+✅ Carregar lista: carregarProdutos() - Linha ~100
+✅ Adicionar novo: salvarProduto() - Linha ~230
+✅ Editar existente: editarProduto() - Linha ~320
+✅ Remover: removerProduto() - Linha ~380
+
+👥 CRUD DE USUÁRIOS:
+✅ Carregar lista: carregarUsuarios() - Linha ~450
+✅ Remover: removerUsuario() - Linha ~500
+
+🖼️ UPLOAD DE IMAGENS:
+✅ Seleção e preview: handleImageUpload() - Linha ~520
+✅ Envio para servidor: uploadImageToServer() - Linha ~550
+
+📊 DASHBOARD:
+✅ Carregar estatísticas: carregarEstatisticas() - Linha ~70
+✅ Verificar sessão: verificarSessaoAdmin() - Linha ~25
+
+🔄 COMUNICAÇÃO API:
+- Todas as funções usam fetch() para requisições AJAX
+- Retorno em JSON padronizado
+- Tratamento de erros consistente
+
+🎨 INTERFACE:
+- Bootstrap 5 para responsividade
+- Modais para formulários
+- Alertas com cores da paleta do site
+- Animações suaves
+
+🔒 SEGURANÇA:
+- Verificação de sessão em todas as operações
+- Validação de dados no frontend
+- Redirecionamento automático se não logado
+====================================================================
+*/
+
 // ===== VARIÁVEIS GLOBAIS =====
 let currentSection = 'dashboard';
 let produtos = [];
@@ -108,7 +161,15 @@ function mostrarSecao(sectionName) {
     }
 }
 
-// ===== DASHBOARD ESTATÍSTICAS =====
+// ============================================================================
+// 📊 DASHBOARD - ESTATÍSTICAS E VISÃO GERAL
+// ============================================================================
+
+/**
+ * 📈 CARREGAR ESTATÍSTICAS DO DASHBOARD
+ * Busca dados gerais do sistema para exibir nos cards do dashboard
+ * Atualiza: total de produtos, usuários, vendas, etc.
+ */
 async function carregarEstatisticas() {
     try {
         const response = await fetch('../APP/controller/AdminController.php?acao=estatisticas');
@@ -127,6 +188,15 @@ async function carregarEstatisticas() {
 }
 
 // ===== GERENCIAMENTO DE PRODUTOS =====
+// ============================================================================
+// 📦 CRUD DE PRODUTOS
+// ============================================================================
+
+/**
+ * 📋 READ - CARREGAR LISTA DE PRODUTOS
+ * Busca todos os produtos do banco e exibe na tabela
+ * Inclui botões de ação (editar/deletar) para cada item
+ */
 async function carregarProdutos() {
     try {
         const response = await fetch('../APP/controller/AdminController.php?acao=listar_produtos');
@@ -223,6 +293,12 @@ function editarProduto(id) {
     }
 }
 
+/**
+ * ➕ CREATE/UPDATE - SALVAR PRODUTO
+ * Processa formulário de produto (novo ou edição)
+ * Faz upload de imagem se selecionada
+ * Envia dados para o backend via AJAX
+ */
 async function salvarProduto(e) {
     e.preventDefault();
     
