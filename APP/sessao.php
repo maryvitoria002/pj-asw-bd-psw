@@ -2,7 +2,7 @@
 session_start();
 
 function usuarioLogado() {
-    return isset($_SESSION['usuario_logado']) && $_SESSION['usuario_logado'] === true;
+    return isset($_SESSION['usuario_logado']);
 }
 
 function dadosUsuario() {

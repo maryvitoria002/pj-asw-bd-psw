@@ -1,3 +1,8 @@
+<?php
+require_once '../APP/sessao.php';
+$usuario_logado = usuarioLogado();
+$dados_usuario = dadosUsuario();
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -39,6 +44,9 @@
         <a href="perfil.php"><i class="bi bi-person-circle" style="color: black; font-size: 30px"></i></a>
         <a href="index.php"><i class="bi bi-house-door" style="color: black;font-size: 30px"></i></a>
         <a href="#notificacoes"><i class="bi bi-bell" style="color: black; font-size: 30px"></i></a>
+        <?php if ($usuario_logado): ?>
+        <a href="#" onclick="logout()" title="Sair"><i class="bi bi-box-arrow-right" style="color: #d63384; font-size: 30px"></i></a>
+        <?php endif; ?>
         <a id="dark-toggle-wrapper" title="Ativar/Desativar modo escuro">
             <label class="container" id="dark-toggle">
                 <input type="checkbox" id="darkModeSwitch">
@@ -1747,6 +1755,33 @@ function getQueryParams() {
         });
 
         // catálogo dos instrumentos + carrinho + modal de produtos e modal do pix + filtragem por categoria papaizinho
+
+        // Função para logout
+        async function logout() {
+            if (confirm('Tem certeza que deseja sair?')) {
+                try {
+                    const response = await fetch('../APP/controller/LogoutController.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: 'acao=logout'
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.sucesso) {
+                        alert('Logout realizado com sucesso!');
+                        window.location.href = 'index.php';
+                    } else {
+                        alert('Erro ao fazer logout: ' + data.mensagem);
+                    }
+                } catch (error) {
+                    console.error('Erro:', error);
+                    alert('Erro de comunicação com o servidor');
+                }
+            }
+        }
 
 
 </script>

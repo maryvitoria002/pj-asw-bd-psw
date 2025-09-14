@@ -20,6 +20,21 @@ CREATE TABLE ClienteUsuario (
 );
 
 -- ==========================
+-- TABELA ADMINISTRADOR
+-- ==========================
+CREATE TABLE Administrador (
+    id_admin INT AUTO_INCREMENT PRIMARY KEY,
+    usuario VARCHAR(50) UNIQUE NOT NULL,
+    senha VARCHAR(100) NOT NULL,
+    nome_completo VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    nivel_acesso ENUM('master', 'moderador') DEFAULT 'moderador',
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ultimo_login TIMESTAMP NULL,
+    ativo BOOLEAN DEFAULT TRUE
+);
+
+-- ==========================
 -- TABELA PRODUTO
 -- ==========================
 CREATE TABLE Produto (
@@ -376,3 +391,10 @@ INSERT INTO CarrinhoItem (produto_idproduto, carrinho_idcarrinho, quantidade) VA
 (23,23,1),
 (22,24,1),
 (21,25,1);
+
+-- ==========================
+-- INSERÇÃO DO ADMINISTRADOR PADRÃO
+-- ==========================
+INSERT INTO Administrador (usuario, senha, nome_completo, email, nivel_acesso) VALUES
+('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Administrador Principal', 'admin@musicwave.com', 'master');
+-- Senha: password

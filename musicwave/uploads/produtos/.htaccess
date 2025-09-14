@@ -1,0 +1,24 @@
+# Permitir acesso a imagens
+<Files "*.jpg">
+    Order allow,deny
+    Allow from all
+</Files>
+
+<Files "*.jpeg">
+    Order allow,deny
+    Allow from all
+</Files>
+
+<Files "*.png">
+    Order allow,deny
+    Allow from all
+</Files>
+
+<Files "*.gif">
+    Order allow,deny
+    Allow from all
+</Files>
+
+# Impedir execução de scripts
+Options -ExecCGI
+AddHandler cgi-script .php .pl .py .jsp .asp .sh .cgi

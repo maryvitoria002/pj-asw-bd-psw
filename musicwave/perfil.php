@@ -49,6 +49,7 @@ $dados_usuario = dadosUsuario();
         <a href="perfil.php"><i class="bi bi-person-circle" style="color: black; font-size: 30px"></i></a>
         <a href="index.php"><i class="bi bi-house-door" style="color: black;font-size: 30px"></i></a>
         <a href="#notificacoes"><i class="bi bi-bell" style="color: black; font-size: 30px"></i></a>
+        <a href="#" onclick="logout()" title="Sair"><i class="bi bi-box-arrow-right" style="color: #d63384; font-size: 30px"></i></a>
         <a id="dark-toggle-wrapper" title="Ativar/Desativar modo escuro">
             <label class="container" id="dark-toggle">
                 <input type="checkbox" id="darkModeSwitch">
@@ -68,29 +69,51 @@ $dados_usuario = dadosUsuario();
 
   <main>
   <section class="user-profile">
-    <h2>Faça seu cadastro na Musicwave!</h2>
-    <form id="cadastro-form" enctype="multipart/form-data" >
-      <div class="profile-box">
-        
-        <div class="avatar-container">
-          <img src="img/aaaaa.jpg" alt="" class="avatar" id="preview-avatar">
-          <label for="foto-perfil" class="foto-label">Adicionar Foto</label>
-          <input type="file" id="foto-perfil" accept="image/*">
-          <button type="button" id="remover-foto" class="btn-remover" style="display: none;">Remover Foto</button>
-        </div>
-
-        <div class="profile-info">
-          <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo..." required><br>
-          <input type="email" id="email" name="email" placeholder="Digite seu e-mail..." required><br>
-          <input type="password" id="senha" name="senha" placeholder="Digite sua senha..." required><br>
-          <input type="text" id="cep" name="cep" placeholder="Digite seu CEP..." required><br>
-
-          <button type="submit" class="btn-laranja">Cadastrar</button>
-          <button type="button" class="btn-laranja" id="logout" style="display: none;">Logout</button>
-        </div>
-
+    <div class="profile-container">
+      <div class="profile-header">
+        <h2>👤 Meu Perfil</h2>
+        <p>Olá, <?php echo htmlspecialchars(saudacaoUsuario()); ?>! Aqui estão suas informações:</p>
       </div>
-    </form>
+
+      <div class="profile-content">
+        <div class="profile-card">
+          <div class="avatar-section">
+            <div class="avatar-container">
+              <img src="img/aaaaa.jpg" alt="Avatar" class="avatar" id="preview-avatar">
+              <label for="foto-perfil" class="foto-label">📷 Alterar Foto</label>
+              <input type="file" id="foto-perfil" accept="image/*" style="display: none;">
+            </div>
+          </div>
+
+          <div class="profile-info">
+            <div class="info-group">
+              <label>📧 Email:</label>
+              <span class="info-value"><?php echo htmlspecialchars($dados_usuario['email'] ?? 'Não informado'); ?></span>
+            </div>
+
+            <div class="info-group">
+              <label>📱 CPF:</label>
+              <span class="info-value"><?php echo htmlspecialchars($dados_usuario['cpf'] ?? 'Não informado'); ?></span>
+            </div>
+
+            <div class="info-group">
+              <label>👤 Nome Completo:</label>
+              <span class="info-value"><?php echo htmlspecialchars($dados_usuario['nome'] ?? 'Não informado'); ?></span>
+            </div>
+
+            <div class="info-group">
+              <label>⏰ Status:</label>
+              <span class="info-value status-online">🟢 Online</span>
+            </div>
+          </div>
+
+          <div class="profile-actions">
+            <button type="button" class="btn-edit" onclick="editarPerfil()">✏️ Editar Perfil</button>
+            <button type="button" class="btn-history" onclick="verHistorico()">📋 Histórico de Compras</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 </main>
 
@@ -242,6 +265,54 @@ $dados_usuario = dadosUsuario();
                     hideSuggestions();
                 }
             });
+        }
+    });
+
+    // Função para logout
+    async function logout() {
+        if (confirm('Tem certeza que deseja sair?')) {
+            try {
+                const response = await fetch('../APP/controller/LogoutController.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'acao=logout'
+                });
+                
+                const data = await response.json();
+                
+                if (data.sucesso) {
+                    alert('Logout realizado com sucesso!');
+                    window.location.href = 'index.php';
+                } else {
+                    alert('Erro ao fazer logout: ' + data.mensagem);
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro de comunicação com o servidor');
+            }
+        }
+    }
+
+    // Funções do perfil
+    function editarPerfil() {
+        alert('🚧 Funcionalidade em desenvolvimento!\nEm breve você poderá editar seu perfil.');
+    }
+
+    function verHistorico() {
+        alert('🚧 Histórico de Compras\nEm breve você terá acesso ao seu histórico completo!');
+    }
+
+    // Preview da foto de perfil
+    document.getElementById('foto-perfil').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('preview-avatar').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
         }
     });
 </script>

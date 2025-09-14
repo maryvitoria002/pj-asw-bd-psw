@@ -40,15 +40,7 @@ $dados_usuario = dadosUsuario();
   <span class="text">Afinador</span>
 </button>
 
-<?php if ($usuario_logado): ?>
-    <!-- Usuário logado -->
-    <div class="user-info bubbles" style="background: #e8f5e8;">
-        <span class="text">Olá, <?php echo htmlspecialchars(saudacaoUsuario()); ?>!</span>
-    </div>
-    <button class="bubbles" onclick="logout()">
-        <span class="text">Sair</span>
-    </button>
-<?php else: ?>
+<?php if (!$usuario_logado): ?>
     <!-- Usuário não logado -->
     <button class="bubbles">
         <span class="text"><a href="view/login-usuario.php" style="color: inherit; text-decoration: none;">Entrar</a></span>
@@ -69,6 +61,9 @@ $dados_usuario = dadosUsuario();
         <a href="perfil.php"><i class="bi bi-person-circle" style="color: black; font-size: 30px"></i></a>
         <a href="index.php"><i class="bi bi-house-door" style="color: black;font-size: 30px"></i></a>
         <a href="#notificacoes"><i class="bi bi-bell" style="color: black; font-size: 30px"></i></a>
+        <?php if ($usuario_logado): ?>
+        <a href="#" onclick="logout()" title="Sair"><i class="bi bi-box-arrow-right" style="color: #d63384; font-size: 30px"></i></a>
+        <?php endif; ?>
         <a id="dark-toggle-wrapper" title="Ativar/Desativar modo escuro">
             <label class="container" id="dark-toggle">
                 <input type="checkbox" id="darkModeSwitch">
