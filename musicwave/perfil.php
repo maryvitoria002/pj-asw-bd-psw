@@ -1,3 +1,11 @@
+<?php
+require_once '../APP/sessao.php';
+
+// Redirecionar para login se não estiver logado
+requererLogin('perfil.php');
+
+$dados_usuario = dadosUsuario();
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -6,7 +14,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="styles.css">
    <link rel="shortcut icon" href="img/mw..png" type="image/x-icon">
-  <title>HOME</title>
+  <title>Perfil - MusicWave</title>
 
 </head>
 <body>

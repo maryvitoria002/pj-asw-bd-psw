@@ -1,3 +1,8 @@
+<?php
+require_once '../APP/sessao.php';
+$usuario_logado = usuarioLogado();
+$dados_usuario = dadosUsuario();
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -34,6 +39,24 @@
       <button id="btn-afinador" class="bubbles" onclick="abrirAfinador()">
   <span class="text">Afinador</span>
 </button>
+
+<?php if ($usuario_logado): ?>
+    <!-- Usuário logado -->
+    <div class="user-info bubbles" style="background: #e8f5e8;">
+        <span class="text">Olá, <?php echo htmlspecialchars(saudacaoUsuario()); ?>!</span>
+    </div>
+    <button class="bubbles" onclick="logout()">
+        <span class="text">Sair</span>
+    </button>
+<?php else: ?>
+    <!-- Usuário não logado -->
+    <button class="bubbles">
+        <span class="text"><a href="view/login-usuario.php" style="color: inherit; text-decoration: none;">Entrar</a></span>
+    </button>
+    <button class="bubbles" style="background: #b45f06;">
+        <span class="text"><a href="view/cadastro-usuario.php" style="color: white; text-decoration: none;">Cadastrar</a></span>
+    </button>
+<?php endif; ?>
   </header>
 
 
@@ -471,8 +494,34 @@
         <p>Copyright &copy; 2025 MusicWave. Todos os direitos reservados. </p>
     </footer>
 
+<script>
+    // Função para logout
+    async function logout() {
+        if (confirm('Tem certeza que deseja sair?')) {
+            try {
+                const response = await fetch('../APP/controller/LogoutController.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'acao=logout'
+                });
+                
+                const data = await response.json();
+                
+                if (data.sucesso) {
+                    alert('Logout realizado com sucesso!');
+                    window.location.reload();
+                } else {
+                    alert('Erro ao fazer logout: ' + data.mensagem);
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro de comunicação com o servidor');
+            }
+        }
+    }
+</script>
+
 </body>
 </html>
-    
-
-

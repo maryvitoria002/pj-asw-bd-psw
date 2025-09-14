@@ -7,21 +7,15 @@ class Conexao {
 
     private function __construct()
     {
-        $host = 'localhost';
-        $dbName = 'musicwave';
-        $username = 'root';
-        $porta = '3306';
-        $pass = '';
-        $dsn = "mysql:host=$host; port=$porta; dbname=$dbName;";
+        $dsn = "mysql:host=localhost;dbname=projeto;charset=utf8mb4";
         
         try {
-            
-            $this->pdo = new PDO($dsn, $username, password: $pass);
+            $this->pdo = new PDO($dsn, "root", "1234");
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             die('Erro na conexão: ' . $e->getMessage());
         }
-
-        
     }
 
     public static function getInstancia(): PDO
