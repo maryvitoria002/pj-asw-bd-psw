@@ -28,7 +28,7 @@ $dados_usuario = dadosUsuario();
       <button class="bubbles">
   <span class="text"><a href="loja.php">Loja</a></span>
 </button>
-<button class="bubbles" onclick="toggleCarrinho()">
+<button class="bubbles" onclick="alert('TESTE CARRINHO!'); toggleCarrinho();">
     <span class="text">Carrinho (<span id="cart-count">0</span>)</span>
 </button>
      
@@ -210,8 +210,7 @@ $dados_usuario = dadosUsuario();
 <script src="script.js"></script>
 
 <script>
-    console.log("🚀 SCRIPT CARREGADO - Loja.php iniciado");
-    
+    console.log("🚀 SCRIPT INICIADO!");
     /*
     ====================================================================
     🛒 SISTEMA DE LOJA DINÂMICO - CARREGA PRODUTOS DO BANCO

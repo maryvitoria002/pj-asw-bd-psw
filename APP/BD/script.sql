@@ -97,8 +97,8 @@ CREATE TABLE CarrinhoItem (
 -- ==========================
 
 -- Produtos
-INSERT INTO Produto (nome, preco, estoque, marca) VALUES
-('Violino Acústico 4/4 Arco Breu Cavalete MDF Estojo Luxo', 899.90, 5, 'Generic'),
+INSERT INTO Produto (idproduto, nome, preco, estoque, imagem, marca) VALUES
+(1, 'Violino Acústico 4/4 Arco Breu Cavalete MDF Estojo Luxo', 899.90, 5, 'catálogo\\violinos\\2ViolinoAcústico44ArcoBreuCavaleteMdfEstojoLuxo\\violino2.png', 'Generic'),
 ('Violino Alan 4/4 AL-1410 Completo', 1299.00, 3, 'Alan'),
 ('Violino Dominante 9649 3/4 Natural', 749.00, 2, 'Dominante'),
 ('Violino Tarttan Série 100 Natural 4/4', 560.00, 6, 'Tarttan'),
