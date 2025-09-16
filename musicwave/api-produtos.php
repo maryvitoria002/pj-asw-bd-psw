@@ -26,7 +26,7 @@ require_once '../APP/BD/Conexao.php';
 
 try {
     // Buscar todos os produtos do banco
-    $sql = "SELECT idproduto, nome, preco, estoque, marca, imagem, descricao 
+    $sql = "SELECT idproduto, nome, preco, estoque, marca, imagem 
             FROM Produto 
             WHERE estoque > 0 
             ORDER BY idproduto";
@@ -41,17 +41,31 @@ try {
         // Determinar categoria baseada no nome do produto
         $categoria = determinarCategoria($produto['nome']);
         
-        // Gerar caminhos das imagens
-        $imagePaths = gerarCaminhosImagens($produto['idproduto'], $categoria, $produto['nome']);
+        // Usar imagem do banco se existir, senão gerar automaticamente
+        if (!empty($produto['imagem'])) {
+            // Usar imagem definida no banco
+            $imagemPrincipal = $produto['imagem'];
+            $thumbnails = [
+                $produto['imagem'],
+                $produto['imagem'], 
+                $produto['imagem'],
+                $produto['imagem']
+            ];
+        } else {
+            // Gerar caminhos das imagens automaticamente
+            $imagePaths = gerarCaminhosImagens($produto['idproduto'], $categoria, $produto['nome']);
+            $imagemPrincipal = $imagePaths['main'];
+            $thumbnails = $imagePaths['thumbnails'];
+        }
         
         $products[] = [
             'id' => (int)$produto['idproduto'],
             'category' => $categoria,
             'title' => $produto['nome'],
             'price' => (float)$produto['preco'],
-            'description' => $produto['descricao'] ?: 'Descrição não disponível.',
-            'image' => $imagePaths['main'],
-            'thumbnails' => $imagePaths['thumbnails'],
+            'description' => 'Instrumento musical de alta qualidade da marca ' . ($produto['marca'] ?: 'Premium') . '. Ideal para músicos iniciantes e profissionais.',
+            'image' => $imagemPrincipal,
+            'thumbnails' => $thumbnails,
             'stock' => (int)$produto['estoque'],
             'marca' => $produto['marca']
         ];

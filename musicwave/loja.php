@@ -28,7 +28,7 @@ $dados_usuario = dadosUsuario();
       <button class="bubbles">
   <span class="text"><a href="loja.php">Loja</a></span>
 </button>
-<button class="bubbles" onclick="toggleCarrinho()">
+<button class="bubbles" onclick="alert('TESTE CARRINHO!'); toggleCarrinho();">
     <span class="text">Carrinho (<span id="cart-count">0</span>)</span>
 </button>
      
@@ -44,6 +44,7 @@ $dados_usuario = dadosUsuario();
         <a href="perfil.php"><i class="bi bi-person-circle" style="color: black; font-size: 30px"></i></a>
         <a href="index.php"><i class="bi bi-house-door" style="color: black;font-size: 30px"></i></a>
         <a href="#notificacoes"><i class="bi bi-bell" style="color: black; font-size: 30px"></i></a>
+        <a href="../admin/login-admin.php" title="Área Administrativa"><i class="bi bi-gear-fill" style="color: #f7bd6d; font-size: 30px"></i></a>
         <?php if ($usuario_logado): ?>
         <a href="#" onclick="logout()" title="Sair"><i class="bi bi-box-arrow-right" style="color: #d63384; font-size: 30px"></i></a>
         <?php endif; ?>
@@ -98,7 +99,18 @@ $dados_usuario = dadosUsuario();
             <p>Total: <span id="carrinho-total-valor">R$0,00</span></p>
         </div>
         <div class="carrinho-acoes">
-            <button class="btn-finalizar" onclick="finalizarCompraPix()">Finalizar Compra com PIX</button>
+            <select id="forma-pagamento" class="btn-limpar" style="background:#fff;color:#333;">
+                <option value="PIX">PIX</option>
+                <option value="CARTAO">Cartão</option>
+                <option value="BOLETO">Boleto</option>
+            </select>
+            <button class="btn-finalizar" onclick="finalizarCompra()">
+                <?php if ($usuario_logado): ?>
+                    Finalizar Compra
+                <?php else: ?>
+                    🔒 Faça Login para Comprar
+                <?php endif; ?>
+            </button>
             <button class="btn-limpar" onclick="clearCart()">Limpar Carrinho</button>
         </div>
     </div>
@@ -210,8 +222,7 @@ $dados_usuario = dadosUsuario();
 <script src="script.js"></script>
 
 <script>
-    console.log("🚀 SCRIPT CARREGADO - Loja.php iniciado");
-    
+    console.log("🚀 SCRIPT INICIADO!");
     /*
     ====================================================================
     🛒 SISTEMA DE LOJA DINÂMICO - CARREGA PRODUTOS DO BANCO
@@ -672,24 +683,46 @@ $dados_usuario = dadosUsuario();
         }
     }
 
-    // Finalizar compra PIX
-    function finalizarCompraPix() {
+    // Finalizar compra (envia para backend e controla estoque)
+    async function finalizarCompra() {
+        // Verificar login no PHP
+        <?php if (!$usuario_logado): ?>
+        alert("Você precisa estar logado para finalizar a compra!\n\nFaça login ou cadastre-se para continuar.");
+        window.location.href = "view/login-usuario.php";
+        return;
+        <?php endif; ?>
+
         if (cart.length === 0) {
             alert("Seu carrinho está vazio!");
             return;
         }
 
-        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        
-        // Configurar modal PIX
-        document.getElementById("pix-total-valor").textContent = `R$ ${total.toFixed(2)}`;
-        document.getElementById("pix-qr-code-img").src = "img/qr_code.png";
-        
-        // Mostrar modal PIX
-        document.getElementById("modalPixPagamento").style.display = "flex";
-        
-        // Fechar carrinho lateral
-        toggleCarrinho();
+        try {
+            const forma = document.getElementById('forma-pagamento')?.value || 'PIX';
+            const items = cart.map(c => ({ id: c.id, qtd: c.quantity }));
+            const resp = await fetch('../APP/controller/CheckoutController.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ metodo: forma, items })
+            });
+            const data = await resp.json();
+            if (!resp.ok || !data.sucesso) {
+                throw new Error(data.mensagem || 'Falha ao processar pedido');
+            }
+            // Sucesso: limpar carrinho, mostrar feedback
+            clearCart();
+            toggleCarrinho();
+            alert(`✅ Pedido #${data.pedido_id} criado! Total: R$ ${Number(data.total).toFixed(2)}. Método: ${data.metodo}`);
+
+            if (forma === 'PIX') {
+                // Exibir modal PIX com total
+                document.getElementById("pix-total-valor").textContent = `R$ ${Number(data.total).toFixed(2)}`;
+                document.getElementById("pix-qr-code-img").src = "img/qr_code.png";
+                document.getElementById("modalPixPagamento").style.display = "flex";
+            }
+        } catch (e) {
+            alert('❌ Erro ao finalizar compra: ' + e.message);
+        }
     }
 
     // Fechar modal PIX

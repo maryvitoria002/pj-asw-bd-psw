@@ -113,7 +113,10 @@ try {
         exit();
     }
     
-    // Inserir usuário (senha sem criptografia)
+    // Criptografar senha com SHA256
+    $senhaCriptografada = hash('sha256', $senha);
+    
+    // Inserir usuário (senha criptografada)
     $sql = "INSERT INTO ClienteUsuario (cpf, nome_completo, rg, email, senha, telefone, data_cadastro) 
             VALUES (:cpf, :nome_completo, :rg, :email, :senha, :telefone, CURDATE())";
     
@@ -122,13 +125,14 @@ try {
     $stmt->bindParam(':nome_completo', $nome_completo);
     $stmt->bindParam(':rg', $rg);
     $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':senha', $senha); // Senha em texto puro
+    $stmt->bindParam(':senha', $senhaCriptografada); // Senha criptografada com SHA256
     $stmt->bindParam(':telefone', $telefone);
     
     if ($stmt->execute()) {
         // Criar carrinho para o novo usuário
         try {
-            $sqlCarrinho = "INSERT INTO Carrinho (cliente_cpf, data_criacao) VALUES (:cpf, CURDATE())";
+            // Tabela Carrinho não possui coluna data_criacao no schema atual
+            $sqlCarrinho = "INSERT INTO Carrinho (cliente_cpf) VALUES (:cpf)";
             $stmtCarrinho = $pdo->prepare($sqlCarrinho);
             $stmtCarrinho->bindParam(':cpf', $cpf);
             $stmtCarrinho->execute();
