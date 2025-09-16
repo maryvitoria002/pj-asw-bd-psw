@@ -29,9 +29,9 @@ $dados_usuario = dadosUsuario();
   <button class="bubbles" onclick="pedirCep()">
   <span class="text" id="cep-texto">Informe seu CEP</span>
 </button>
-            <button class="bubbles">
-               <span class="text"><a href="loja.html">Loja</a></span>
-            </button>
+                <button class="bubbles">
+                    <span class="text"><a href="loja.php">Loja</a></span>
+                </button>
 
 <button class="bubbles" onclick="toggleCarrinho()">
     <span class="text">Carrinho (<span id="cart-count">0</span>)</span>
@@ -344,7 +344,7 @@ $dados_usuario = dadosUsuario();
     }
 
     function verHistorico() {
-        alert('🚧 Histórico de Compras\nEm breve você terá acesso ao seu histórico completo!');
+        window.location.href = 'historico.php';
     }
 
     // Preview da foto de perfil
@@ -600,9 +600,9 @@ window.onclick = function(event) {
     }
 }
 
-// Função para o histórico (placeholder)
+// Função para o histórico
 function verHistorico() {
-    alert('📋 Funcionalidade de histórico será implementada em breve!');
+    window.location.href = 'historico.php';
 }
 
 // Envio do formulário de edição

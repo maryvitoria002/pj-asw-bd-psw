@@ -131,7 +131,8 @@ try {
     if ($stmt->execute()) {
         // Criar carrinho para o novo usuário
         try {
-            $sqlCarrinho = "INSERT INTO Carrinho (cliente_cpf, data_criacao) VALUES (:cpf, CURDATE())";
+            // Tabela Carrinho não possui coluna data_criacao no schema atual
+            $sqlCarrinho = "INSERT INTO Carrinho (cliente_cpf) VALUES (:cpf)";
             $stmtCarrinho = $pdo->prepare($sqlCarrinho);
             $stmtCarrinho->bindParam(':cpf', $cpf);
             $stmtCarrinho->execute();

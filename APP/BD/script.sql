@@ -30,7 +30,8 @@ CREATE TABLE Produto (
     preco DECIMAL(10,2) NOT NULL,
     estoque INT NOT NULL,
     imagem VARCHAR(255), -- URL ou caminho da imagem
-    marca VARCHAR(45)
+    marca VARCHAR(45),
+    descricao VARCHAR(300) default null
 );
 
 -- ==========================
@@ -41,7 +42,9 @@ CREATE TABLE Pedido (
     datapedido DATE NOT NULL,
     dataentrega DATE,
     total DECIMAL(10,2),
-    status VARCHAR(45) NOT NULL
+    status VARCHAR(45) NOT NULL,
+    cliente_cpf CHAR(11) NOT NULL,
+    CONSTRAINT fk_pedido_cliente FOREIGN KEY (cliente_cpf) REFERENCES ClienteUsuario(cpf)
 );
 
 -- ==========================
@@ -220,32 +223,32 @@ INSERT INTO ClienteUsuario (cpf, nome_completo, rg, email, senha, telefone, data
 ('00000000025','Yasmin Castro','DF252525','yasmin.castro@example.com','senha123','(61)99999-0025','2025-08-28');
 
 -- Pedidos (totais corrigidos = soma exata dos itens)
-INSERT INTO Pedido (datapedido, dataentrega, total, status) VALUES
-('2025-01-10','2025-01-15',2048.00,'ENTREGUE'),
-('2025-01-20','2025-01-27',1259.90,'ENTREGUE'),
-('2025-02-05','2025-02-12',3200.00,'ENTREGUE'),
-('2025-02-18','2025-02-25',16500.00,'CANCELADO'),
-('2025-03-01','2025-03-08',560.00,'ENTREGUE'),
-('2025-03-10','2025-03-20',1259.00,'PROCESSANDO'),
-('2025-03-15',NULL,3200.00,'PROCESSANDO'),
-('2025-03-25','2025-04-02',1800.00,'ENTREGUE'),
-('2025-04-05','2025-04-10',1250.00,'ENTREGUE'),
-('2025-04-18','2025-04-30',11000.00,'ENTREGUE'),
-('2025-05-02','2025-05-10',3400.00,'ENTREGUE'),
-('2025-05-15','2025-05-22',9700.00,'ENTREGUE'),
-('2025-06-01',NULL,14800.00,'PROCESSANDO'),
-('2025-06-07','2025-06-12',8900.00,'ENTREGUE'),
-('2025-06-18','2025-06-25',480.00,'ENTREGUE'),
-('2025-07-01','2025-07-09',520.00,'ENTREGUE'),
-('2025-07-10','2025-07-18',1100.00,'ENTREGUE'),
-('2025-07-20',NULL,1500.00,'PROCESSANDO'),
-('2025-07-25','2025-08-02',5700.00,'ENTREGUE'),
-('2025-08-01','2025-08-09',2000.00,'ENTREGUE'),
-('2025-08-07',NULL,1950.00,'PROCESSANDO'),
-('2025-08-11','2025-08-16',2380.00,'ENTREGUE'),
-('2025-08-20','2025-08-25',1150.00,'CANCELADO'),
-('2025-08-24','2025-08-30',350.00,'ENTREGUE'),
-('2025-09-01',NULL,160.00,'PROCESSANDO');
+INSERT INTO Pedido (datapedido, dataentrega, total, status, cliente_cpf) VALUES
+('2025-01-10','2025-01-15',2048.00,'ENTREGUE', '00000000001'),
+('2025-01-20','2025-01-27',1259.90,'ENTREGUE', '00000000001'),
+('2025-02-05','2025-02-12',3200.00,'ENTREGUE','00000000001'),
+('2025-02-18','2025-02-25',16500.00,'CANCELADO','00000000001'),
+('2025-03-01','2025-03-08',560.00,'ENTREGUE','00000000001'),
+('2025-03-10','2025-03-20',1259.00,'PROCESSANDO','00000000001'),
+('2025-03-15',NULL,3200.00,'PROCESSANDO','00000000001'),
+('2025-03-25','2025-04-02',1800.00,'ENTREGUE','00000000001'),
+('2025-04-05','2025-04-10',1250.00,'ENTREGUE','00000000001'),
+('2025-04-18','2025-04-30',11000.00,'ENTREGUE','00000000001'),
+('2025-05-02','2025-05-10',3400.00,'ENTREGUE','00000000001'),
+('2025-05-15','2025-05-22',9700.00,'ENTREGUE','00000000001'),
+('2025-06-01',NULL,14800.00,'PROCESSANDO','00000000001'),
+('2025-06-07','2025-06-12',8900.00,'ENTREGUE','00000000001'),
+('2025-06-18','2025-06-25',480.00,'ENTREGUE','00000000001'),
+('2025-07-01','2025-07-09',520.00,'ENTREGUE','00000000001'),
+('2025-07-10','2025-07-18',1100.00,'ENTREGUE','00000000001'),
+('2025-07-20',NULL,1500.00,'PROCESSANDO','00000000001'),
+('2025-07-25','2025-08-02',5700.00,'ENTREGUE','00000000001'),
+('2025-08-01','2025-08-09',2000.00,'ENTREGUE','00000000001'),
+('2025-08-07',NULL,1950.00,'PROCESSANDO','00000000001'),
+('2025-08-11','2025-08-16',2380.00,'ENTREGUE','00000000001'),
+('2025-08-20','2025-08-25',1150.00,'CANCELADO','00000000001'),
+('2025-08-24','2025-08-30',350.00,'ENTREGUE','00000000001'),
+('2025-09-01',NULL,160.00,'PROCESSANDO','00000000001');
 
 -- Itens dos pedidos (mesmo conjunto fornecido, base para os totais acima)
 INSERT INTO ItemPedido (produto_idproduto, pedido_idpedido, quantidade, precounitario) VALUES
@@ -411,124 +414,16 @@ CREATE TABLE Avaliacao (
 );
 
 -- ==========================
--- ALTERAÇÃO NA TABELA PRODUTO - ADICIONAR DESCRIÇÃO
--- ==========================
-ALTER TABLE Produto ADD COLUMN descricao TEXT AFTER marca;
-
--- ==========================
 -- INSERIR ADMINISTRADORES PADRÃO
 -- ==========================
-INSERT INTO Administrador (nome, email, senha) VALUES
-('Admin Master', 'admin@musicwave.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
-('Gerente Loja', 'gerente@musicwave.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
-('Moderador', 'moderador@musicwave.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');
+-- ADMINISTRADOR PADRÃO:
+-- Usuário: admin
+-- Senha: 123456 (SHA-256: 8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92)
+INSERT INTO Administrador (nome, email, senha, usuario, nome_completo) VALUES
+('Admin Master', 'admin@musicwave.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'admin', 'Administrador Master'),
+('Gerente Loja', 'gerente@musicwave.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'gerente', 'Gerente da Loja'),
+('Moderador', 'moderador@musicwave.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'moderador', 'Moderador do Sistema');
 
--- ==========================
--- ATUALIZAR PRODUTOS COM DESCRIÇÕES E CAMINHOS DE IMAGENS
--- ==========================
-
--- VIOLINOS (IDs 1-8)
-UPDATE Produto SET 
-    descricao = 'Violino acústico 4/4 completo com arco, breu, cavalete e estojo luxo. Ideal para iniciantes e estudantes. Acabamento em verniz brilhante com excelente projeção sonora.',
-WHERE idproduto = 1;
-
-UPDATE Produto SET 
-    descricao = 'Violino Alan AL-1410 4/4 completo com acabamento profissional. Tampo em abeto selecionado, laterais e fundo em ácer. Inclui estojo, arco e breu de qualidade.',
-WHERE idproduto = 2;
-
-UPDATE Produto SET 
-    descricao = 'Violino Dominante 3/4 natural, perfeito para jovens músicos. Construção sólida com madeiras selecionadas e acabamento natural fosco.',
-WHERE idproduto = 3;
-
--- BAIXOS (IDs 25-32)
-UPDATE Produto SET 
-    descricao = 'Contrabaixo elétrico Waldman 4 cordas com captadores de alta qualidade. Corpo em basswood, braço em maple e escala em rosewood. Som encorpado e versátil.',
-WHERE idproduto = 25;
-
-UPDATE Produto SET 
-    descricao = 'Baixo Yamaha TRBX305 de 5 cordas com sistema ativo. Corpo em basswood, braço em maple e acabamento branco elegante. Captadores de alta definição.',
-WHERE idproduto = 26;
-
-UPDATE Produto SET 
-    descricao = 'Baixo Tagima TW65 Woodstock Precision Vintage White. Estilo clássico precision bass com som vintage autêntico. Corpo em alder e braço em maple.',
-WHERE idproduto = 27;
-
--- GUITARRAS (IDs 73-77)
-UPDATE Produto SET 
-    descricao = 'Guitarra Fender Stratocaster Olympic White. Lendária guitarra com 3 captadores single coil, alavanca tremolo e som icônico. Braço em maple e corpo em alder.',
-WHERE idproduto = 73;
-
-UPDATE Produto SET 
-    descricao = 'Gibson Les Paul Tribute Satin Tobacco Burst. Guitarra premium com captadores humbucker, corpo em mogno e tampo em maple. Som encorpado e sustain lendário.',
-WHERE idproduto = 74;
-
-UPDATE Produto SET 
-    descricao = 'Fender Telecaster Butterscotch Blonde. Guitarra clássica com som cristalino e versátil. 2 captadores single coil, ponte fixa e acabamento vintage.',
-WHERE idproduto = 75;
-
--- BANDOLINS (IDs 33-40)
-UPDATE Produto SET 
-    descricao = 'Bandolim Marquês BND-100 estudante com acabamento natural sombra. Tampo em pinho, laterais e fundo em sapele. Som brilhante ideal para música brasileira.',
-WHERE idproduto = 33;
-
-UPDATE Produto SET 
-    descricao = 'Bandolim Marquês BND-100 NS com acabamento natural selecionado. Construção tradicional com excelente projeção para choro e música popular brasileira.',
-WHERE idproduto = 34;
-
-UPDATE Produto SET 
-    descricao = 'Bandolim Giannini Raiz BS1 NS natural. Modelo profissional com tampo em cedro maciço e laterais em sapele. Som rico e balanceado.',
-WHERE idproduto = 37;
-
--- UKULELES (IDs 41-48)
-UPDATE Produto SET 
-    descricao = 'Ukulele Seven Concert SUK-23 NT natural. Tamanho concert com som equilibrado e projeção excelente. Corpo em sapele e acabamento fosco.',
-WHERE idproduto = 41;
-
-UPDATE Produto SET 
-    descricao = 'Ukulele Seven Concert SUK-23 BK preto elegante. Mesmo som excelente do modelo natural mas com visual moderno e sofisticado.',
-WHERE idproduto = 42;
-
-UPDATE Produto SET 
-    descricao = 'Ukulele Seven Concert SUK-23 PI rosa vibrante. Perfeito para quem busca personalidade e cor. Som de qualidade com visual único.',
-WHERE idproduto = 43;
-
--- BANJOS (IDs 57-64)
-UPDATE Produto SET 
-    descricao = 'Banjo Strinberg WB50 Natural Bluegrass com 5 cordas. Aro em maple, tampo em pele natural e hardware cromado. Som autêntico para bluegrass e country.',
-WHERE idproduto = 57;
-
-UPDATE Produto SET 
-    descricao = 'Banjo Rozini RJ14 estudante elétrico com caixa larga fosco imbuia. Pickup instalado para amplificação e versatilidade sonora.',
-WHERE idproduto = 58;
-
--- VIOLÕES (IDs 65-72)
-UPDATE Produto SET 
-    descricao = 'Violão Michael Elegance VME720 com tampo em abeto maciço, laterais e fundo em sapele. Braço em cedro e escala em pau-ferro. Som equilibrado e sustain excelente.',
-WHERE idproduto = 65;
-
-UPDATE Produto SET 
-    descricao = 'Violão Yamaha CSF-TA Parlor Transacoustic com tecnologia exclusiva de reverb e chorus sem amplificação. Tampo em abeto sitka e laterais em mogno.',
-WHERE idproduto = 66;
-
--- VIOLAS (IDs 9-16)
-UPDATE Produto SET 
-    descricao = 'Viola Clássica Alan AL 1310 4/4 com tampo em abeto europeu, laterais e fundo em ácer flameado. Som aveludado e projeção excelente.',
-WHERE idproduto = 9;
-
--- VIOLAS CAIPIRAS (IDs 49-56)
-UPDATE Produto SET 
-    descricao = 'Viola Giannini Start VS-14 EQ Black eletroacústica com equalizador de 4 bandas e afinador. Tampo em abeto e laterais em sapele.',
-WHERE idproduto = 49;
-
--- VIOLONCELOS (IDs 17-24)
-UPDATE Produto SET 
-    descricao = 'Violoncelo Alan AL 1210 4/4 com tampo em abeto europeu selecionado, laterais e fundo em ácer. Som profundo e rico em harmônicos.',
-WHERE idproduto = 17;
-
--- CAVAQUINHOS (IDs 78-81)
-UPDATE Produto SET 
-    descricao = 'Cavaquinho Roos acústico preto fosco com tampo em pinho, laterais e fundo em sapele. Som brilhante ideal para samba e choro.',
-WHERE idproduto = 78;
 
 -- ==========================
 -- INSERIR AVALIAÇÕES DE EXEMPLO
