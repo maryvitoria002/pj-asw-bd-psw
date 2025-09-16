@@ -61,6 +61,7 @@ $dados_usuario = dadosUsuario();
         <a href="perfil.php"><i class="bi bi-person-circle" style="color: black; font-size: 30px"></i></a>
         <a href="index.php"><i class="bi bi-house-door" style="color: black;font-size: 30px"></i></a>
         <a href="#notificacoes"><i class="bi bi-bell" style="color: black; font-size: 30px"></i></a>
+        <a href="../admin/login-admin.php" title="Área Administrativa"><i class="bi bi-gear-fill" style="color: #f7bd6d; font-size: 30px"></i></a>
         <?php if ($usuario_logado): ?>
         <a href="#" onclick="logout()" title="Sair"><i class="bi bi-box-arrow-right" style="color: #d63384; font-size: 30px"></i></a>
         <?php endif; ?>

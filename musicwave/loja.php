@@ -44,6 +44,7 @@ $dados_usuario = dadosUsuario();
         <a href="perfil.php"><i class="bi bi-person-circle" style="color: black; font-size: 30px"></i></a>
         <a href="index.php"><i class="bi bi-house-door" style="color: black;font-size: 30px"></i></a>
         <a href="#notificacoes"><i class="bi bi-bell" style="color: black; font-size: 30px"></i></a>
+        <a href="../admin/login-admin.php" title="Área Administrativa"><i class="bi bi-gear-fill" style="color: #f7bd6d; font-size: 30px"></i></a>
         <?php if ($usuario_logado): ?>
         <a href="#" onclick="logout()" title="Sair"><i class="bi bi-box-arrow-right" style="color: #d63384; font-size: 30px"></i></a>
         <?php endif; ?>
@@ -98,7 +99,13 @@ $dados_usuario = dadosUsuario();
             <p>Total: <span id="carrinho-total-valor">R$0,00</span></p>
         </div>
         <div class="carrinho-acoes">
-            <button class="btn-finalizar" onclick="finalizarCompraPix()">Finalizar Compra com PIX</button>
+            <button class="btn-finalizar" onclick="finalizarCompraPix()">
+                <?php if ($usuario_logado): ?>
+                    Finalizar Compra com PIX
+                <?php else: ?>
+                    🔒 Faça Login para Comprar
+                <?php endif; ?>
+            </button>
             <button class="btn-limpar" onclick="clearCart()">Limpar Carrinho</button>
         </div>
     </div>
@@ -673,6 +680,13 @@ $dados_usuario = dadosUsuario();
 
     // Finalizar compra PIX
     function finalizarCompraPix() {
+        // Verificar se o usuário está logado
+        <?php if (!$usuario_logado): ?>
+        alert("Você precisa estar logado para finalizar a compra!\n\nFaça login ou cadastre-se para continuar.");
+        window.location.href = "view/login-usuario.php";
+        return;
+        <?php endif; ?>
+        
         if (cart.length === 0) {
             alert("Seu carrinho está vazio!");
             return;

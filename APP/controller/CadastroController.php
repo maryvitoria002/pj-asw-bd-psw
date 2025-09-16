@@ -113,7 +113,10 @@ try {
         exit();
     }
     
-    // Inserir usuário (senha sem criptografia)
+    // Criptografar senha com SHA256
+    $senhaCriptografada = hash('sha256', $senha);
+    
+    // Inserir usuário (senha criptografada)
     $sql = "INSERT INTO ClienteUsuario (cpf, nome_completo, rg, email, senha, telefone, data_cadastro) 
             VALUES (:cpf, :nome_completo, :rg, :email, :senha, :telefone, CURDATE())";
     
@@ -122,7 +125,7 @@ try {
     $stmt->bindParam(':nome_completo', $nome_completo);
     $stmt->bindParam(':rg', $rg);
     $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':senha', $senha); // Senha em texto puro
+    $stmt->bindParam(':senha', $senhaCriptografada); // Senha criptografada com SHA256
     $stmt->bindParam(':telefone', $telefone);
     
     if ($stmt->execute()) {

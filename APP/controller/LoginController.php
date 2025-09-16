@@ -58,8 +58,10 @@ try {
         exit();
     }
     
-    // Verificar senha (comparação direta)
-    if ($senha !== $usuario['senha']) {
+    // Verificar senha (comparação com SHA256)
+    $senhaCriptografada = hash('sha256', $senha);
+    
+    if ($senhaCriptografada !== $usuario['senha']) {
         echo json_encode([
             'sucesso' => false,
             'mensagem' => 'Senha incorreta'

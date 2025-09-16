@@ -47,6 +47,11 @@ if (!isset($_SESSION['admin_logado']) || !$_SESSION['admin_logado']) {
     header('Location: login-admin.php');
     exit;
 }
+
+// Definir nível padrão se não existir
+if (!isset($_SESSION['admin_nivel'])) {
+    $_SESSION['admin_nivel'] = 'administrador';
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -354,5 +359,61 @@ if (!isset($_SESSION['admin_logado']) || !$_SESSION['admin_logado']) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="admin-script.js"></script>
+    
+    <script>
+        // Função para logout administrativo
+        async function realizarLogout() {
+            if (confirm('Tem certeza que deseja sair do painel administrativo?')) {
+                try {
+                    const response = await fetch('../APP/controller/AdminController.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: 'acao=logout'
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.sucesso) {
+                        alert('Logout realizado com sucesso!');
+                        window.location.href = 'login-admin.php';
+                    } else {
+                        alert('Erro ao fazer logout: ' + data.mensagem);
+                    }
+                } catch (error) {
+                    console.error('Erro:', error);
+                    // Forçar logout mesmo se der erro
+                    window.location.href = 'login-admin.php';
+                }
+            }
+        }
+        
+        // Logout automático quando fechar aba/navegador
+        window.addEventListener('beforeunload', function() {
+            fetch('../APP/controller/AdminController.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'acao=logout',
+                keepalive: true
+            });
+        });
+        
+        // Logout automático quando sair da página
+        window.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'hidden') {
+                fetch('../APP/controller/AdminController.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'acao=logout',
+                    keepalive: true
+                });
+            }
+        });
+    </script>
 </body>
 </html>

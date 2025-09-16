@@ -3,6 +3,7 @@
 -- Turma: 2AII
 -- Título do projeto: MusicWave
 
+DROP DATABASE projeto;
 CREATE DATABASE projeto;
 USE projeto;
 
@@ -97,8 +98,8 @@ CREATE TABLE CarrinhoItem (
 -- ==========================
 
 -- Produtos
-INSERT INTO Produto (idproduto, nome, preco, estoque, imagem, marca) VALUES
-(1, 'Violino Acústico 4/4 Arco Breu Cavalete MDF Estojo Luxo', 899.90, 5, 'catálogo\\violinos\\2ViolinoAcústico44ArcoBreuCavaleteMdfEstojoLuxo\\violino2.png', 'Generic'),
+INSERT INTO Produto (nome, preco, estoque, marca) VALUES
+('Violino Acústico 4/4 Arco Breu Cavalete MDF Estojo Luxo', 899.90, 5, 'Generic'),
 ('Violino Alan 4/4 AL-1410 Completo', 1299.00, 3, 'Alan'),
 ('Violino Dominante 9649 3/4 Natural', 749.00, 2, 'Dominante'),
 ('Violino Tarttan Série 100 Natural 4/4', 560.00, 6, 'Tarttan'),
@@ -388,7 +389,11 @@ CREATE TABLE Administrador (
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     senha VARCHAR(255) NOT NULL,
-    ativo BOOLEAN DEFAULT TRUE
+    nivel_acesso ENUM('admin', 'super_admin') DEFAULT 'admin',
+    usuario VARCHAR(50) UNIQUE NOT NULL,
+    nome_completo VARCHAR(150) NOT NULL,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ultimo_login TIMESTAMP NULL
 );
 
 -- TABELA AVALIAÇÕES
@@ -425,127 +430,104 @@ INSERT INTO Administrador (nome, email, senha) VALUES
 -- VIOLINOS (IDs 1-8)
 UPDATE Produto SET 
     descricao = 'Violino acústico 4/4 completo com arco, breu, cavalete e estojo luxo. Ideal para iniciantes e estudantes. Acabamento em verniz brilhante com excelente projeção sonora.',
-    imagem = 'catálogo/violinos/1 Violino Acústico 4-4/violino1.png'
 WHERE idproduto = 1;
 
 UPDATE Produto SET 
     descricao = 'Violino Alan AL-1410 4/4 completo com acabamento profissional. Tampo em abeto selecionado, laterais e fundo em ácer. Inclui estojo, arco e breu de qualidade.',
-    imagem = 'catálogo/violinos/2 Violino Alan 4-4/violino2.png'
 WHERE idproduto = 2;
 
 UPDATE Produto SET 
     descricao = 'Violino Dominante 3/4 natural, perfeito para jovens músicos. Construção sólida com madeiras selecionadas e acabamento natural fosco.',
-    imagem = 'catálogo/violinos/3 Violino Dominante 3-4/violino3.png'
 WHERE idproduto = 3;
 
 -- BAIXOS (IDs 25-32)
 UPDATE Produto SET 
     descricao = 'Contrabaixo elétrico Waldman 4 cordas com captadores de alta qualidade. Corpo em basswood, braço em maple e escala em rosewood. Som encorpado e versátil.',
-    imagem = 'catálogo/baixos/1 Contrabaixo Elétrico Waldman/baixo1.png'
 WHERE idproduto = 25;
 
 UPDATE Produto SET 
     descricao = 'Baixo Yamaha TRBX305 de 5 cordas com sistema ativo. Corpo em basswood, braço em maple e acabamento branco elegante. Captadores de alta definição.',
-    imagem = 'catálogo/baixos/2 Baixo 5 Cordas Ativo Yamaha Trbx305 White/baixo2.png'
 WHERE idproduto = 26;
 
 UPDATE Produto SET 
     descricao = 'Baixo Tagima TW65 Woodstock Precision Vintage White. Estilo clássico precision bass com som vintage autêntico. Corpo em alder e braço em maple.',
-    imagem = 'catálogo/baixos/3 Baixo Tagima Tw65 Woodstock Precision Vintage White/baixo3.png'
 WHERE idproduto = 27;
 
 -- GUITARRAS (IDs 73-77)
 UPDATE Produto SET 
     descricao = 'Guitarra Fender Stratocaster Olympic White. Lendária guitarra com 3 captadores single coil, alavanca tremolo e som icônico. Braço em maple e corpo em alder.',
-    imagem = 'catálogo/guitarras/1 Guitarra Fender Standard Stratocaster Olympic White/guitarra1.png'
 WHERE idproduto = 73;
 
 UPDATE Produto SET 
     descricao = 'Gibson Les Paul Tribute Satin Tobacco Burst. Guitarra premium com captadores humbucker, corpo em mogno e tampo em maple. Som encorpado e sustain lendário.',
-    imagem = 'catálogo/guitarras/2 Guitarra Elétrica Gibson Modern Collection Les Paul/guitarra2.png'
 WHERE idproduto = 74;
 
 UPDATE Produto SET 
     descricao = 'Fender Telecaster Butterscotch Blonde. Guitarra clássica com som cristalino e versátil. 2 captadores single coil, ponte fixa e acabamento vintage.',
-    imagem = 'catálogo/guitarras/3 Guitarra Fender Standard Telecaster Butterscotch Blonde/guitarra3.png'
 WHERE idproduto = 75;
 
 -- BANDOLINS (IDs 33-40)
 UPDATE Produto SET 
     descricao = 'Bandolim Marquês BND-100 estudante com acabamento natural sombra. Tampo em pinho, laterais e fundo em sapele. Som brilhante ideal para música brasileira.',
-    imagem = 'catálogo/bandolins/1 Bandolim Marquês Bnd100 Estudante Natural Sombra Acústico/bandolim1.png'
 WHERE idproduto = 33;
 
 UPDATE Produto SET 
     descricao = 'Bandolim Marquês BND-100 NS com acabamento natural selecionado. Construção tradicional com excelente projeção para choro e música popular brasileira.',
-    imagem = 'catálogo/bandolins/2 Bandolim Marquês Bnd-100 Ns/bandolim2.png'
 WHERE idproduto = 34;
 
 UPDATE Produto SET 
     descricao = 'Bandolim Giannini Raiz BS1 NS natural. Modelo profissional com tampo em cedro maciço e laterais em sapele. Som rico e balanceado.',
-    imagem = 'catálogo/bandolins/5 Bandolim Acústico Giannini Raiz BS1 NS/bandolim5.png'
 WHERE idproduto = 37;
 
 -- UKULELES (IDs 41-48)
 UPDATE Produto SET 
     descricao = 'Ukulele Seven Concert SUK-23 NT natural. Tamanho concert com som equilibrado e projeção excelente. Corpo em sapele e acabamento fosco.',
-    imagem = 'catálogo/ukuleles/1 Ukulele Seven Concert SUK-23 NT Natural/ukulele1.png'
 WHERE idproduto = 41;
 
 UPDATE Produto SET 
     descricao = 'Ukulele Seven Concert SUK-23 BK preto elegante. Mesmo som excelente do modelo natural mas com visual moderno e sofisticado.',
-    imagem = 'catálogo/ukuleles/2 Ukulele Seven Concert SUK-23 BK Preto/ukulele2.png'
 WHERE idproduto = 42;
 
 UPDATE Produto SET 
     descricao = 'Ukulele Seven Concert SUK-23 PI rosa vibrante. Perfeito para quem busca personalidade e cor. Som de qualidade com visual único.',
-    imagem = 'catálogo/ukuleles/3 Ukulele Seven Concert SUK-23 PI Rosa/ukulele3.png'
 WHERE idproduto = 43;
 
 -- BANJOS (IDs 57-64)
 UPDATE Produto SET 
     descricao = 'Banjo Strinberg WB50 Natural Bluegrass com 5 cordas. Aro em maple, tampo em pele natural e hardware cromado. Som autêntico para bluegrass e country.',
-    imagem = 'catálogo/banjos/1 Banjo Acústico Strinberg Wb50 Natural Bluegrass/banjo1.png'
 WHERE idproduto = 57;
 
 UPDATE Produto SET 
     descricao = 'Banjo Rozini RJ14 estudante elétrico com caixa larga fosco imbuia. Pickup instalado para amplificação e versatilidade sonora.',
-    imagem = 'catálogo/banjos/2 Banjo Estudante Rozini Rj14 Elétric Caixa Larga Fosco Imbuia/banjo2.png'
 WHERE idproduto = 58;
 
 -- VIOLÕES (IDs 65-72)
 UPDATE Produto SET 
     descricao = 'Violão Michael Elegance VME720 com tampo em abeto maciço, laterais e fundo em sapele. Braço em cedro e escala em pau-ferro. Som equilibrado e sustain excelente.',
-    imagem = 'catálogo/violões/1 Violão Michael Elegance VME720/violao1.png'
 WHERE idproduto = 65;
 
 UPDATE Produto SET 
     descricao = 'Violão Yamaha CSF-TA Parlor Transacoustic com tecnologia exclusiva de reverb e chorus sem amplificação. Tampo em abeto sitka e laterais em mogno.',
-    imagem = 'catálogo/violões/2 Violão Yamaha CSF-TA Parlor Transacoustic/violao2.png'
 WHERE idproduto = 66;
 
 -- VIOLAS (IDs 9-16)
 UPDATE Produto SET 
     descricao = 'Viola Clássica Alan AL 1310 4/4 com tampo em abeto europeu, laterais e fundo em ácer flameado. Som aveludado e projeção excelente.',
-    imagem = 'catálogo/violas/1 Viola Clássica AL 1310 4-4 Alan/viola1.png'
 WHERE idproduto = 9;
 
 -- VIOLAS CAIPIRAS (IDs 49-56)
 UPDATE Produto SET 
     descricao = 'Viola Giannini Start VS-14 EQ Black eletroacústica com equalizador de 4 bandas e afinador. Tampo em abeto e laterais em sapele.',
-    imagem = 'catálogo/violas_caipiras/1 Viola Giannini Start VS-14 EQ Black/viola_caipira1.png'
 WHERE idproduto = 49;
 
 -- VIOLONCELOS (IDs 17-24)
 UPDATE Produto SET 
     descricao = 'Violoncelo Alan AL 1210 4/4 com tampo em abeto europeu selecionado, laterais e fundo em ácer. Som profundo e rico em harmônicos.',
-    imagem = 'catálogo/violoncelos/1 Violoncelo AL 1210 4-4 Alan/violoncelo1.png'
 WHERE idproduto = 17;
 
 -- CAVAQUINHOS (IDs 78-81)
 UPDATE Produto SET 
     descricao = 'Cavaquinho Roos acústico preto fosco com tampo em pinho, laterais e fundo em sapele. Som brilhante ideal para samba e choro.',
-    imagem = 'catálogo/cavaquinhos/1 Cavaquinho Roos Acústico Preto Fosco/cavaquinho1.png'
 WHERE idproduto = 78;
 
 -- ==========================
@@ -569,4 +551,3 @@ INSERT INTO Avaliacao (produto_idproduto, cliente_cpf, nota, comentario, aprovad
 (27, '00000000015', 4, 'Baixo Tagima com bom custo-benefício. Som vintage autêntico.', TRUE);
 
 -- Fim do script
-

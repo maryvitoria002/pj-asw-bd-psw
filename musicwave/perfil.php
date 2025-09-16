@@ -49,6 +49,7 @@ $dados_usuario = dadosUsuario();
         <a href="perfil.php"><i class="bi bi-person-circle" style="color: black; font-size: 30px"></i></a>
         <a href="index.php"><i class="bi bi-house-door" style="color: black;font-size: 30px"></i></a>
         <a href="#notificacoes"><i class="bi bi-bell" style="color: black; font-size: 30px"></i></a>
+        <a href="../admin/login-admin.php" title="Área Administrativa"><i class="bi bi-gear-fill" style="color: #f7bd6d; font-size: 30px"></i></a>
         <a href="#" onclick="logout()" title="Sair"><i class="bi bi-box-arrow-right" style="color: #d63384; font-size: 30px"></i></a>
         <a id="dark-toggle-wrapper" title="Ativar/Desativar modo escuro">
             <label class="container" id="dark-toggle">
@@ -119,7 +120,49 @@ $dados_usuario = dadosUsuario();
 
    <!-- formuláriozinho -->
 
-
+   <!-- Modal de Edição de Perfil -->
+   <div id="modalEditarPerfil" class="modal-editar-perfil">
+       <div class="modal-content">
+           <div class="modal-header">
+               <h3>✏️ Editar Perfil</h3>
+               <span class="modal-close" onclick="fecharModalEditar()">&times;</span>
+           </div>
+           <form id="formEditarPerfil">
+               <div class="modal-body">
+                   <div class="form-group">
+                       <label for="edit-nome">👤 Nome Completo:</label>
+                       <input type="text" id="edit-nome" name="nome" value="<?php echo htmlspecialchars($dados_usuario['nome'] ?? ''); ?>" required>
+                   </div>
+                   
+                   <div class="form-group">
+                       <label for="edit-email">📧 Email:</label>
+                       <input type="email" id="edit-email" name="email" value="<?php echo htmlspecialchars($dados_usuario['email'] ?? ''); ?>" required>
+                   </div>
+                   
+                   <div class="form-group">
+                       <label for="edit-cpf">📱 CPF:</label>
+                       <input type="text" id="edit-cpf" name="cpf" value="<?php echo htmlspecialchars($dados_usuario['cpf'] ?? ''); ?>" readonly>
+                       <small>CPF não pode ser alterado</small>
+                   </div>
+                   
+                   <div class="form-group">
+                       <label for="edit-senha">🔒 Nova Senha (opcional):</label>
+                       <input type="password" id="edit-senha" name="senha" placeholder="Deixe em branco para manter a atual">
+                   </div>
+                   
+                   <div class="form-group">
+                       <label for="edit-confirmar-senha">🔒 Confirmar Nova Senha:</label>
+                       <input type="password" id="edit-confirmar-senha" name="confirmar_senha" placeholder="Confirme a nova senha">
+                   </div>
+               </div>
+               
+               <div class="modal-footer">
+                   <button type="button" class="btn-cancel" onclick="fecharModalEditar()">Cancelar</button>
+                   <button type="submit" class="btn-save">💾 Salvar Alterações</button>
+               </div>
+           </form>
+       </div>
+   </div>
 
      <!-- afinador lateral -->
 <div id="afinadorLateral" class="painel-lateral">
@@ -363,6 +406,258 @@ $dados_usuario = dadosUsuario();
         </div>
         <p>Copyright &copy; 2025 MusicWave. Todos os direitos reservados. </p>
     </footer>
+
+<style>
+/* Modal de Edição de Perfil */
+.modal-editar-perfil {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: #fdfaf5;
+    margin: 5% auto;
+    padding: 0;
+    border: 2px solid #f7bd6d;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #f7bd6d, #d4910a);
+    color: white;
+    padding: 20px;
+    border-radius: 13px 13px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.modal-close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.modal-body {
+    padding: 25px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #f7bd6d;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #d4910a;
+    box-shadow: 0 0 0 3px rgba(247, 189, 109, 0.2);
+    background: #fdfaf5;
+}
+
+.form-group input[readonly] {
+    background: #f8f9fa;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+.form-group small {
+    color: #6c757d;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: block;
+}
+
+.modal-footer {
+    padding: 20px 25px;
+    border-top: 1px solid #f7bd6d;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.btn-cancel, .btn-save {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-cancel {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-cancel:hover {
+    background: #5a6268;
+    transform: translateY(-1px);
+}
+
+.btn-save {
+    background: linear-gradient(135deg, #f7bd6d, #d4910a);
+    color: white;
+}
+
+.btn-save:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(247, 189, 109, 0.4);
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+    
+    .modal-body {
+        padding: 20px;
+    }
+    
+    .modal-footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .btn-cancel, .btn-save {
+        width: 100%;
+    }
+}
+</style>
+
+<script src="script.js"></script>
+<script>
+// Função para abrir o modal de edição
+function editarPerfil() {
+    document.getElementById('modalEditarPerfil').style.display = 'block';
+}
+
+// Função para fechar o modal
+function fecharModalEditar() {
+    document.getElementById('modalEditarPerfil').style.display = 'none';
+    document.getElementById('formEditarPerfil').reset();
+}
+
+// Fechar modal clicando fora dele
+window.onclick = function(event) {
+    const modal = document.getElementById('modalEditarPerfil');
+    if (event.target == modal) {
+        fecharModalEditar();
+    }
+}
+
+// Função para o histórico (placeholder)
+function verHistorico() {
+    alert('📋 Funcionalidade de histórico será implementada em breve!');
+}
+
+// Envio do formulário de edição
+document.getElementById('formEditarPerfil').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const senha = formData.get('senha');
+    const confirmarSenha = formData.get('confirmar_senha');
+    
+    // Validar senhas se preenchidas
+    if (senha && senha !== confirmarSenha) {
+        alert('❌ As senhas não coincidem!');
+        return;
+    }
+    
+    // Se senha vazia, remover do envio
+    if (!senha) {
+        formData.delete('senha');
+        formData.delete('confirmar_senha');
+    }
+    
+    // Adicionar ação
+    formData.append('acao', 'editar_perfil');
+    
+    try {
+        const response = await fetch('../APP/controller/UsuarioController.php', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.sucesso) {
+            alert('✅ Perfil atualizado com sucesso!');
+            fecharModalEditar();
+            location.reload(); // Recarregar para mostrar as mudanças
+        } else {
+            alert('❌ Erro ao atualizar perfil: ' + data.mensagem);
+        }
+    } catch (error) {
+        console.error('Erro:', error);
+        alert('❌ Erro de comunicação com o servidor!');
+    }
+});
+
+// Máscara para CPF (se necessário)
+document.getElementById('edit-cpf').addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    e.target.value = value;
+});
+</script>
 
 </body>
 </html>
